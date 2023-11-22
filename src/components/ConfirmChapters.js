@@ -4,13 +4,19 @@ import ChapterCard from "./ChapterCard";
 import Link from "next/link";
 
 const ConfirmChapters = ({ course }) => {
+  const [Loading, setLoading] = React.useState(false);
   const chapterRefs = {};
   course.units.forEach((unit) => {
     unit.chapters.forEach((chapter) => {
       chapterRefs[chapter.id] = React.useRef(null);
     });
   });
-  console.log(chapterRefs);
+  const [completedChapters, setcompletedChapters] = React.useState(new Set());
+  const totalChaptersCount = React.useMemo(() => {
+    return course.units.reduce((acc, unit) => {
+      return acc + unit.chapters.length;
+    }, 0);
+  }, [course.units]);
   return (
     <div>
       {course.units.map((unit, unitIndex) => {
@@ -22,6 +28,8 @@ const ConfirmChapters = ({ course }) => {
               {unit.chapters.map((chapter, chapterIndex) => {
                 return (
                   <ChapterCard
+                    completedChapters={completedChapters}
+                    setcompletedChapters={setcompletedChapters}
                     ref={chapterRefs[chapter.id]}
                     key={chapter.id}
                     chapter={chapter}
@@ -35,16 +43,22 @@ const ConfirmChapters = ({ course }) => {
       })}
       <div>
         <Link href="/create">Back</Link>
-        <button
-          type="button"
-          onClick={() => {
-            Object.values(chapterRefs).forEach((ref) => {
-              ref.current?.triggerLoad();
-            });
-          }}
-        >
-          Generate
-        </button>
+        {totalChaptersCount === completedChapters.size ? (
+          <Link href={`/course/${course.id}/0/0`}>Go to next step</Link>
+        ) : (
+          <button
+            type="button"
+            disabled={Loading}
+            onClick={() => {
+              setLoading(true);
+              Object.values(chapterRefs).forEach((ref) => {
+                ref.current?.triggerLoad();
+              });
+            }}
+          >
+            Generate
+          </button>
+        )}
       </div>
     </div>
   );

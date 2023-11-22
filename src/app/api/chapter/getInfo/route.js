@@ -45,6 +45,8 @@ export async function POST(req, res) {
       }
     );
 
+    console.log(transcript, chapter.name)
+
     const questions = await getQuestionsFromTranscript(
       transcript,
       chapter.name
@@ -92,7 +94,7 @@ export async function POST(req, res) {
       return NextResponse.json(
         {
           success: false,
-          error: "unknown",
+          error: error,
         },
         { status: 500 }
       );
