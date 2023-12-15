@@ -18,12 +18,12 @@ const ConfirmChapters = ({ course }) => {
     }, 0);
   }, [course.units]);
   return (
-    <div>
+    <div className="card container w-75 mt-2 rounded-3 text-white bg-dark-subtle col-form-label ">
       {course.units.map((unit, unitIndex) => {
         return (
-          <div key={unit.id}>
-            <h2>Unit {unitIndex + 1}</h2>
-            <h3>{unit.name}</h3>
+          <div key={unit.id} className="m-2">
+            <h className="font-monospace text-body-secondary fs-5">Unit {unitIndex + 1}</h>
+            <h4 className=" fw-bold fs-2 text-capitalize">{unit.name}</h4>
             <div>
               {unit.chapters.map((chapter, chapterIndex) => {
                 return (
@@ -41,12 +41,14 @@ const ConfirmChapters = ({ course }) => {
           </div>
         );
       })}
-      <div>
-        <Link href="/create">Back</Link>
+      <div className="container d-inline-flex gap-3 col-form-label justify-content-center">
+      <hr className="flex-grow-1 bg-secondary" />
+        <Link href="/create" className="btn btn-light">Back</Link>
         {totalChaptersCount === completedChapters.size ? (
-          <Link href={`/course/${course.id}/0/0`}>Go to next step</Link>
+          <Link href={`/course/${course.id}/0/0`} className="btn btn-warning">Go to next step</Link>
         ) : (
           <button
+          className="btn btn-warning"
             type="button"
             disabled={Loading}
             onClick={() => {
@@ -59,6 +61,7 @@ const ConfirmChapters = ({ course }) => {
             Generate
           </button>
         )}
+        <hr className="flex-grow-1 bg-secondary " />
       </div>
     </div>
   );

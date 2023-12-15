@@ -1,0 +1,14 @@
+.galleryPage{
+    width: 100%;
+    height: max-content;
+    background-image:linear-gradient(rgba(50, 2, 2, 0.856),rgba(0, 0, 0, 0.849)), url('/images/bg1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+}
+ /* for provide background a black tint-add this with in bg image line */
+/* linear-gradient(rgba(15, 2, 2, 0.856),rgba(0, 0, 0, 0.849)), */ 
+
+ /* for provide background a blackesh red tint-add this with in bg image line  */
+/* linear-gradient(rgba(50, 2, 2, 0.856),rgba(0, 0, 0, 0.849)), */ 

@@ -5,23 +5,33 @@ import React from "react";
 const UserAccountNav = ({ user }) => {
   return (
     <>
-      <div className="dropdown">
-        {/* <button className="dropbtn">Select an option</button> */}
+      <div>
+        <div className="card border-white" >
+          <ul className="list-group list-group-flush ">
+            <li className="list-group-item font-monospace ">{user?.name && <div>{user.name}</div>}</li>
+            <li className="list-group-item font-monospace">{user?.email && <div>{user.email}</div>}</li>
+          </ul>
+        </div>
 
-        <div className="dropdown-content">
-          <a href="#">{user?.name && <p>{user.name}</p>}</a>
-          <a href="#">{user?.email && <p>{user.email}</p>}</a>
-          <button
+        <div className="card m-1 ">
+          <button className="btn btn-outline-danger text-red"
             onClick={() => {
               signOut();
             }}
           >
-            Sign Out
+           <div className=" font-monospace">Sign Out</div> 
           </button>
         </div>
       </div>
+
+
     </>
+
+
+
   );
 };
 
 export default UserAccountNav;
+
+

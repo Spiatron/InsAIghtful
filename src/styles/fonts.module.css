@@ -1,0 +1,35 @@
+/* styles/fonts.css */
+@font-face {
+    font-family: 'angrybird';
+    src: url('/fonts/angrybirds-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+     font-family: 'manosque';
+     src: url('/fonts/Manosque-Regular.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+   }
+
+   @font-face {
+     font-family: 'asul';
+     src: url('/fonts/Asul-Regular.ttf') format('truetype');
+     font-weight: normal;
+     font-style: normal;
+   }
+
+   @font-face {
+     font-family: 'quando';
+     src: url('/fonts/Quando-Regular.ttf') format('truetype');
+     font-weight: normal;
+     font-style: normal;
+   }
+
+   @font-face {
+    font-family: 'stencil';
+    src: url('/fonts/BespokeStencil-Extrabold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }

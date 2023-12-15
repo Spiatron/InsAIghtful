@@ -36,14 +36,14 @@ export async function POST(req, res) {
     let maxLength = 500;
     transcript = transcript.split(" ").slice(0, maxLength).join(" ");
 
-    const { summary } = await strict_output(
-      "You are an AI capable of summarizing a youtube transcript",
-      "Summarize in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
-        transcript,
-      {
-        summary: "summary of the transcript",
-      }
-    );
+    // const { summary } = await strict_output(
+    //   "You are an AI capable of summarizing a youtube transcript",
+    //   "Summarize in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
+    //     transcript,
+    //   {
+    //     summary: "summary of the transcript",
+    //   }
+    // );
 
     console.log(transcript, chapter.name)
 
@@ -74,7 +74,7 @@ export async function POST(req, res) {
       where: { id: chapterId },
       data: {
         videoId: videoId,
-        summary: summary,
+        // summary: summary,
       },
     });
 

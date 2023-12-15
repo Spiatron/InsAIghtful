@@ -61,15 +61,15 @@ const ChapterCard = React.forwardRef(
     }));
 
     return (
-      <div
+      <div className="card container  m-2"
         key={chapter.id}
         style={{
           backgroundColor:
-            Success === true ? "#00ff00" : Success === false ? "#ff0000" : "",
+            Success === true ? "#689C0D" : Success === false ? "#ff0000" : "",
         }}
       >
-        <h5>
-          Chapter {chapterIndex + 1} {chapter.name}
+        <h5 className="fs-5 font-monospace">
+          Chapter-{chapterIndex + 1}: {chapter.name}
         </h5>
       </div>
     );

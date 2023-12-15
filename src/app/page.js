@@ -1,11 +1,10 @@
-import styles from "./page.module.css";
+
+import { redirect } from "next/navigation";
+
+
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <button type="button">HELLO WORLD!</button>
-      </div>
-    </main>
+    redirect("/gallery")
   );
 }
