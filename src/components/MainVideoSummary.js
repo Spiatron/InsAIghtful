@@ -17,7 +17,7 @@ const MainVideoSummary = ({ unit, unitIndex, chapter, chapterIndex }) => {
       />
       <div>
         <h3 className="fs-3 mt-2" style={{ fontFamily: "asul", color: "#C3CED6" }}>Summary:</h3>
-        <p className="fs-6 text-start" >Lorem Ipsum{chapter.summary}</p>
+        <p className="fs-6 text-start" >{chapter.summary}</p>
       </div>
     </div>
   );

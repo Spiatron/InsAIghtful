@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import {
-  getQuestionsFromTranscript,
+  // getQuestionsFromTranscript,
   getTranscript,
   searchYouTube,
 } from "@/lib/youtube";
@@ -36,45 +36,45 @@ export async function POST(req, res) {
     let maxLength = 500;
     transcript = transcript.split(" ").slice(0, maxLength).join(" ");
 
-    // const { summary } = await strict_output(
-    //   "You are an AI capable of summarizing a youtube transcript",
-    //   "Summarize in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
-    //     transcript,
-    //   {
-    //     summary: "summary of the transcript",
-    //   }
-    // );
-
-    console.log(transcript, chapter.name)
-
-    const questions = await getQuestionsFromTranscript(
-      transcript,
-      chapter.name
+    const { summary } = await strict_output(
+      "You are an AI capable of summarizing a youtube transcript",
+      "Summarize in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
+        transcript,
+      {
+        summary: "summary of the transcript",
+      }
     );
 
-    await prisma.question.createMany({
-      data: questions.map((question) => {
-        let options = [
-          question.answer,
-          question.option1,
-          question.option2,
-          question.option3,
-        ];
-        options = options.sort(() => Math.random() - 0.5);
-        return {
-          question: question.question,
-          answer: question.answer,
-          options: JSON.stringify(options),
-          chapterId: chapterId,
-        };
-      }),
-    });
+    console.log(transcript, chapter.name, summary);
+
+    // const questions = await getQuestionsFromTranscript(
+    //   transcript,
+    //   chapter.name
+    // );
+
+    // await prisma.question.createMany({
+    //   data: questions.map((question) => {
+    //     let options = [
+    //       question.answer,
+    //       question.option1,
+    //       question.option2,
+    //       question.option3,
+    //     ];
+    //     options = options.sort(() => Math.random() - 0.5);
+    //     return {
+    //       question: question.question,
+    //       answer: question.answer,
+    //       options: JSON.stringify(options),
+    //       chapterId: chapterId,
+    //     };
+    //   }),
+    // });
 
     await prisma.chapter.update({
       where: { id: chapterId },
       data: {
         videoId: videoId,
-        // summary: summary,
+        summary: summary,
       },
     });
 
