@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import React from "react";
 
 const ChapterCard = React.forwardRef(
-  ({ chapter, chapterIndex, completedChapters, setcompletedChapters }, ref) => {
+  ({ chapter, chapterIndex, setcompletedChapters }, ref) => {
     //Use this for making the color changes to chapter fetch success
     const [Success, setSuccess] = React.useState("");
     const { mutate: getChapterInfo, isLoading } = useMutation({
@@ -61,7 +61,8 @@ const ChapterCard = React.forwardRef(
     }));
 
     return (
-      <div className="card container  m-2"
+      <div
+        className="card container  m-2"
         key={chapter.id}
         style={{
           backgroundColor:

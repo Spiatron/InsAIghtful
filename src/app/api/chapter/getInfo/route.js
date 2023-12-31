@@ -2,11 +2,12 @@ import { prisma } from "@/lib/db";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import {
-  // getQuestionsFromTranscript,
+  getQuestionsFromTranscript,
   getTranscript,
   searchYouTube,
 } from "@/lib/youtube";
 import { strict_output } from "@/lib/gpt";
+import { strictAI } from "@/lib/ai";
 
 const bodyParser = z.object({
   chapterId: z.string(),
@@ -32,25 +33,48 @@ export async function POST(req, res) {
     }
 
     const videoId = await searchYouTube(chapter.youtubeSearchQuery);
+    console.log(videoId);
     let transcript = await getTranscript(videoId);
-    let maxLength = 500;
+    let maxLength = 1000;
     transcript = transcript.split(" ").slice(0, maxLength).join(" ");
 
-    const { summary } = await strict_output(
-      "You are an AI capable of summarizing a youtube transcript",
-      "Summarize in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
+    const {summary} = await strictAI(
+      "You are an AI capable of summarising a youtube transcript.",
+      "Summarise in 300 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about. Make sure that the summary is in correct JSON format. \n" +
         transcript,
-      {
-        summary: "summary of the transcript",
-      }
+      { summary: "summary of the transcript" }
     );
 
-    console.log(transcript, chapter.name, summary);
+    // console.log(summary);
+
+    if (!summary) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Summary not found",
+        },
+        { status: 404 }
+      );
+    }
 
     // const questions = await getQuestionsFromTranscript(
     //   transcript,
     //   chapter.name
     // );
+
+    // const questions_result = questions.some((question) => {
+    //   return !question.option1 || !question.option2 || !question.option3;
+    // });
+
+    // if (questions_result) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       error: "Options not found",
+    //     },
+    //     { status: 404 }
+    //   );
+    // }
 
     // await prisma.question.createMany({
     //   data: questions.map((question) => {
@@ -60,6 +84,7 @@ export async function POST(req, res) {
     //       question.option2,
     //       question.option3,
     //     ];
+
     //     options = options.sort(() => Math.random() - 0.5);
     //     return {
     //       question: question.question,
@@ -92,6 +117,7 @@ export async function POST(req, res) {
       );
     } else {
       return NextResponse.json(
+        console.log(error),
         {
           success: false,
           error: error,

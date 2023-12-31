@@ -1,10 +1,6 @@
 
-import { redirect } from "next/navigation";
-
-
-
 export default function Home() {
   return (
-    redirect("/gallery")
+    <p>HELLO WORLD</p>
   );
 }

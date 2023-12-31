@@ -1,12 +1,11 @@
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
-  organization: "org-GcvptdgE1j50U27Az3OvHin4",
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-export async function strict_output(
+export async function strictAI(
   system_prompt,
   user_prompt,
   output_format,
@@ -14,8 +13,8 @@ export async function strict_output(
   output_value_only = false,
   model = "gpt-3.5-turbo",
   temperature = 1,
-  num_tries = 3,
-  verbose = true
+  num_tries = 2,
+  verbose = false
 ) {
   // if the user input is in a list, we also process the output as a list of json
   const list_input = Array.isArray(user_prompt);
@@ -28,11 +27,14 @@ export async function strict_output(
   let error_msg = "";
 
   for (let i = 0; i < num_tries; i++) {
+    if(i==1) {
+      console.log("Second Try")
+    }
     let output_format_prompt = `\nYou are to output ${
       list_output && "an array of objects in"
     } the following in json format: ${JSON.stringify(
       output_format
-    )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
+    )}. \nDo not put quotation marks or escape character \\ in the output fields as it may cause the JSON parsing to fail.`;
 
     if (list_output) {
       output_format_prompt += `\nIf output field is a list, classify output into the best element of the list.`;
@@ -61,11 +63,8 @@ export async function strict_output(
       ],
     });
 
-    let res =
-      response.data.choices[0].message?.content?.replace(/'/g, '"') ?? "";
-
-    // ensure that we don't replace away apostrophes in text
-    res = res.replace(/(\w)"(\w)/g, "$1'$2");
+    let res = response.data.choices[0].message.content;
+    console.log(`This is the response ${res}`);
 
     if (verbose) {
       console.log(
@@ -82,54 +81,12 @@ export async function strict_output(
 
       if (list_input) {
         if (!Array.isArray(output)) {
-          throw new Error("Output format not in an array of json");
+          output = [output];
         }
       } else {
         output = [output];
       }
 
-      // check for each element in the output_list, the format is correctly adhered to
-      for (let index = 0; index < output.length; index++) {
-        for (const key in output_format) {
-          // unable to ensure accuracy of dynamic output header, so skip it
-          if (/<.*?>/.test(key)) {
-            continue;
-          }
-
-          // if output field missing, raise an error
-          if (!(key in output[index])) {
-            throw new Error(`${key} not in json output`);
-          }
-
-          // check that one of the choices given for the list of words is an unknown
-          if (Array.isArray(output_format[key])) {
-            const choices = output_format[key];
-            // ensure output is not a list
-            if (Array.isArray(output[index][key])) {
-              output[index][key] = output[index][key][0];
-            }
-            // output the default category (if any) if GPT is unable to identify the category
-            if (!choices.includes(output[index][key]) && default_category) {
-              output[index][key] = default_category;
-            }
-            // if the output is a description format, get only the label
-            if (output[index][key].includes(":")) {
-              output[index][key] = output[index][key].split(":")[0];
-            }
-          }
-        }
-
-        // if we just want the values for the outputs
-        if (output_value_only) {
-          output[index] = Object.values(output[index]);
-          // just output without the list if there is only one element
-          if (output[index].length === 1) {
-            output[index] = output[index][0];
-          }
-        }
-      }
-
-      console.log(list_input)
       return list_input ? output : output[0];
     } catch (e) {
       error_msg = `\n\nResult: ${res}\n\nError message: ${e}`;

@@ -45,13 +45,19 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  courses       Course[]
 }
 
 model Course {
-  id    String @id @default(cuid())
+  id     String @id @default(cuid())
+  userId String
+
   name  String
   image String
   units Unit[]
+  User  User   @relation(fields: [userId], references: [id])
+
+  @@index([userId], name: "userId")
 }
 
 model Unit {

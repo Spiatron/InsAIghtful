@@ -23,7 +23,7 @@ const page = async ({ params: { slug } }) => {
     },
   });
   if (!course) {
-    return redirect("/gallery");
+    return redirect("/");
   }
 
   let unitIndex = parseInt(unitIndexParam);
@@ -31,12 +31,12 @@ const page = async ({ params: { slug } }) => {
 
   const unit = course.units[unitIndex];
   if (!unit) {
-    return redirect("/gallery");
+    return redirect("/");
   }
 
   const chapter = unit.chapters[chapterIndex];
   if (!chapter) {
-    return redirect("/gallery");
+    return redirect("/");
   }
 
   const nextChapter = unit.chapters[chapterIndex + 1];

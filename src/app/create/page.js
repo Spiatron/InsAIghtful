@@ -3,12 +3,11 @@ import { redirect } from "next/navigation";
 import { getAuthSession } from "@/lib/auth";
 import style from "@/styles/coursepage.module.css";
 import React from "react";
-import { discriminatedUnion } from "zod";
 
 const page = async () => {
   const session = await getAuthSession();
   if (!session?.user) {
-    return redirect("/gallery");
+    return redirect("/");
   }
   return (
     <div className={style.coursepage} >

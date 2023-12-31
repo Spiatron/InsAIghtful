@@ -8,7 +8,7 @@ import style from "@/styles/confirmcoursepage.module.css";
 const CreateChapters = async ({ params: { courseId } }) => {
   const session = await getAuthSession();
   if (!session?.user) {
-    return redirect("/gallery");
+    return redirect("/");
   }
   const course = await prisma.course.findUnique({
     where: {

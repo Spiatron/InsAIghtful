@@ -1,3 +1,5 @@
+import { strictAI } from "@/lib/ai";
+import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { strict_output } from "@/lib/gpt";
 import { getUnsplashImage } from "@/lib/unsplash";
@@ -6,18 +8,19 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 export async function POST(req, res) {
+  const session = await getAuthSession()
   try {
     const body = await req.json();
     const { title, units } = createChaptersSchema.parse(body);
 
     let unitsPrompt;
     if (units.length > 0) {
-      unitsPrompt = `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units (you must include these units: ${units}). Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in youtube.`;
+      unitsPrompt = `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units (you must include these units only: ${units}). Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in youtube.`;
     } else {
       unitsPrompt = `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units. Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in youtube.`;
     }
 
-    let output_units = await strict_output(
+    let output_units = await strictAI(
       "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant youtube videos for each chapter",
       new Array(unitsPrompt),
       {
@@ -27,7 +30,7 @@ export async function POST(req, res) {
       }
     );
 
-    const imageSearchTerm = await strict_output(
+    const imageSearchTerm = await strictAI(
       "You are an AI capable of finding the most relevant image for a course",
       `Please provide a good image search term for the title of a course about ${title}. This search term will be fed into the unsplash API, so make sure it is a good search term that will return good results.`,
       {
@@ -41,6 +44,7 @@ export async function POST(req, res) {
 
     const course = await prisma.course.create({
       data: {
+        userId: session.user.id,
         name: title,
         image: course_image,
       },
@@ -66,7 +70,9 @@ export async function POST(req, res) {
       });
     }
 
-    return NextResponse.json({ course_id: course.id });
+    return NextResponse.json({ 
+      course_id: course.id,
+    });
   } catch (error) {
     if (error instanceof ZodError) {
       return new NextResponse("invalid body", { status: 400 });
