@@ -43,8 +43,12 @@ export async function getTranscript(videoID) {
     for (let t of transcript_arr) {
       transcript += t.text + " ";
     }
-    return transcript.replaceAll("\n", " ");
+    transcript.replaceAll("\n", " ");
+    const MAX_LENGTH = 500;
+    transcript = transcript.split(" ").slice(0, MAX_LENGTH).join(" ");
+    return transcript;
   } catch (error) {
+    console.log("transcript failed");
     return "";
   }
 }

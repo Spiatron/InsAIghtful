@@ -1,0 +1,3 @@
+pip install flask requests flask_cors dotenv os paddlepaddle paddleocr
+pip install PyMuPDF-1.20.2-cp311-cp311-win_amd64.whl
+python src\lib\textnmathocr.py

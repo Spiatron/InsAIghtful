@@ -17,6 +17,12 @@ const ConfirmChapters = ({ course }) => {
       return acc + unit.chapters.length;
     }, 0);
   }, [course.units]);
+  React.useEffect(() => {
+    console.log(completedChapters, totalChaptersCount);
+    if (completedChapters.size === totalChaptersCount) {
+      setLoading(false);
+    }
+  }, [totalChaptersCount, completedChapters]);
   return (
     <div className="card container w-75 mt-2 rounded-3 text-white bg-dark-subtle col-form-label ">
       {course.units.map((unit, unitIndex) => {

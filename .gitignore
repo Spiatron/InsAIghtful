@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 .env
+src/lib/__pycache__
 /.pnp
 .pnp.js
 .yarn/install-state.gz

@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 export async function POST(req, res) {
-  const session = await getAuthSession()
+  const session = await getAuthSession();
   try {
     const body = await req.json();
     const { title, units } = createChaptersSchema.parse(body);
@@ -51,7 +51,10 @@ export async function POST(req, res) {
     });
 
     for (const unit of output_units) {
-      const unitTitle = unit.title;
+      const title = unit.title;
+      // use regex to remove things like "Unit 1: " from the title
+      const regex = /Unit \d+: /;
+      const unitTitle = title.replace(regex, "");
       const prismaUnit = await prisma.unit.create({
         data: {
           name: unitTitle,
@@ -70,7 +73,7 @@ export async function POST(req, res) {
       });
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       course_id: course.id,
     });
   } catch (error) {

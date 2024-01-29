@@ -35,8 +35,6 @@ export async function POST(req, res) {
     const videoId = await searchYouTube(chapter.youtubeSearchQuery);
     console.log(videoId);
     let transcript = await getTranscript(videoId);
-    let maxLength = 1000;
-    transcript = transcript.split(" ").slice(0, maxLength).join(" ");
 
     const {summary} = await strictAI(
       "You are an AI capable of summarising a youtube transcript.",

@@ -7,9 +7,9 @@ import React from "react";
 import style from "@/styles/finalgeneration.module.css";
 
 const page = async ({ params: { slug } }) => {
-  const [courseId, unitIndexParam, chapterIndexParam] = slug;
+  const [courseSlug, unitIndexParam, chapterIndexParam] = slug;
   const course = await prisma.course.findUnique({
-    where: { id: courseId },
+    where: { id: courseSlug },
     include: {
       units: {
         include: {

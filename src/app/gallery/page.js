@@ -22,6 +22,7 @@ const page = async () => {
       },
     },
   });
+  courses.reverse();
   return (
     <div className={style.galleryPage}>
       <div>
