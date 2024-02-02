@@ -4,6 +4,11 @@
 /node_modules
 .env
 src/lib/__pycache__
+PyMuPDF-1.20.2-cp311-cp311-win_amd64.whl
+requirements.txt
+src/lib/textnmathocr.py
+src/lib/tesseract.js
+src/app/chatbot
 /.pnp
 .pnp.js
 .yarn/install-state.gz
