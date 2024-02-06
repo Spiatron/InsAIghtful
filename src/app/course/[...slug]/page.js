@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import React from "react";
 import style from "@/styles/finalgeneration.module.css";
+import ChatbotComponent from "@/components/ChatbotComponent";
 
 const page = async ({ params: { slug } }) => {
   const [courseSlug, unitIndexParam, chapterIndexParam] = slug;
@@ -86,6 +87,12 @@ const page = async ({ params: { slug } }) => {
           <QuizCards chapter={chapter} />
         </div>
       </div>
+
+      {/* Chat bot idher he */}
+      <div>
+        <ChatbotComponent/>
+      </div>
+      
     </div>
 
 
