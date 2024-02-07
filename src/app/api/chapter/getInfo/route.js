@@ -7,7 +7,7 @@ import {
   searchYouTube,
 } from "@/lib/youtube";
 import { strict_output } from "@/lib/gpt";
-import { strictAI } from "@/lib/ai";
+// import { strictAI } from "@/lib/ai";
 
 const bodyParser = z.object({
   chapterId: z.string(),
@@ -36,7 +36,7 @@ export async function POST(req, res) {
     console.log(videoId);
     let transcript = await getTranscript(videoId);
 
-    const {summary} = await strictAI(
+    const {summary} = await strict_output(
       "You are an AI capable of summarising a youtube transcript.",
       "Summarise in 300 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about. Make sure that the summary is in correct JSON format. \n" +
         transcript,

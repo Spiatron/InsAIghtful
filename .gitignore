@@ -9,6 +9,7 @@ requirements.txt
 src/lib/textnmathocr.py
 src/lib/tesseract.js
 src/app/chatbot
+src/lib/ai.js
 /.pnp
 .pnp.js
 .yarn/install-state.gz

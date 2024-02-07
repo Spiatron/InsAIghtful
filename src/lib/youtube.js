@@ -1,6 +1,6 @@
 import { YoutubeTranscript } from "youtube-transcript";
 import { strict_output } from "./gpt";
-import { strictAI } from "./ai";
+// import { strictAI } from "./ai";
 
 export async function searchYouTube(searchQuery) {
   searchQuery = searchQuery.replaceAll(" ", "+");
@@ -55,7 +55,7 @@ export async function getTranscript(videoID) {
 
 export async function getQuestionsFromTranscript(transcript, course_title) {
   let questions;
-  questions = await strictAI(
+  questions = await strict_output(
     "You are a helpful AI that is able to generate mcq questions and answers, the length of each answer should not be more than 15 words, store all answers and questions and options in a JSON array.",
     new Array(1).fill(
       `You are to generate 5 random hard mcq questions about ${course_title} with context of the following transcript: ${transcript}. Make sure that you always send options with your response!`
