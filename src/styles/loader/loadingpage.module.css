@@ -1,0 +1,40 @@
+.loadingpage {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .loadingpage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background-image: url('/images/bg2.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    filter: blur(15px);  /* Adjust the blur intensity as needed */
+ }
+  
+  .loadingpage::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    background: inherit;
+  }
+  
+  .loading-content {
+    position: relative;
+    z-index: 1;
+  }
+  

@@ -1,0 +1,63 @@
+/* ChatbotScreen.css */
+
+.chatbot-screen {
+    background-color: black;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 20%;
+    max-height: 80%;
+    position: fixed;
+    bottom: 90px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    z-index: 9999;
+    overflow-y: auto; 
+    
+}
+
+.chat-history {
+    margin-bottom: 10px;
+    
+}
+
+.chat-history div {
+    margin-bottom: 5px;
+}
+
+.input-section input[type="text"] {
+    width: calc(100% - 70px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-section button {
+    width: 60px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-section button:hover {
+    background-color: #0056b3;
+}
+
+.input-section input[type="text"] {
+    flex: 1; /* Take remaining space */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px; /* Add spacing between input field and button */
+}
+
+.input-section {
+    position: sticky;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}

@@ -50,17 +50,13 @@ const ConfirmChapters = ({ course }) => {
         );
       })}
       <div className="container d-inline-flex gap-3 col-form-label justify-content-center">
-        <hr className="flex-grow-1 bg-secondary" />
-        <Link href="/create" className="btn btn-light">
-          Back
-        </Link>
+        <hr className="flex-grow-1 bg-secondary " />
+        <Link href="/create" className="btn btn-light fw-bold">Back</Link>
         {totalChaptersCount === completedChapters.size ? (
-          <Link href={`/course/${course.id}/0/0`} className="btn btn-warning">
-            Go to next step
-          </Link>
+          <Link href={`/course/${course.id}/0/0`} className="btn btn-warning fw-bold">Go to next step</Link>
         ) : (
           <button
-            className="btn btn-warning"
+            className="btn btn-warning fw-bold"
             type="button"
             disabled={Loading}
             onClick={() => {
@@ -73,10 +69,12 @@ const ConfirmChapters = ({ course }) => {
             Generate
           </button>
         )}
-        <hr className="flex-grow-1 bg-secondary " />
+        <hr className="flex-grow-1 bg-secondary" />
       </div>
     </div>
   );
 };
+
+
 
 export default ConfirmChapters;

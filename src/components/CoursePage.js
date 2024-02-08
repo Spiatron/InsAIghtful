@@ -18,15 +18,16 @@ const CoursePage = ({
 }) => {
   return (
     <div className={style.finalgeneration}>
-      <div className="row">
-        <div
-          className="col-md-3 m-3 mt-4"
+      <div className="">
+        {/* <div
+          className="col-md-3 m-3 mt-4 border border-danger"
           style={{ margin: "", padding: "", zIndex: 1000 }}
         >
           <CourseSideBar course={course} currentChapterId={chapter.id} />
-        </div>
+        </div> */}
 
         <Progressbar
+         course={course} currentChapterId={chapter.id}
           courseId={course.id}
           unitIndex={unitIndex}
           chapterIndex={chapterIndex}

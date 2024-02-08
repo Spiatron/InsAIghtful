@@ -1,0 +1,50 @@
+.UpsideAboutUs {
+    width: auto;
+    height: auto;
+    display: flex;
+    /* background-color: #081b29; */
+    background: hsla(205, 46%, 10%, 1);
+    background: linear-gradient(90deg, hsla(205, 46%, 10%, 1) 0%, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(205, 46%, 10%, 1) 0%, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(205, 46%, 10%, 1) 0%, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#0e1c26", endColorstr="#2a454b", GradientType=1);
+}
+
+.UpsideAboutUs .mainHeading {
+    color: #ffc300;
+    font-size: 17px;
+}
+
+.UpsideAboutUs .para {
+    font-weight: 600;
+}
+
+.UpsideAboutUs .mainWord {
+    color: #ffc300;
+    /* font-weight: 900; */
+    letter-spacing: 5px;
+
+}
+
+.UpsideAboutUs .content {
+    flex: 70;
+    padding: 150px; /* Adjust as needed */
+    color: #fff;  /* Text color */
+}
+
+.UpsideAboutUs .mainimage {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    justify-content: flex-start; /* Align to the right */
+    align-items: center;  /* Center vertically */
+    
+
+}
+
+.UpsideAboutUs .mainimage img {
+    max-width: 100%; /* Make sure the image doesn't exceed its container */
+    max-height: 100vh;  /* Adjust as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-radius: 1000px; /* Add a border-radius for a square shape */
+    
+}

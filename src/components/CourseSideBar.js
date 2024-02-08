@@ -6,7 +6,7 @@ const CourseSideBar = async ({ course, currentChapterId }) => {
   return (
     <div
       className=" bg-black lh-1 bg-opacity-50  rounded-4 p-3"
-      style={{ height: "", width: "130%" }}
+      style={{ height: "", width: "" }}
     >
       <h5
         className="fs-1 text-center text-capitalize fw-bold  p-2 "

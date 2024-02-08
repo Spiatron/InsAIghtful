@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getAuthSession } from "@/lib/auth";
 import style from "@/styles/coursepage.module.css";
 import React from "react";
+import 'src/styles/fonts.module.css';
+
 
 const page = async () => {
   const session = await getAuthSession();

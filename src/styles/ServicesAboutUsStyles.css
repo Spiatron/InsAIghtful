@@ -1,0 +1,88 @@
+.ServicesAboutUs{
+    width: auto;
+    height: auto;
+    display: flex;
+    /* background-color: #081b29; */
+   background-color: #0f1e27;
+}
+
+.ServicesAboutUs .mainHeading {
+    color: #ffc300;
+    font-size: 17px;
+    margin-left: 290px;
+}
+
+.ServicesAboutUs .paraHeading {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    margin-left: 290px;
+}
+
+.ServicesAboutUs .para {
+    text-align: justify;
+    margin-left: 290px;
+    /* width: 73%; */
+}
+
+.ServicesAboutUs .mainWord {
+    color: #ffc300;
+    /* font-weight: 900; */
+    letter-spacing: 5px;
+
+}
+
+.ServicesAboutUs .content {
+    flex: 70;
+    padding: 50px; /* Adjust as needed */
+    color: #fff;  /* Text color */
+    margin-top: 150px;
+}
+
+
+
+
+.cards {
+    box-sizing: border-box;
+    width: 220px;
+    height: 154px;
+    background: rgba(217, 217, 217, 0.58);
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+    margin: 10px;
+  }
+
+  .cardsPosition {
+    margin-top: 150px;
+    display: flex;
+    justify-content: center; /* Center cards horizontally */
+    padding: 10px 0; /* Add padding as needed */
+    margin-right: 400px;
+}
+
+.upperCards,
+.lowerCards {
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center; /* Center cards vertically */
+}
+  
+  .cards:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+  }
+  
+  .cards:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+  }
