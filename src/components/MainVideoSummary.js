@@ -17,7 +17,6 @@ const MainVideoSummary = ({ unitIndex, chapterIndex, chapter, onVideoEnd }) => {
   < div className="MainVideoSummary">
     <div
       className=" bg-opacity-50  rounded-4 p-3 col-md-12 mt-4"
-      // style={{ height: "30%", width: "58rem" }}
     >
       <h5 className="fs-4" style={{ fontFamily: "asul", color: "#C3CED6" }}>
         Unit#{unitIndex + 1} &bull; Chapter-{chapterIndex + 1}

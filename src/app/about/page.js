@@ -1,7 +1,7 @@
 import React from "react";
 import UpsideAboutUs from "@/components/UpsideAboutUs";
 import ServicesAboutUs from "@/components/ServicesAboutUs";
-import OurTeam from "@/components/OurTeam";
+import OurTeamAboutUs from "@/components/OurTeamAboutUs";
 
 
 
@@ -15,7 +15,7 @@ const page = () => {
         <ServicesAboutUs />
       </div>
       <div>
-        <OurTeam/>
+        <OurTeamAboutUs/>
       </div>
     </>
   )

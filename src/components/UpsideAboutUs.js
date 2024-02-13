@@ -1,7 +1,5 @@
 'use client'
 import React from "react";
-import Link from "next/link";
-// import style from "@/styles/UpsideAboutUs.module.css";
 import '../styles/fonts.module.css';
 import styles from '@/styles/UpsideAboutUsStyles.css';
 

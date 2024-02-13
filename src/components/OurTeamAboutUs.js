@@ -1,7 +1,5 @@
 'use client'
 import React from "react";
-import Link from "next/link";
-// import style from "@/styles/UpsideAboutUs.module.css";
 import '../styles/fonts.module.css';
 import styles from '@/styles/ourTeamStyles.css';
 import { FaFacebook } from "react-icons/fa";
@@ -9,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { GrInstagram } from "react-icons/gr";
 import { FiGithub } from "react-icons/fi";
 
-const OurTeam = () => {
+const OurTeamAboutUs = () => {
     return <>
         <div className="OurTeam">
             <div className="container content">
@@ -85,4 +83,4 @@ const OurTeam = () => {
         </div>
     </>
 };
-export default OurTeam;
+export default OurTeamAboutUs;

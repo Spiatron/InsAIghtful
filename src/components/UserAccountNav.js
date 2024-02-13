@@ -1,5 +1,4 @@
 "use client";
-import { signOut } from "next-auth/react";
 import React from "react";
 
 const UserAccountNav = ({ user }) => {
@@ -22,16 +21,6 @@ const UserAccountNav = ({ user }) => {
             <li className="list-group-item font-monospace">{user?.email && <div>{user.email}</div>}</li>
           </ul>
         </div>
-
-        {/* <div className="card m-1 ">
-          <button className="btn btn-outline-danger text-red"
-            onClick={() => {
-              signOut();
-            }}
-          >
-            <div className=" font-monospace">Sign Out</div>
-          </button>
-        </div> */}
       </div>
     </>
   );
