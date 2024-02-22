@@ -22,27 +22,15 @@ export async function POST(req, res) {
           quizDone,
         },
       });
-      if (selectedAnswers) {
-        for (const [questionId, selectedAnswer] of Object.entries(
-          selectedAnswers
-        )) {
-          await prisma.question.update({
-            where: { id: questionId },
-            data: { selectedAnswer },
-          });
-        }
-      }
-      console.log("User progress created successfully");
 
-      return NextResponse.json({
-        success: true,
-      });
+      console.log("User progress created successfully");
     } else {
       if (videoDone) {
         // If there's an existing record, update it
         await prisma.userProgress.update({
           where: {
-            id: existingProgress.id,
+            courseId,
+            chapterId,
           },
           data: {
             videoDone,
@@ -53,46 +41,39 @@ export async function POST(req, res) {
         return NextResponse.json({
           success: true,
         });
-      } else if (quizDone) {
+      }
+      if (quizDone) {
         // If there's an existing record, update it
         await prisma.userProgress.update({
           where: {
-            id: existingProgress.id,
+            courseId,
+            chapterId,
           },
           data: {
             quizDone,
           },
         });
 
-        for (const [questionId, selectedAnswer] of Object.entries(
-          selectedAnswers
-        )) {
-          await prisma.question.update({
-            where: { id: questionId },
-            data: { selectedAnswer },
-          });
-        }
         console.log("New user quiz progress updated successfully");
-
-        return NextResponse.json({
-          success: true,
-        });
-      } else {
-        for (const [questionId, selectedAnswer] of Object.entries(
-          selectedAnswers
-        )) {
-          await prisma.question.update({
-            where: { id: questionId },
-            data: { selectedAnswer },
-          });
-        }
-
-        console.log("New user selected answers updated successfully");
-
-        return NextResponse.json({
-          success: true,
+      }
+    }
+    if (selectedAnswers) {
+      for (const [questionId, selectedAnswer] of Object.entries(
+        selectedAnswers
+      )) {
+        await prisma.question.update({
+          where: { id: questionId },
+          data: { selectedAnswer },
         });
       }
+      console.log("New user quiz answers updated successfully");
+      return NextResponse.json({
+        success: true,
+      });
+    } else {
+      return NextResponse.json({
+        success: true,
+      });
     }
   } catch (error) {
     console.error("Error updating user progress:", error);

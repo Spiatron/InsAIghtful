@@ -1,9 +1,20 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, {useState} from "react";
 import style from "@/styles/GalleryCourseCard.module.css";
 
-const GalleryCourseCard = async ({ course }) => {
+const GalleryCourseCard = ({ course, handleDelete }) => {
+  const [courseDeleted, setCourseDeleted] = useState(false);
+  const handleClickDelete = async () => {
+    await handleDelete(course.id);
+    setCourseDeleted(true);
+  };
+
+  if (courseDeleted) {
+    return null;
+  }
+
   return (
     <>
       <div className={style.GalleryCourseCard}>
@@ -48,6 +59,7 @@ const GalleryCourseCard = async ({ course }) => {
                   </Link>
                 );
               })}
+              <button onClick={handleClickDelete}>DELETE</button>
             </li>
           </ul>
         </div>
@@ -55,4 +67,5 @@ const GalleryCourseCard = async ({ course }) => {
     </>
   );
 };
+
 export default GalleryCourseCard;

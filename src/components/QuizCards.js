@@ -26,6 +26,7 @@ const QuizCards = ({
 
   const checkAnswer = React.useCallback(() => {
     const newQuestionState = { ...questionState };
+    let allCorrect = true;
     if (!isEqual(answers, previousAnswersRef.current)) {
       questions.forEach((question) => {
         const userAnswer = answers[question.id];
@@ -34,11 +35,12 @@ const QuizCards = ({
           newQuestionState[question.id] = true;
         } else {
           newQuestionState[question.id] = false;
+          allCorrect = false
         }
         setQuestionState(newQuestionState);
       });
       setIsCheckButtonDisabled(true);
-      onQuizEnd(answers);
+      onQuizEnd(answers, allCorrect);
     } else {
       console.log("SAME");
     }
@@ -87,6 +89,7 @@ const QuizCards = ({
                             }));
                           }}
                           defaultChecked={extractedAnswers[question.id] == option}
+                          disabled={extractedAnswers[question.id] == question.answer}
                         />
                         {option}
                       </label>

@@ -55,7 +55,7 @@ model Course {
   name     String
   image    String
   units    Unit[]
-  User     User           @relation(fields: [userId], references: [id])
+  User     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   Progress UserProgress[]
 
   @@index([userId], name: "userId")
@@ -66,7 +66,7 @@ model Unit {
   courseId String
 
   name     String
-  course   Course    @relation(fields: [courseId], references: [id])
+  course   Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   chapters Chapter[]
 
   @@index([courseId], name: "courseId")
@@ -80,7 +80,7 @@ model Chapter {
   youtubeSearchQuery String
   videoId            String?
   summary            String?    @db.VarChar(3000)
-  unit               Unit       @relation(fields: [unitId], references: [id])
+  unit               Unit       @relation(fields: [unitId], references: [id], onDelete: Cascade)
   questions          Question[]
 
   @@index([unitId], name: "unitId")
@@ -94,18 +94,17 @@ model Question {
   answer         String  @db.VarChar(3000)
   options        String  @db.VarChar(3000)
   selectedAnswer String?
-  chapter        Chapter @relation(fields: [chapterId], references: [id])
+  chapter        Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@index([chapterId], name: "chapterId")
 }
 
 model UserProgress {
-  id        Int      @id @default(autoincrement())
   courseId  String
-  chapterId String
+  chapterId String   @unique
   videoDone Boolean?
   quizDone  Boolean?
-  course    Course   @relation(fields: [courseId], references: [id])
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId], name: "courseId")
 }

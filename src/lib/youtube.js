@@ -1,12 +1,13 @@
 import { YoutubeTranscript } from "youtube-transcript";
 import { strict_output } from "./gpt";
-// import { strictAI } from "./ai";
+import { strict_response } from "./gpt2.0";
 
 export async function searchYouTube(searchQuery) {
   searchQuery = searchQuery.replaceAll(" ", "+");
   console.count("youtube search");
   const response = await fetch(
     `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=1&regionCode=US&videoCaption=closedCaption`,
+    // `https://yt.lemnoslife.com/noKey/search?q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=1&regionCode=US&videoCaption=closedCaption`,
     {
       method: "GET",
     }
@@ -55,19 +56,22 @@ export async function getTranscript(videoID) {
 
 export async function getQuestionsFromTranscript(transcript, course_title) {
   let questions;
-  questions = await strict_output(
-    "You are a helpful AI that is able to generate mcq questions and answers, the length of each answer should not be more than 15 words, store all answers and questions and options in a JSON array.",
+  questions = await strict_response(
+    "You are a helpful AI that is able to generate mcq questions and answers, the length of each answer should not be more than 10 words, store all answers and questions and options in a JSON array.",
     new Array(1).fill(
-      `You are to generate 3 random hard mcq questions about ${course_title} with context of the following transcript: ${transcript}. Make sure that you always send options with your response!`
+      `You are to generate 3 random hard mcq questions with 3 options for each question about ${course_title} with context of the following transcript: "${transcript}".`
     ),
     {
-      question: "question",
-      answer: "answer with max length of 15 words",
-      option1: "option1 with max length of 15 words",
-      option2: "option2 with max length of 15 words",
-      option3: "option3 with max length of 15 words",
+      questions: [
+        {
+          question: "question",
+          answer: "answer with max length of 10 words",
+          option1: "option1 with max length of 10 words",
+          option2: "option2 with max length of 10 words",
+          option3: "option3 with max length of 10 words",
+        },
+      ],
     }
   );
-  // console.log(questions);
   return questions;
 }

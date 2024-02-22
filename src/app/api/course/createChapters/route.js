@@ -1,7 +1,7 @@
-// import { strictAI } from "@/lib/ai";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { strict_output } from "@/lib/gpt";
+import { strict_response } from "@/lib/gpt2.0";
 import { getUnsplashImage } from "@/lib/unsplash";
 import { createChaptersSchema } from "@/validators/course";
 import { NextResponse } from "next/server";
@@ -13,24 +13,26 @@ export async function POST(req, res) {
     const body = await req.json();
     const { title, units } = createChaptersSchema.parse(body);
 
-    let unitsPrompt;
-    if (units.length > 0) {
-      unitsPrompt = `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units (you must include these units only: ${units}). Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in youtube.`;
-    } else {
-      unitsPrompt = `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units. Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in youtube.`;
-    }
+    let unitsPrompt = `Create a course about ${title}. The user has requested chapters for each of the units around 5 or ${
+      units.length > 0 ? `(only include these units: ${units})` : ""
+    }. For each chapter, provide a detailed YouTube search query for an informative educational video.`;
 
-    let output_units = await strict_output(
+    let output_units = await strict_response(
       "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant youtube videos for each chapter",
       new Array(unitsPrompt),
       {
-        title: "title of the unit",
-        chapters:
-          "an array of chapters, each chapter should have a youtube_search_query key and a chapter_title key in the JSON object with proper syntax",
+        data: [
+          {
+            title: "title of the unit",
+            chapters: [
+              "an array of 3 chapters, each chapter should have a youtube_search_query key and a chapter_title key in the JSON object with proper syntax",
+            ],
+          },
+        ],
       }
     );
 
-    const imageSearchTerm = await strict_output(
+    const imageSearchTerm = await strict_response(
       "You are an AI capable of finding the most relevant image for a course",
       `Please provide a good image search term for the title of a course about ${title}. This search term will be fed into the unsplash API, so make sure it is a good search term that will return good results.`,
       {
@@ -50,9 +52,9 @@ export async function POST(req, res) {
       },
     });
 
-    for (const unit of output_units) {
+    for (const unit of output_units.data) {
       const title = unit.title;
-      // use regex to remove things like "Unit 1: " from the title
+      // using regex to remove things like "Unit 1: " from the title
       const regex = /Unit \d+: /;
       const unitTitle = title.replace(regex, "");
       const prismaUnit = await prisma.unit.create({

@@ -1,15 +1,17 @@
-import GalleryCourseCard from "@/components/GalleryCourseCard";
 import { prisma } from "@/lib/db";
 import React from "react";
 import style from "@/styles/galleryPage.module.css";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import GalleryPage from "@/components/GalleryPage";
 
-const page = async () => {
+const Page = async () => {
   const session = await getAuthSession();
+
   if (!session?.user) {
     return redirect("/");
   }
+  
   const courses = await prisma.course.findMany({
     where: {
       userId: session.user.id,
@@ -23,17 +25,14 @@ const page = async () => {
     },
   });
   courses.reverse();
+
   return (
     <div className={style.galleryPage}>
       <div>
-        <div>
-          {courses.map((course) => {
-            return <GalleryCourseCard course={course} key={course.id} />;
-          })}
-        </div>
+        <GalleryPage courses={courses} />
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

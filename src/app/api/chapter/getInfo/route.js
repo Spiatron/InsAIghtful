@@ -7,7 +7,7 @@ import {
   searchYouTube,
 } from "@/lib/youtube";
 import { strict_output } from "@/lib/gpt";
-// import { strictAI } from "@/lib/ai";
+import { strict_response } from "@/lib/gpt2.0";
 
 const bodyParser = z.object({
   chapterId: z.string(),
@@ -36,46 +36,20 @@ export async function POST(req, res) {
     console.log(videoId);
     let transcript = await getTranscript(videoId);
 
-    // const {summary} = await strict_output(
-    //   "You are an AI capable of summarising a youtube transcript.",
-    //   "Summarise in 300 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about. Make sure that the summary is in correct JSON format. \n" +
-    //     transcript,
-    //   { summary: "summary of the transcript" }
-    // );
-
-    // // console.log(summary);
-
-    // if (!summary) {
-    //   return NextResponse.json(
-    //     {
-    //       success: false,
-    //       error: "Summary not found",
-    //     },
-    //     { status: 404 }
-    //   );
-    // }
+    const {summary} = await strict_response(
+      "You are an AI capable of summarising a youtube transcript, the length of the summary should not be more than 300 words.",
+      "Summarise in 300 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about. Make sure that the summary is in correct JSON format. \n" +
+        transcript,
+      { summary: "summary of the transcript" }
+    );
 
     const questions = await getQuestionsFromTranscript(
       transcript,
       chapter.name
     );
 
-    const questions_result = questions.some((question) => {
-      return !question.option1 || !question.option2 || !question.option3;
-    });
-
-    if (questions_result) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Options not found",
-        },
-        { status: 404 }
-      );
-    }
-
     await prisma.question.createMany({
-      data: questions.map((question) => {
+      data: questions.questions.map((question) => {
         let options = [
           question.answer,
           question.option1,
@@ -97,7 +71,7 @@ export async function POST(req, res) {
       where: { id: chapterId },
       data: {
         videoId: videoId,
-        // summary: summary,
+        summary: summary,
       },
     });
 

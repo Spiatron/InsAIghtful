@@ -52,6 +52,7 @@ export async function strict_output(
     const response = await openai.createChatCompletion({
       temperature: temperature,
       model: model,
+      response_format:{"type":"json_object"},
       messages: [
         {
           role: "system",

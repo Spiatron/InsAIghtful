@@ -2,7 +2,7 @@
 import React from "react";
 import "../styles/fonts.module.css";
 import YouTube from "react-youtube";
-import styles from '@/styles/MainVideoSummaryStyles.css';
+import styles from "@/styles/MainVideoSummaryStyles.css";
 
 const MainVideoSummary = ({ unitIndex, chapterIndex, chapter, onVideoEnd }) => {
   const opts = {
