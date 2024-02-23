@@ -35,6 +35,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+openaikey.js
 
 # vercel
 .vercel

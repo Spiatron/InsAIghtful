@@ -100,6 +100,7 @@ model Question {
 }
 
 model UserProgress {
+  id        Int      @id @default(autoincrement())
   courseId  String
   chapterId String   @unique
   videoDone Boolean?

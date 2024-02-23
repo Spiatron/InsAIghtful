@@ -4,7 +4,6 @@ import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import style from "@/styles/finalgeneration.module.css";
 import ChatbotComponent from "@/components/ChatbotComponent";
-import Chatbot from "@/components/Chatbot";
 
 const Page = async ({ params: { slug } }) => {
   const [courseSlug, unitIndexParam, chapterIndexParam] = slug;
@@ -34,6 +33,7 @@ const Page = async ({ params: { slug } }) => {
   const chapter = unit.chapters[chapterIndex];
   const questions = chapter.questions;
   const courseProgress = course.Progress;
+  const summary = chapter.summary;
 
   const extractedAnswers = {};
   const extractedBooleans = {};
@@ -78,7 +78,7 @@ const Page = async ({ params: { slug } }) => {
       />
       {/* Chat bot idher he */}
       <div>
-        <Chatbot />
+        <ChatbotComponent summary={summary}/>
       </div>
     </div>
   );

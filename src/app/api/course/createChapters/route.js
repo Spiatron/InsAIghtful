@@ -13,8 +13,8 @@ export async function POST(req, res) {
     const body = await req.json();
     const { title, units } = createChaptersSchema.parse(body);
 
-    let unitsPrompt = `Create a course about ${title}. The user has requested chapters for each of the units around 5 or ${
-      units.length > 0 ? `(only include these units: ${units})` : ""
+    let unitsPrompt = `Create a course about ${title}. The user has requested chapters for each of the units ${
+      units.length > 0 ? `(only include these units: ${units})` : `(create at lesat 4 units or more if needed)`
     }. For each chapter, provide a detailed YouTube search query for an informative educational video.`;
 
     let output_units = await strict_response(
