@@ -102,7 +102,7 @@ model Question {
 model UserProgress {
   id        Int      @id @default(autoincrement())
   courseId  String
-  chapterId String   @unique
+  chapterId String
   videoDone Boolean?
   quizDone  Boolean?
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)

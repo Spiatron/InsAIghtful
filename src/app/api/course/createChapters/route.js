@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { strict_output } from "@/lib/gpt";
 import { strict_response } from "@/lib/gpt2.0";
 import { getUnsplashImage } from "@/lib/unsplash";
 import { createChaptersSchema } from "@/validators/course";

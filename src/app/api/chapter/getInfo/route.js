@@ -6,7 +6,6 @@ import {
   getTranscript,
   searchYouTube,
 } from "@/lib/youtube";
-import { strict_output } from "@/lib/gpt";
 import { strict_response } from "@/lib/gpt2.0";
 
 const bodyParser = z.object({

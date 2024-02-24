@@ -1,5 +1,5 @@
 "use client";
-import React, {useState, useRef} from "react";
+import React, { useState, useEffect } from "react";
 import Progressbar from "@/components/Progressbar";
 import MainVideoSummary from "./MainVideoSummary";
 import QuizCards from "./QuizCards";
@@ -15,24 +15,49 @@ const CoursePage = ({
   extractedAnswers,
   extractedBooleans,
   increment,
-  progress,
-  courseProgress,
 }) => {
-  const [totalProgress, setTotalProgress] = useState(progress || 0);
-  const [answers, setAnswers] = useState(extractedAnswers || {})
+  const [totalProgress, setTotalProgress] = useState(0);
+  const [videoDone, setVideoDone] = useState({});
+  const [quizDone, setQuizDone] = useState({});
+  const [answers, setAnswers] = useState(extractedAnswers || {});
+  const [booleans, setBooleans] = useState(extractedBooleans || {});
   const [resetKey, setResetKey] = useState(0);
-  const chapterVideoDoneRef = useRef(
-    new Map(
-      courseProgress.map((prog) => [prog.chapterId, prog.videoDone || false])
-    )
-  );
-  const chapterQuizDoneRef = useRef(
-    new Map(
-      courseProgress.map((prog) => [prog.chapterId, prog.quizDone || false])
-    )
-  );
+
+  // Function to fetch progress data from the server
+  const fetchProgress = async () => {
+    try {
+      const response = await fetch("/api/progress/getProgress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId: course.id,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to fetch progress data");
+        return;
+      }
+
+      const { progress, VideoDone, QuizDone } = await response.json();
+      setTotalProgress(progress);
+      setVideoDone(VideoDone);
+      setQuizDone(QuizDone);
+    } catch (error) {
+      console.error("Error fetching progress data:", error);
+    }
+  };
+
+  // Fetch progress data when the component mounts
+  useEffect(() => {
+    fetchProgress();
+  }, []);
+
   const handleVideoEnd = async () => {
-    if (!chapterVideoDoneRef.current.get(chapter.id)) {
+    console.log(videoDone[chapter.id]);
+    if (!videoDone[chapter.id]) {
       let newProgress;
       if (!questions.length == 0) {
         try {
@@ -76,17 +101,17 @@ const CoursePage = ({
             return;
           }
           newProgress = await (totalProgress + increment * 2);
-          chapterQuizDoneRef.current.set(chapter.id, true);
+          quizDone[chapter.id] = true;
         } catch (error) {
           console.error("Error during API call:", error);
         }
       }
       setTotalProgress(newProgress);
-      chapterVideoDoneRef.current.set(chapter.id, true);
+      videoDone[chapter.id] = true;
     }
   };
   const handleQuizEnd = async (answers, allCorrect) => {
-    if (!chapterQuizDoneRef.current.get(chapter.id)) {
+    if (!quizDone[chapter.id]) {
       try {
         const response = await fetch("/api/progress/updateProgress", {
           method: "POST",
@@ -105,7 +130,7 @@ const CoursePage = ({
           console.error("API call failed");
           return;
         }
-        chapterQuizDoneRef.current.set(chapter.id, true);
+        quizDone[chapter.id] = true;
       } catch (error) {
         console.error("Error during API call:", error);
       }
@@ -153,13 +178,10 @@ const CoursePage = ({
         console.error("API call failed");
         return;
       }
-      chapterVideoDoneRef.current = new Map(
-        courseProgress.map((prog) => [prog.chapterId, false])
-      );
-      chapterQuizDoneRef.current = new Map(
-        courseProgress.map((prog) => [prog.chapterId, false])
-      );
-      setAnswers({})
+      setVideoDone({});
+      setQuizDone({});
+      setAnswers({});
+      setBooleans({});
       setResetKey((prevKey) => prevKey + 1);
       setTotalProgress(0);
     } catch (error) {
@@ -179,8 +201,8 @@ const CoursePage = ({
             <CourseSideBar
               course={course}
               currentChapterId={chapter.id}
-              chapterVideoDoneRef={chapterVideoDoneRef}
-              chapterQuizDoneRef={chapterQuizDoneRef}
+              chapterVideoDone={videoDone}
+              chapterQuizDone={quizDone}
             />
           </div>
         </div>
@@ -204,7 +226,7 @@ const CoursePage = ({
               key={resetKey}
               questions={questions}
               extractedAnswers={answers}
-              extractedBooleans={extractedBooleans}
+              extractedBooleans={booleans}
               onQuizEnd={handleQuizEnd}
             />
           </div>

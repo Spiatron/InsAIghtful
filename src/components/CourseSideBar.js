@@ -5,8 +5,8 @@ import "../styles/fonts.module.css";
 const CourseSideBar = ({
   course,
   currentChapterId,
-  chapterVideoDoneRef,
-  chapterQuizDoneRef,
+  chapterVideoDone,
+  chapterQuizDone,
 }) => {
   const updatedList = course.units.map((unit, unitIndex) => {
     return (
@@ -26,10 +26,8 @@ const CourseSideBar = ({
         </h5>
         {unit.chapters.map((chapter, chapterIndex) => {
           const chapterId = chapter.id;
-          const videoDone =
-            chapterVideoDoneRef.current.get(chapterId) || false;
-          const quizDone =
-            chapterQuizDoneRef.current.get(chapterId) || false;
+          const videoDone = chapterVideoDone[chapterId] || false;
+          const quizDone = chapterQuizDone[chapterId] || false;
           const isChapterCompleted = videoDone && quizDone;
 
           return (

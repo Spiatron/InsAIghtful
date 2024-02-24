@@ -29,8 +29,7 @@ export async function POST(req, res) {
         // If there's an existing record, update it
         await prisma.userProgress.update({
           where: {
-            courseId,
-            chapterId,
+            id: existingProgress.id,
           },
           data: {
             videoDone,
@@ -46,8 +45,7 @@ export async function POST(req, res) {
         // If there's an existing record, update it
         await prisma.userProgress.update({
           where: {
-            courseId,
-            chapterId,
+            id: existingProgress.id,
           },
           data: {
             quizDone,

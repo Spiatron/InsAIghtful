@@ -1,5 +1,4 @@
 import { YoutubeTranscript } from "youtube-transcript";
-import { strict_output } from "./gpt";
 import { strict_response } from "./gpt2.0";
 
 export async function searchYouTube(searchQuery) {
