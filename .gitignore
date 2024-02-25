@@ -5,6 +5,8 @@
 .env
 src/lib/ai.js
 src/lib/gpt.js
+src/lib/playlistcreator.js
+src/lib/transcriptprocessor.js
 /.pnp
 .pnp.js
 .yarn/install-state.gz

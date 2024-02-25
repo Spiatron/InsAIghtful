@@ -1,5 +1,4 @@
 import { YoutubeTranscript } from "youtube-transcript";
-import { strict_response } from "./gpt2.0";
 
 export async function searchYouTube(searchQuery) {
   searchQuery = searchQuery.replaceAll(" ", "+");
@@ -51,26 +50,4 @@ export async function getTranscript(videoID) {
     console.log("transcript failed");
     return "";
   }
-}
-
-export async function getQuestionsFromTranscript(transcript, course_title) {
-  let questions;
-  questions = await strict_response(
-    "You are a helpful AI that is able to generate mcq questions and answers, the length of each answer should not be more than 10 words, store all answers and questions and options in a JSON array.",
-    new Array(1).fill(
-      `You are to generate 3 random hard mcq questions with 3 options for each question about ${course_title} with context of the following transcript: "${transcript}".`
-    ),
-    {
-      questions: [
-        {
-          question: "question",
-          answer: "answer with max length of 10 words",
-          option1: "option1 with max length of 10 words",
-          option2: "option2 with max length of 10 words",
-          option3: "option3 with max length of 10 words",
-        },
-      ],
-    }
-  );
-  return questions;
 }

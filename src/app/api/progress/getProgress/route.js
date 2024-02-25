@@ -44,7 +44,6 @@ export async function POST(req, res) {
     }
     const dynamicIncrement = 100 / (totalChapters * 2);
     const currentProgress = dynamicIncrement * count;
-    // console.log(`User progress for course has been reset.`);
     return NextResponse.json({
       success: true,
       progress: currentProgress,

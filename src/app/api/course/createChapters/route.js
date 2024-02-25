@@ -1,6 +1,6 @@
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { strict_response } from "@/lib/gpt2.0";
+import { generateCoursePlaylist, generateImageSearchTerm } from "@/lib/aiutils";
 import { getUnsplashImage } from "@/lib/unsplash";
 import { createChaptersSchema } from "@/validators/course";
 import { NextResponse } from "next/server";
@@ -12,36 +12,11 @@ export async function POST(req, res) {
     const body = await req.json();
     const { title, units } = createChaptersSchema.parse(body);
 
-    let unitsPrompt = `Create a course about ${title}. The user has requested chapters for each of the units ${
-      units.length > 0 ? `(only include these units: ${units})` : `(create at lesat 4 units or more if needed)`
-    }. For each chapter, provide a detailed YouTube search query for an informative educational video.`;
+    const output_units = await generateCoursePlaylist(title, units);
 
-    let output_units = await strict_response(
-      "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant youtube videos for each chapter",
-      new Array(unitsPrompt),
-      {
-        data: [
-          {
-            title: "title of the unit",
-            chapters: [
-              "an array of 3 chapters, each chapter should have a youtube_search_query key and a chapter_title key in the JSON object with proper syntax",
-            ],
-          },
-        ],
-      }
-    );
+    const { image_search_term } = await generateImageSearchTerm(title);
 
-    const imageSearchTerm = await strict_response(
-      "You are an AI capable of finding the most relevant image for a course",
-      `Please provide a good image search term for the title of a course about ${title}. This search term will be fed into the unsplash API, so make sure it is a good search term that will return good results.`,
-      {
-        image_search_term: "a good search term for the title of the course",
-      }
-    );
-
-    const course_image = await getUnsplashImage(
-      imageSearchTerm.image_search_term
-    );
+    const course_image = await getUnsplashImage(image_search_term);
 
     const course = await prisma.course.create({
       data: {
@@ -51,7 +26,7 @@ export async function POST(req, res) {
       },
     });
 
-    for (const unit of output_units.data) {
+    for (const unit of output_units.units) {
       const title = unit.title;
       // using regex to remove things like "Unit 1: " from the title
       const regex = /Unit \d+: /;

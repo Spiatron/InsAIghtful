@@ -1,12 +1,11 @@
 import { prisma } from "@/lib/db";
 import { z } from "zod";
-import { NextResponse } from "next/server";
+import { getTranscript, searchYouTube } from "@/lib/youtube";
 import {
-  getQuestionsFromTranscript,
-  getTranscript,
-  searchYouTube,
-} from "@/lib/youtube";
-import { strict_response } from "@/lib/gpt2.0";
+  generateQuestionsFromTranscript,
+  generateSummaryFromTranscript,
+} from "@/lib/aiutils";
+import { NextResponse } from "next/server";
 
 const bodyParser = z.object({
   chapterId: z.string(),
@@ -35,20 +34,18 @@ export async function POST(req, res) {
     console.log(videoId);
     let transcript = await getTranscript(videoId);
 
-    const {summary} = await strict_response(
-      "You are an AI capable of summarising a youtube transcript, the length of the summary should not be more than 300 words.",
-      "Summarise in 300 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about. Make sure that the summary is in correct JSON format. \n" +
-        transcript,
-      { summary: "summary of the transcript" }
+    const { questions } = await generateQuestionsFromTranscript(
+      chapter.name,
+      transcript
     );
 
-    const questions = await getQuestionsFromTranscript(
-      transcript,
-      chapter.name
+    const { summary } = await generateSummaryFromTranscript(
+      chapter.name,
+      transcript
     );
 
     await prisma.question.createMany({
-      data: questions.questions.map((question) => {
+      data: questions.map((question) => {
         let options = [
           question.answer,
           question.option1,

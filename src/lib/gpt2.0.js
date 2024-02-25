@@ -9,6 +9,7 @@ export async function strict_response(
   system_prompt,
   user_prompt,
   output_format,
+  units = undefined,
   model = "gpt-3.5-turbo",
   temperature = 1,
   num_tries = 3,
@@ -22,11 +23,12 @@ export async function strict_response(
   const list_output = /\[.*?\]/.test(JSON.stringify(output_format));
 
   for (let i = 0; i < num_tries; i++) {
+    console.count("GPT CALL");
     if (i == 1) {
       console.log("Second Try");
     }
-    if(i == 2){
-      console.log("Third Try")
+    if (i == 2) {
+      console.log("Third Try");
     }
     let output_format_prompt = `\nYou are to output ${
       list_output && "an array of objects in"
@@ -49,7 +51,7 @@ export async function strict_response(
     const response = await openai.createChatCompletion({
       temperature: temperature,
       model: model,
-      response_format:{"type":"json_object"},
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
@@ -60,13 +62,10 @@ export async function strict_response(
     });
 
     const res = response.data.choices[0].message.content;
-    console.log(res)
+    console.log(res);
 
     if (verbose) {
-      console.log(
-        "System prompt:",
-        system_prompt + output_format_prompt
-      );
+      console.log("System prompt:", system_prompt + output_format_prompt);
       console.log("\nUser prompt:", user_prompt);
       console.log("\nGPT response:", res);
     }
@@ -75,17 +74,35 @@ export async function strict_response(
     try {
       let output = JSON.parse(res);
 
-      if (output.questions && output.questions.length < 3) {
-        console.log("There are less than 3 questions in the data.");
-        continue
+      if (output.units) {
+        if (units == 0 && output.units < 4) {
+          console.log("There are less than 4 units in the whole course.");
+          continue;
+        }
+        if (units > 0 && output.units < units) {
+          console.log("There are less units than requested in the course.");
+          continue;
+        }
       }
 
-      if (output.summary && (output.summary.split(/\s+/).filter(Boolean).length < 50 || output.summary.split(/\s+/).filter(Boolean).length > 350)) {
-        console.log("No summary in the data or the summary length is not within the desired range.");
+      if (output.questions && output.questions.length < 3) {
+        console.log("There are less than 3 questions in the data.");
         continue;
       }
-      console.log(output)
-      return output
+
+      if (
+        output.summary &&
+        (output.summary.split(/\s+/).filter(Boolean).length < 50 ||
+          output.summary.split(/\s+/).filter(Boolean).length > 250)
+      ) {
+        console.log(
+          "No summary in the data or the summary length is not within the desired range."
+        );
+        continue;
+      }
+
+      console.log(output);
+      return output;
     } catch (e) {
       console.log("An exception occurred:", e);
       console.log("Current invalid json format ", res);

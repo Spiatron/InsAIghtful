@@ -60,7 +60,6 @@ const Page = async ({ params: { slug } }) => {
     }
   }
   const dynamicIncrement = 100 / (totalChapters * 2);
-  const currentProgress = dynamicIncrement * count;
 
   return (
     <div className={style.finalgeneration}>
@@ -73,12 +72,10 @@ const Page = async ({ params: { slug } }) => {
         extractedBooleans={extractedBooleans}
         questions={questions}
         increment={dynamicIncrement}
-        progress={currentProgress}
-        courseProgress={courseProgress}
       />
       {/* Chat bot idher he */}
       <div>
-        <ChatbotComponent summary={summary}/>
+        <ChatbotComponent summary={summary} />
       </div>
     </div>
   );
