@@ -24,7 +24,7 @@ const ConfirmChapters = ({ course }) => {
     }
   }, [totalChaptersCount, completedChapters]);
   return (
-    <div className="card container w-75 mt-2 rounded-3 text-white bg-dark-subtle col-form-label ">
+    <div className="card container w-75 mt-2 mb-5 rounded-3 text-white bg-dark-subtle col-form-label ">
       {course.units.map((unit, unitIndex) => {
         return (
           <div key={unitIndex} className="m-2">

@@ -1,14 +1,26 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import style from "@/styles/GalleryCourseCard.module.css";
+import GalleryCourseCardBtnStyles from '@/styles/buttons/GalleryCourseCardBtnStyles.css';
+import { Trash2 } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const GalleryCourseCard = ({ course, handleDelete }) => {
   const [courseDeleted, setCourseDeleted] = useState(false);
+
   const handleClickDelete = async () => {
-    await handleDelete(course.id);
-    setCourseDeleted(true);
+    const shouldDelete = window.confirm(
+      `Are you sure you want to delete the course of ${course.name}?`
+    );
+    if (shouldDelete) {
+      alert("Course deleted successfully!");
+      await handleDelete(course.id);
+      setCourseDeleted(true);
+    } else {
+      alert("Course deletion canceled.");
+    }
   };
 
   if (courseDeleted) {
@@ -18,7 +30,7 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
   return (
     <>
       <div className={style.GalleryCourseCard}>
-        <div className="card bg-dark border border-dark">
+        <div className="card outline bg-dark border border-dark">
           {/*This chunk of code is for course name & picture*/}
           <Link
             className="  font-monospace text-capitalize  text-decoration-none"
@@ -45,7 +57,7 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
           </Link>
 
           {/*This chunk of code is for units*/}
-          <ul className=" list-group list-group-flush  ">
+          <ul className=" list-group list-group-flush">
             <li className=" list-group-item bg-dark  ">
               <h5 className="text-light font-monospace ">Units:</h5>
               {course.units.map((unit, unitIndex) => {
@@ -59,9 +71,12 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
                   </Link>
                 );
               })}
-              <button onClick={handleClickDelete}>DELETE</button>
             </li>
           </ul>
+          {/*Gallery Course delete button*/}
+          <button className="GDbtn" onClick={handleClickDelete}>
+            <X className="icon"  size={30} strokeWidth={3} absoluteStrokeWidth/>
+          </button>
         </div>
       </div>
     </>
@@ -69,3 +84,4 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 };
 
 export default GalleryCourseCard;
+<X size={32} strokeWidth={2.5} absoluteStrokeWidth />

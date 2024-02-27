@@ -5,7 +5,7 @@ import { RiRobot2Line } from "react-icons/ri";
 import { IoSend } from "react-icons/io5";
 import { BsChatRightText } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
-import styles from "@/styles/ChatBottStyles.css";
+import styles from "@/styles/ChatBotStyles.css";
 import ChatbotCustomMsg from "../components/ChatbotCustomMsg";
 
 export default function ChatbotComponent({ summary }) {
@@ -13,6 +13,8 @@ export default function ChatbotComponent({ summary }) {
   const [userInput, setuserInput] = useState("   ");
   const [firstMessage, setFirstMessage] = useState(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [sendingMessage, setSendingMessage] = useState(false); //state variable for disbaling the send button
+
 
   if (firstMessage) {
     buttonHandler();
@@ -20,19 +22,23 @@ export default function ChatbotComponent({ summary }) {
   }
 
   async function buttonHandler() {
+    // Disable the button while sending
+    if (sendingMessage) return;
+
+    setSendingMessage(true);
     var chatbotdata;
     if (firstMessage) {
       if (summary) {
 
         var msgWithSummary =
-        "System Message: The user will ask you questions, here's the summary of the video answer according to it and don't mention user about this first msg. \nSummary = " +
-        summary + "\n\nUser Message: " + firstMessage;
-        
+          "System Message: The user will ask you questions, here's the summary of the video answer according to it and don't mention user about this first msg. \nSummary = " +
+          summary + "\n\nUser Message: " + firstMessage;
+
         console.log(msgWithSummary);
 
         setChatHistory([...chatHistory, { user: firstMessage, bot: "..." }]);
         chatbotdata = await ChatBOT(msgWithSummary);
-        
+
       } else {
         setChatHistory([...chatHistory, { user: firstMessage, bot: "..." }]);
         chatbotdata = await ChatBOT(firstMessage);
@@ -51,13 +57,11 @@ export default function ChatbotComponent({ summary }) {
       return newChatHistory;
     });
 
+    setSendingMessage(false); // Reset sendingMessage to false
     setuserInput("");
   }
 
-  function handleChange(event) {
-    setuserInput(event.target.value);
-  }
-
+  // Function for custom msgs
   function customMessage(msg) {
     setFirstMessage(msg);
     setuserInput(msg);
@@ -83,6 +87,14 @@ export default function ChatbotComponent({ summary }) {
     }
   }
 
+
+  // Function to scroll the chatbox to the bottom after receiving and sending a msg
+  function scrollToBottom() {
+    const chatbox = document.getElementById("chatbox");
+    if (chatbox) {
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  }
   return (
     <div className={`show-chatbot ${isChatbotOpen ? "open" : "closed"}`}>
       <button className="chatbot-toggler" onClick={toggleChatbot}>
@@ -103,14 +115,14 @@ export default function ChatbotComponent({ summary }) {
           </header>
 
           {/* chatbot and users ingoing and outgoing messages*/}
-          <ul className="chatbox">
+          <ul className="chatbox" id="chatbox">
             {chatHistory.map((chat, index) => (
               <div key={index}>
                 <li className="chat outgoing">
                   <p> {chat.user}</p>
                 </li>
 
-                <li className="chat incoming">
+                <li className="chat incoming" ref={index === chatHistory.length - 1 ? scrollToBottom : null}>
                   {" "}
                   <span>
                     <RiRobot2Line size={25} />
@@ -129,7 +141,7 @@ export default function ChatbotComponent({ summary }) {
           ) : null}
 
           {/* text area, input, send button */}
-          <div className="chat-input show-">
+          <div className="chat-input">
             <textarea
               placeholder="Enter a message...."
               value={userInput}
@@ -141,7 +153,6 @@ export default function ChatbotComponent({ summary }) {
             <span
               id="send-btn"
               onClick={buttonHandler}
-              className="material-symbols-outlined"
             >
               <IoSend />
             </span>

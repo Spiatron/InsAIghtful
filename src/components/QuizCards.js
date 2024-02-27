@@ -101,7 +101,7 @@ const QuizCards = ({
           })}
         </div>
         <div className="d-grid mt-4">
-          <button
+          <button style={{ fontFamily: "quando", color: "", fontWeight: "bold" }}
             className="btn btn-success"
             type="button"
             onClick={checkAnswer}
