@@ -7,7 +7,8 @@ import { BsChatRightText } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import styles from "@/styles/ChatBotStyles.css";
 import ChatbotCustomMsg from "../components/ChatbotCustomMsg";
-import { ThreeDots } from 'react-loader-spinner'
+import { ThreeDots } from "react-loader-spinner";
+import Spinner from "react-bootstrap/Spinner";
 
 export default function ChatbotComponent({ summary }) {
   const [chatHistory, setChatHistory] = useState([]);
@@ -15,7 +16,6 @@ export default function ChatbotComponent({ summary }) {
   const [firstMessage, setFirstMessage] = useState(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [sendingMessage, setSendingMessage] = useState(false); //state variable for disbaling the send button
-
 
   if (firstMessage) {
     buttonHandler();
@@ -30,55 +30,79 @@ export default function ChatbotComponent({ summary }) {
     var chatbotdata;
     if (firstMessage) {
       if (summary) {
-
         var msgWithSummary =
           "System Message: The user will ask you questions, here's the summary of the video answer according to it and don't mention user about this first msg. \nSummary = " +
-          summary + "\n\nUser Message: " + firstMessage;
+          summary +
+          "\n\nUser Message: " +
+          firstMessage;
 
         console.log(msgWithSummary);
 
-        setChatHistory([...chatHistory, {
-          user: firstMessage, bot: <div><ThreeDots
-            visible={true}
-            height="10"
-            width="80"
-            color="#000814"
-            radius="9"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          /> </div>
-        }]);
+        setChatHistory([
+          ...chatHistory,
+          {
+            user: firstMessage,
+            bot: (
+              <div>
+                <ThreeDots
+                  visible={true}
+                  height="10"
+                  width="80"
+                  color="#000814"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />{" "}
+              </div>
+            ),
+          },
+        ]);
         chatbotdata = await ChatBOT(msgWithSummary);
-
       } else {
-        setChatHistory([...chatHistory, {
-          user: firstMessage, bot: <div><ThreeDots
-            visible={true}
-            height="10"
-            width="80"
-            color="#000814"
-            radius="9"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          /> </div>
-        }]);
+        setChatHistory([
+          ...chatHistory,
+          {
+            user: firstMessage,
+            bot: (
+              <div>
+                <ThreeDots
+                  visible={true}
+                  height="10"
+                  width="80"
+                  color="#000814"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />{" "}
+              </div>
+            ),
+          },
+        ]);
         chatbotdata = await ChatBOT(firstMessage);
       }
     } else {
-      setChatHistory([...chatHistory, {
-        user: userInput, bot: <div><ThreeDots
-          visible={true}
-          height="10"
-          width="80"
-          color="#000814"
-          radius="9"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        /> </div>
-      }]);
+      setChatHistory([
+        ...chatHistory,
+        {
+          user: userInput,
+          bot: (
+            <div>
+              <ThreeDots
+                visible={true}
+                height="10"
+                width="80"
+                color="#000814"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />{" "}
+            </div>
+          ),
+        },
+      ]);
       chatbotdata = await ChatBOT(userInput);
     }
 
@@ -121,7 +145,6 @@ export default function ChatbotComponent({ summary }) {
     }
   }
 
-
   // Function to scroll the chatbox to the bottom after receiving and sending a msg
   function scrollToBottom() {
     const chatbox = document.getElementById("chatbox");
@@ -156,7 +179,10 @@ export default function ChatbotComponent({ summary }) {
                   <p> {chat.user}</p>
                 </li>
 
-                <li className="chat incoming" ref={index === chatHistory.length - 1 ? scrollToBottom : null}>
+                <li
+                  className="chat incoming"
+                  ref={index === chatHistory.length - 1 ? scrollToBottom : null}
+                >
                   {" "}
                   <span>
                     <RiRobot2Line size={25} />
@@ -172,25 +198,27 @@ export default function ChatbotComponent({ summary }) {
             <div className="customMessages">
               <ChatbotCustomMsg onButtonPress={customMessage} />
             </div>
-          ) : null}
-
-          {/* text area, input, send button */}
-          <div className="chat-input">
-            <textarea
-              placeholder="Enter a message...."
-              value={userInput}
-              onChange={handleChange}
-              required
-              onKeyDown={(event) => adjustTextareaHeight(event.target, event)}
-              style={{ height: "55px", width: "100%" }}
-            />
-            <span
-              id="send-btn"
-              onClick={buttonHandler}
-            >
-              <IoSend />
-            </span>
-          </div>
+          ) : (
+            <div className="chat-input">
+              <textarea
+                placeholder="Enter a message...."
+                value={userInput}
+                onChange={handleChange}
+                required
+                onKeyDown={(event) => adjustTextareaHeight(event.target, event)}
+                style={{ height: "55px", width: "100%" }}
+              />
+              {sendingMessage ? (
+                <span>
+                  <Spinner animation="border" variant="dark" />
+                </span>
+              ) : (
+                <span id="send-btn" onClick={buttonHandler}>
+                  <IoSend />
+                </span>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
