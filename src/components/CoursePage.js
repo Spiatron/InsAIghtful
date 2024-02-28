@@ -265,33 +265,34 @@ const CoursePage = ({
               onVideoEnd={handleVideoEnd}
             />
             <div className="mb-3 ms-5 me-5 d-flex justify-content-between" >
+              <div>
+                {prevChapter && (
+                  <Link className="text-decoration-none" href={`/course/${course.id}/${unitIndex}/${chapterIndex - 1}`}>
+                    <button className="Previousbutton">
+                      <div className="PreviousArrow">
+                        <FastForward color="black" />
+                      </div>
+                      <span className="BtnText">Previous</span>
 
-              {prevChapter && (
-                <Link className="text-decoration-none" href={`/course/${course.id}/${unitIndex}/${chapterIndex - 1}`}>
-                  <button className="Previousbutton">
-                    <div className="PreviousArrow">
-                      <FastForward color="black" />
-                    </div>
-                    <span className="BtnText">Previous</span>
-                    
-                  </button>
-                </Link>
-              )}
-
-              {nextChapter && (
-                <Link className="text-decoration-none" href={`/course/${course.id}/${unitIndex}/${chapterIndex + 1}`}>
-
-                  <button className="Nextbutton">
-                    <span className="BtnText">Next</span>
-                    <div className="arrow">
-                      <FastForward color="black" />
-                    </div>
-                  </button>
-                </Link>
-              )}
+                    </button>
+                  </Link>
+                )}
+              </div>
+              <div>
+                {nextChapter && (
+                  <Link className="text-decoration-none" href={`/course/${course.id}/${unitIndex}/${chapterIndex + 1}`}>
+                    <button className="Nextbutton">
+                      <span className="BtnText">Next</span>
+                      <div className="arrow">
+                        <FastForward color="black" />
+                      </div>
+                    </button>
+                  </Link>
+                )}
+              </div>
             </div>
+            
           </div>
-
         </div>
 
         {/* Quiz card */}

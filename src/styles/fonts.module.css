@@ -102,3 +102,9 @@ style={{ fontFamily: "angrybird" }}
     font-weight: normal;
     font-style: normal;
   }
+  @font-face {
+    font-family: 'Kufi';
+    src: url('/fonts/Reem Kufi Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }

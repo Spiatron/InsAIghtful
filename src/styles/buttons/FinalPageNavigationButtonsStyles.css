@@ -37,6 +37,7 @@
 
 .PreviousArrow {
   transform: scaleX(-1);
+  margin-bottom: 0.19rem;
 }
 
 

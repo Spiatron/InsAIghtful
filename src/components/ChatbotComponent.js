@@ -7,6 +7,7 @@ import { BsChatRightText } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import styles from "@/styles/ChatBotStyles.css";
 import ChatbotCustomMsg from "../components/ChatbotCustomMsg";
+import { ThreeDots } from 'react-loader-spinner'
 
 export default function ChatbotComponent({ summary }) {
   const [chatHistory, setChatHistory] = useState([]);
@@ -36,15 +37,48 @@ export default function ChatbotComponent({ summary }) {
 
         console.log(msgWithSummary);
 
-        setChatHistory([...chatHistory, { user: firstMessage, bot: "..." }]);
+        setChatHistory([...chatHistory, {
+          user: firstMessage, bot: <div><ThreeDots
+            visible={true}
+            height="10"
+            width="80"
+            color="#000814"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          /> </div>
+        }]);
         chatbotdata = await ChatBOT(msgWithSummary);
 
       } else {
-        setChatHistory([...chatHistory, { user: firstMessage, bot: "..." }]);
+        setChatHistory([...chatHistory, {
+          user: firstMessage, bot: <div><ThreeDots
+            visible={true}
+            height="10"
+            width="80"
+            color="#000814"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          /> </div>
+        }]);
         chatbotdata = await ChatBOT(firstMessage);
       }
     } else {
-      setChatHistory([...chatHistory, { user: userInput, bot: "..." }]);
+      setChatHistory([...chatHistory, {
+        user: userInput, bot: <div><ThreeDots
+          visible={true}
+          height="10"
+          width="80"
+          color="#000814"
+          radius="9"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        /> </div>
+      }]);
       chatbotdata = await ChatBOT(userInput);
     }
 

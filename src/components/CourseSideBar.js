@@ -10,7 +10,7 @@ const CourseSideBar = ({
 }) => {
   const updatedList = course.units.map((unit, unitIndex) => {
     return (
-      <div key={unit.id}>
+      <div className="m-1" key={unit.id}>
         <hr className="flex-grow-0 bg-light" />
         <h5
           className="text-uppercase text-secondary fw-bold fs-6 text-start"
@@ -57,7 +57,7 @@ const CourseSideBar = ({
 
   return (
     <div
-      className=" bg-black lh-1 bg-opacity-50 rounded-4 p-3"
+      className=" mb-5 bg-black lh-1 bg-opacity-50 rounded-4 p-3"
       style={{ height: "", width: "" }}
     >
       <h5
