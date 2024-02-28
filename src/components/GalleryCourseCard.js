@@ -15,9 +15,9 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
       `Are you sure you want to delete the course of ${course.name}?`
     );
     if (shouldDelete) {
-      alert("Course deleted successfully!");
       await handleDelete(course.id);
       setCourseDeleted(true);
+      alert("Course deleted successfully!");
     } else {
       alert("Course deletion canceled.");
     }

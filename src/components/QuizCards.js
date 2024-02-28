@@ -1,11 +1,11 @@
 "use client";
 import "../styles/fonts.module.css";
-import React, { useState, useEffect, useRef } from "react";
-import isEqual from "lodash/isEqual";
-import styles from "@/styles/QuizCardStyles.css"
+import React, { useState, useEffect } from "react";
+import styles from "@/styles/QuizCardStyles.css";
 
 const QuizCards = ({
   questions,
+  videoDone,
   extractedAnswers,
   extractedBooleans,
   onQuizEnd,
@@ -19,36 +19,40 @@ const QuizCards = ({
       (question) => answers[question.id]
     );
 
-    setIsCheckButtonDisabled(!hasAnswerForAllQuestions);
+    if (
+      Object.keys(extractedAnswers).length === 0 &&
+      extractedAnswers.constructor === Object
+    ) {
+      setIsCheckButtonDisabled(!hasAnswerForAllQuestions);
+    }
   }, [answers, questions]);
 
-  const previousAnswersRef = useRef(answers);
-
   const checkAnswer = React.useCallback(() => {
-    const newQuestionState = { ...questionState };
-    let allCorrect = true;
-    if (!isEqual(answers, previousAnswersRef.current)) {
+    if (videoDone) {
+      const newQuestionState = { ...questionState };
       questions.forEach((question) => {
+        extractedAnswers[question.id] = answers[question.id];
         const userAnswer = answers[question.id];
-        previousAnswersRef.current[question.id] = userAnswer;
         if (userAnswer === question.answer) {
           newQuestionState[question.id] = true;
         } else {
           newQuestionState[question.id] = false;
-          allCorrect = false
         }
         setQuestionState(newQuestionState);
       });
       setIsCheckButtonDisabled(true);
-      onQuizEnd(answers, allCorrect);
+      onQuizEnd(answers);
     } else {
-      console.log("SAME");
+      alert("Please watch the video first");
     }
   }, [answers, questionState, questions]);
 
   return (
     <div className="QuizCard">
-      <div className="bg-black bg-opacity-50 rounded-4 p-2" style={{ height: "", width: "" }}>
+      <div
+        className="bg-black bg-opacity-50 rounded-4 p-2"
+        style={{ height: "", width: "" }}
+      >
         <h5
           className="fs-1 text-center text-capitalize fw-bold"
           style={{ fontFamily: "angrybird", color: "#DEDEDE" }}
@@ -60,17 +64,26 @@ const QuizCards = ({
           {questions.map((question) => {
             const options = JSON.parse(question.options);
             return (
-              <div className="border border-secondary rounded-4 p-2 mt-4 text-start"
+              <div
+                className="border border-secondary rounded-4 p-2 mt-4 text-start"
                 key={question.id}
                 style={{
-                  backgroundColor: questionState[question.id] === true ? "#689C0D" : questionState[question.id] === false ? "#ff0000" : "",
+                  backgroundColor:
+                    questionState[question.id] === true
+                      ? "#689C0D"
+                      : questionState[question.id] === false
+                      ? "#ff0000"
+                      : "",
                   fontFamily: "quando",
                   color: "#E9EAEC",
                   fontSize: "14px",
                 }}
               >
                 {/*Question*/}
-                <h5 className="fs-5 fw-bold" style={{ fontFamily: "asul", color: "#D0D2D7" }}>
+                <h5
+                  className="fs-5 fw-bold"
+                  style={{ fontFamily: "asul", color: "#D0D2D7" }}
+                >
                   {question.question}
                 </h5>
                 <div className="text-capitalize">
@@ -88,8 +101,10 @@ const QuizCards = ({
                               [question.id]: e.target.value,
                             }));
                           }}
-                          defaultChecked={extractedAnswers[question.id] == option}
-                          disabled={extractedAnswers[question.id] == question.answer}
+                          defaultChecked={
+                            extractedAnswers[question.id] == option
+                          }
+                          disabled={extractedAnswers[question.id]}
                         />
                         {option}
                       </label>
@@ -101,7 +116,8 @@ const QuizCards = ({
           })}
         </div>
         <div className="d-grid mt-4">
-          <button style={{ fontFamily: "quando", color: "", fontWeight: "bold" }}
+          <button
+            style={{ fontFamily: "quando", color: "", fontWeight: "bold" }}
             className="btn btn-success"
             type="button"
             onClick={checkAnswer}

@@ -9,7 +9,7 @@ const Page = async () => {
   const session = await getAuthSession();
 
   if (!session?.user) {
-    return redirect("/");
+    return redirect("/about");
   }
   
   const courses = await prisma.course.findMany({

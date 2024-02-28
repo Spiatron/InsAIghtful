@@ -5,15 +5,14 @@ import Progressbar from "@/components/Progressbar";
 import MainVideoSummary from "./MainVideoSummary";
 import QuizCards from "./QuizCards";
 import CourseSideBar from "./CourseSideBar";
-import Popup from "./Popup";
+import ResultPopup from "./ResultPopup";
 import style from "@/styles/finalgeneration.module.css";
 import ResetBtnStyles from "@/styles/buttons/ResetBtnStyles.css";
-import FinalPageNavigationButtonsStyles from '@/styles/buttons/FinalPageNavigationButtonsStyles.css'
+import FinalPageNavigationButtonsStyles from "@/styles/buttons/FinalPageNavigationButtonsStyles.css";
 import styles from "@/styles/buttons/ShowResultBtnStyles.css";
 import { BiReset } from "react-icons/bi";
 import { MdOutlineDoubleArrow } from "react-icons/md";
-import { FastForward } from 'lucide-react';
-
+import { FastForward } from "lucide-react";
 
 const CoursePage = ({
   course,
@@ -32,7 +31,7 @@ const CoursePage = ({
   const [booleans, setBooleans] = useState(extractedBooleans || {});
   const [resetKey, setResetKey] = useState(0);
 
-  // Popup function to show overall-result 
+  // Popup function to show overall-result
   const [showPopup, setShowPopup] = useState(false);
 
   const togglePopup = () => {
@@ -72,7 +71,6 @@ const CoursePage = ({
   }, []);
 
   const handleVideoEnd = async () => {
-    console.log(videoDone[chapter.id]);
     if (!videoDone[chapter.id]) {
       let newProgress;
       if (!questions.length == 0) {
@@ -126,56 +124,30 @@ const CoursePage = ({
       videoDone[chapter.id] = true;
     }
   };
-  const handleQuizEnd = async (answers, allCorrect) => {
-    if (!quizDone[chapter.id]) {
-      try {
-        const response = await fetch("/api/progress/updateProgress", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            courseId: course.id,
-            chapterId: chapter.id,
-            quizDone: allCorrect,
-            selectedAnswers: answers,
-          }),
-        });
+  const handleQuizEnd = async (answers) => {
+    try {
+      const response = await fetch("/api/progress/updateProgress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId: course.id,
+          chapterId: chapter.id,
+          quizDone: true,
+          selectedAnswers: answers,
+        }),
+      });
 
-        if (!response.ok) {
-          console.error("API call failed");
-          return;
-        }
-        quizDone[chapter.id] = true;
-      } catch (error) {
-        console.error("Error during API call:", error);
+      if (!response.ok) {
+        console.error("API call failed");
+        return;
       }
-    } else {
-      try {
-        const response = await fetch("/api/progress/updateProgress", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            courseId: course.id,
-            chapterId: chapter.id,
-            quizDone: allCorrect,
-            selectedAnswers: answers,
-          }),
-        });
-
-        if (!response.ok) {
-          console.error("API call failed");
-          return;
-        }
-      } catch (error) {
-        console.error("Error during API call:", error);
-      }
-    }
-    if (allCorrect) {
+      quizDone[chapter.id] = true;
       const newProgress = await (totalProgress + increment);
       setTotalProgress(newProgress);
+    } catch (error) {
+      console.error("Error during API call:", error);
     }
   };
   const handleReset = async () => {
@@ -209,7 +181,9 @@ const CoursePage = ({
         }
       } catch (error) {
         console.error("Error during API call:", error);
-        alert("An error occurred while resetting course progress. Please try again later.");
+        alert(
+          "An error occurred while resetting course progress. Please try again later."
+        );
       }
     } else {
       alert("Course reset canceled.");
@@ -217,13 +191,12 @@ const CoursePage = ({
   };
 
   // This function is used for Navigation of chapters
-  const unit = course.units[unitIndex]
+  const unit = course.units[unitIndex];
   const nextChapter = unit.chapters[chapterIndex + 1];
   const prevChapter = unit.chapters[chapterIndex - 1];
 
   return (
     <div className={style.finalgeneration}>
-
       <div className="container">
         <div className="row">
           <div className="col">
@@ -231,8 +204,19 @@ const CoursePage = ({
           </div>
           <div className="col-auto">
             {/* Overall Progress reset button */}
-            <button className="ResetBtn" type="button" onClick={handleReset} data-bs-toggle="tooltip" title="Reset your overall Progress">
-              <span className="button__text" style={{ fontFamily: "quando", color: "", fontWeight: "bold" }}>Reset</span>
+            <button
+              className="ResetBtn"
+              type="button"
+              onClick={handleReset}
+              data-bs-toggle="tooltip"
+              title="Reset your overall Progress"
+            >
+              <span
+                className="button__text"
+                style={{ fontFamily: "quando", color: "", fontWeight: "bold" }}
+              >
+                Reset
+              </span>
               <span className="button__icon">
                 <BiReset className="svg" size={30} />
               </span>
@@ -242,7 +226,6 @@ const CoursePage = ({
       </div>
 
       <div className="row">
-
         {/* Course sidebar */}
         <div className="col-md-3 mt-4">
           <div className="">
@@ -264,23 +247,32 @@ const CoursePage = ({
               chapterIndex={chapterIndex}
               onVideoEnd={handleVideoEnd}
             />
-            <div className="mb-3 ms-5 me-5 d-flex justify-content-between" >
+            <div className="mb-3 ms-5 me-5 d-flex justify-content-between">
               <div>
                 {prevChapter && (
-                  <Link className="text-decoration-none" href={`/course/${course.id}/${unitIndex}/${chapterIndex - 1}`}>
+                  <Link
+                    className="text-decoration-none"
+                    href={`/course/${course.id}/${unitIndex}/${
+                      chapterIndex - 1
+                    }`}
+                  >
                     <button className="Previousbutton">
                       <div className="PreviousArrow">
                         <FastForward color="black" />
                       </div>
                       <span className="BtnText">Previous</span>
-
                     </button>
                   </Link>
                 )}
               </div>
               <div>
                 {nextChapter && (
-                  <Link className="text-decoration-none" href={`/course/${course.id}/${unitIndex}/${chapterIndex + 1}`}>
+                  <Link
+                    className="text-decoration-none"
+                    href={`/course/${course.id}/${unitIndex}/${
+                      chapterIndex + 1
+                    }`}
+                  >
                     <button className="Nextbutton">
                       <span className="BtnText">Next</span>
                       <div className="arrow">
@@ -291,7 +283,6 @@ const CoursePage = ({
                 )}
               </div>
             </div>
-            
           </div>
         </div>
 
@@ -300,6 +291,7 @@ const CoursePage = ({
           <div className="">
             <QuizCards
               key={resetKey}
+              videoDone={videoDone[chapter.id]}
               questions={questions}
               extractedAnswers={answers}
               extractedBooleans={booleans}
@@ -307,27 +299,30 @@ const CoursePage = ({
             />
           </div>
           {/* Overall result Pop-up */}
-          <div className="d-flex justify-content-center mt-2 mb-4">
-            <button
-              className="cssbuttons-io-button"
-              style={{
-                fontFamily: "quando", fontWeight: "bold"
-              }}
-              onClick={togglePopup}
-            >
-              Show Result
-              <div className="icon">
-                <div className="svg">
-                  <MdOutlineDoubleArrow size={100} />
+          {parseInt(totalProgress) == 100 && (
+            <div className="d-flex justify-content-center mt-2 mb-4">
+              <button
+                className="cssbuttons-io-button"
+                style={{
+                  fontFamily: "quando",
+                  fontWeight: "bold",
+                }}
+                onClick={togglePopup}
+              >
+                Show Result
+                <div className="icon">
+                  <div className="svg">
+                    <MdOutlineDoubleArrow size={100} />
+                  </div>
                 </div>
-              </div>
-            </button>
-            {showPopup && <Popup onClose={togglePopup} />}
-          </div>
+              </button>
+              {showPopup && (
+                <ResultPopup courseId={course.id} onClose={togglePopup} />
+              )}
+            </div>
+          )}
         </div>
-
       </div>
-
     </div>
   );
 };

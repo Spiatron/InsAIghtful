@@ -22,8 +22,9 @@ export async function POST(req, res) {
     }
     const units = course.units;
     const courseProgress = course.Progress;
-    const chapterVideoDone = {};
-    const chapterQuizDone = {};
+
+    let chapterVideoDone = {};
+    let chapterQuizDone = {};
     courseProgress.forEach((prog) => {
       chapterVideoDone[prog.chapterId] = prog.videoDone || false;
       chapterQuizDone[prog.chapterId] = prog.quizDone || false;

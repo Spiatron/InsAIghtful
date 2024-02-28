@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import GalleryCourseCard from "@/components/GalleryCourseCard";
 import React from "react";
 import style from "@/styles/galleryPage.module.css";
 
-const GalleryPage = async ({ courses }) => {
+const GalleryPage = ({ courses }) => {
   const handleDelete = async (courseId) => {
     try {
       const response = await fetch("/api/course/deleteCourse", {

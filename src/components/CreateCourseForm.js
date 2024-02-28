@@ -4,7 +4,6 @@ import { createChaptersSchema } from "@/validators/course";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import '../styles/fonts.module.css';
 import Link from "next/link";
 import CC_DeleteBtnStyles from '@/styles/CC_DeleteBtnStyles.css';
@@ -16,7 +15,6 @@ import { Plus } from 'lucide-react';
 
 
 const CreateCourseForm = () => {
-  const router = useRouter();
   const { mutate: createChapters, isLoading } = useMutation({
     mutationFn: async ({ title, units }) => {
       try {

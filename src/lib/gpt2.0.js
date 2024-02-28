@@ -106,6 +106,7 @@ export async function strict_response(
     } catch (e) {
       console.log("An exception occurred:", e);
       console.log("Current invalid json format ", res);
+      continue;
     }
   }
 
