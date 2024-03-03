@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import style from "@/styles/GalleryCourseCard.module.css";
 import GalleryCourseCardBtnStyles from "@/styles/buttons/GalleryCourseCardBtnStyles.css";
-import { Trash2 } from "lucide-react";
 import { X } from "lucide-react";
 
 const GalleryCourseCard = ({ course, handleDelete }) => {
@@ -76,4 +75,3 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 };
 
 export default GalleryCourseCard;
-<X size={32} strokeWidth={2.5} absoluteStrokeWidth />;
