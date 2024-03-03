@@ -3,8 +3,6 @@ import UpsideAboutUs from "@/components/UpsideAboutUs";
 import ServicesAboutUs from "@/components/ServicesAboutUs";
 import OurTeamAboutUs from "@/components/OurTeamAboutUs";
 
-
-
 const page = () => {
   return (
     <>
@@ -15,9 +13,9 @@ const page = () => {
         <ServicesAboutUs />
       </div>
       <div>
-        <OurTeamAboutUs/>
+        <OurTeamAboutUs />
       </div>
     </>
-  )
-}
+  );
+};
 export default page;

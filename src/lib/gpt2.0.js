@@ -74,6 +74,7 @@ export async function strict_response(
     try {
       let output = JSON.parse(res);
 
+      // Logic for checking the number of units
       if (output.units) {
         if (units == 0 && output.units < 4) {
           console.log("There are less than 4 units in the whole course.");
@@ -85,11 +86,28 @@ export async function strict_response(
         }
       }
 
+      // Logic for checking the number of chapters in each unit
+      let continueFlag = false;
+      if (output.units) {
+        for (const unit of output.units) {
+          if (unit.chapters.length < 2) {
+            continueFlag = true;
+            break;
+          }
+        }
+      }
+      if (continueFlag) {
+        console.log("There are less than 2 chapters in one of the units.");
+        continue;
+      }
+
+      // Logic for checking the number of questions
       if (output.questions && output.questions.length < 3) {
         console.log("There are less than 3 questions in the data.");
         continue;
       }
 
+      // Logic for checking the length of the summary
       if (
         output.summary &&
         (output.summary.split(/\s+/).filter(Boolean).length < 50 ||

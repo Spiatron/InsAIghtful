@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Progressbar from "@/components/Progressbar";
 import MainVideoSummary from "./MainVideoSummary";
@@ -20,15 +20,14 @@ const CoursePage = ({
   chapterIndex,
   chapter,
   questions,
-  extractedAnswers,
-  extractedBooleans,
-  increment,
 }) => {
+  const [loading, setLoading] = useState(true);
   const [totalProgress, setTotalProgress] = useState(0);
   const [videoDone, setVideoDone] = useState({});
   const [quizDone, setQuizDone] = useState({});
-  const [answers, setAnswers] = useState(extractedAnswers || {});
-  const [booleans, setBooleans] = useState(extractedBooleans || {});
+  const [answers, setAnswers] = useState({});
+  const [booleans, setBooleans] = useState({});
+  const [increment, setIncrement] = useState(0);
   const [resetKey, setResetKey] = useState(0);
 
   // Popup function to show overall-result
@@ -41,6 +40,7 @@ const CoursePage = ({
   // Function to fetch progress data from the server
   const fetchProgress = async () => {
     try {
+      // Fetch progress data
       const response = await fetch("/api/progress/getProgress", {
         method: "POST",
         headers: {
@@ -48,18 +48,28 @@ const CoursePage = ({
         },
         body: JSON.stringify({
           courseId: course.id,
+          unitIndex: unitIndex,
+          chapterIndex: chapterIndex,
         }),
       });
 
       if (!response.ok) {
-        console.error("Failed to fetch progress data");
-        return;
+        throw new Error("Failed to fetch progress data");
       }
 
-      const { progress, VideoDone, QuizDone } = await response.json();
+      // Parse response data
+      const { progress, VideoDone, QuizDone, Answers, Booleans, Increment } =
+        await response.json();
+
+      // Update state variables
       setTotalProgress(progress);
       setVideoDone(VideoDone);
       setQuizDone(QuizDone);
+      setAnswers(Answers);
+      setBooleans(Booleans);
+      setIncrement(Increment);
+      // Update loading state
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching progress data:", error);
     }
@@ -67,6 +77,7 @@ const CoursePage = ({
 
   // Fetch progress data when the component mounts
   useEffect(() => {
+    linkButtonRef.current.click();
     fetchProgress();
   }, []);
 
@@ -195,6 +206,16 @@ const CoursePage = ({
   const nextChapter = unit.chapters[chapterIndex + 1];
   const prevChapter = unit.chapters[chapterIndex - 1];
 
+  const linkButtonRef = useRef();
+
+  // Render loading indicator if data is still being fetched
+  if (loading) {
+    return (
+      <Link href={""} ref={linkButtonRef} style={{ display: "none" }}>
+        Hidden Link
+      </Link>
+    );
+  }
   return (
     <div className={style.finalgeneration}>
       <div className="container">

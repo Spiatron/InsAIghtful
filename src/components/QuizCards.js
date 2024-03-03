@@ -1,6 +1,6 @@
 "use client";
 import "../styles/fonts.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "@/styles/QuizCardStyles.css";
 
 const QuizCards = ({
@@ -27,7 +27,7 @@ const QuizCards = ({
     }
   }, [answers, questions]);
 
-  const checkAnswer = React.useCallback(() => {
+  const checkAnswer = useCallback(() => {
     if (videoDone) {
       const newQuestionState = { ...questionState };
       questions.forEach((question) => {
@@ -45,7 +45,7 @@ const QuizCards = ({
     } else {
       alert("Please watch the video first");
     }
-  }, [answers, questionState, questions]);
+  }, [answers, questionState, questions, videoDone]);
 
   return (
     <div className="QuizCard">

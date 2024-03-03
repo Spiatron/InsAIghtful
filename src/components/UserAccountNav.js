@@ -5,9 +5,9 @@ const UserAccountNav = ({ user }) => {
   return (
     <>
       <div className="bg-black">
-        <div className="card" >
+        <div className="card">
           <ul className="list-group list-group-flush ">
-          {user?.image && (
+            {user?.image && (
               <li className="list-group-item">
                 <img
                   src={user.image}
@@ -17,8 +17,12 @@ const UserAccountNav = ({ user }) => {
                 />
               </li>
             )}
-            <li className="list-group-item font-monospace ">{user?.name && <div>{user.name}</div>}</li>
-            <li className="list-group-item font-monospace">{user?.email && <div>{user.email}</div>}</li>
+            <li className="list-group-item font-monospace ">
+              {user?.name && <div>{user.name}</div>}
+            </li>
+            <li className="list-group-item font-monospace">
+              {user?.email && <div>{user.email}</div>}
+            </li>
           </ul>
         </div>
       </div>

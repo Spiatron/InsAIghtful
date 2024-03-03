@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
   const body = await req.json();
-  const { courseId } = body;
+  const { courseId, unitIndex, chapterIndex } = body;
 
   try {
     const course = await prisma.course.findUnique({
@@ -11,7 +11,11 @@ export async function POST(req, res) {
       include: {
         units: {
           include: {
-            chapters: true,
+            chapters: {
+              include: {
+                questions: true,
+              },
+            },
           },
         },
         Progress: true,
@@ -21,6 +25,9 @@ export async function POST(req, res) {
       return redirect("/");
     }
     const units = course.units;
+    const unit = units[unitIndex];
+    const chapter = unit.chapters[chapterIndex];
+    const questions = chapter.questions;
     const courseProgress = course.Progress;
 
     let chapterVideoDone = {};
@@ -29,6 +36,17 @@ export async function POST(req, res) {
       chapterVideoDone[prog.chapterId] = prog.videoDone || false;
       chapterQuizDone[prog.chapterId] = prog.quizDone || false;
     });
+
+    let extractedAnswers = {};
+    let extractedBooleans = {};
+    for (const question of questions) {
+      if (question.selectedAnswer == null) {
+        break;
+      }
+      extractedAnswers[question.id] = question.selectedAnswer;
+      const isCorrect = question.selectedAnswer == question.answer;
+      extractedBooleans[question.id] = isCorrect;
+    }
 
     let totalChapters = 0;
     for (const currentUnit of units) {
@@ -50,6 +68,9 @@ export async function POST(req, res) {
       progress: currentProgress,
       VideoDone: chapterVideoDone,
       QuizDone: chapterQuizDone,
+      Answers: extractedAnswers,
+      Booleans: extractedBooleans,
+      Increment: dynamicIncrement,
     });
   } catch (error) {
     console.error("Error updating user progress:", error);

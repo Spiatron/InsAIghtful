@@ -75,23 +75,23 @@ export async function POST(req, res) {
       success: true,
     });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Invalid body",
-        },
-        { status: 400 }
-      );
-    } else {
-      return NextResponse.json(
-        console.log(error),
-        {
-          success: false,
-          error: error,
-        },
-        { status: 500 }
-      );
-    }
+    // if (error instanceof z.ZodError) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       error: "Invalid body",
+    //     },
+    //     { status: 400 }
+    //   );
+    // } else {
+    return NextResponse.json(
+      console.log(error),
+      {
+        success: false,
+        error: error,
+      },
+      { status: 500 }
+    );
   }
+  // }
 }

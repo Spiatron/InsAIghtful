@@ -1,18 +1,16 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createChaptersSchema } from "@/validators/course";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import '../styles/fonts.module.css';
+import "../styles/fonts.module.css";
 import Link from "next/link";
-import CC_DeleteBtnStyles from '@/styles/CC_DeleteBtnStyles.css';
-import CC_AddBtnStyles from '@/styles/CC_AddBtnStyles.css';
+import CC_DeleteBtnStyles from "@/styles/CC_DeleteBtnStyles.css";
+import CC_AddBtnStyles from "@/styles/CC_AddBtnStyles.css";
 import style from "@/styles/buttons/buttonClick.module.css";
-import { X } from 'lucide-react';
-import { Plus } from 'lucide-react';
-
-
+import { X } from "lucide-react";
+import { Plus } from "lucide-react";
 
 const CreateCourseForm = () => {
   const { mutate: createChapters, isLoading } = useMutation({
@@ -46,10 +44,10 @@ const CreateCourseForm = () => {
     },
   });
 
-  const [generatedHref, setGeneratedHref] = React.useState('');
-  const linkButtonRef = React.useRef();
+  const [generatedHref, setGeneratedHref] = useState("");
+  const linkButtonRef = useRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (generatedHref) {
       linkButtonRef.current.click();
     }
@@ -79,8 +77,11 @@ const CreateCourseForm = () => {
     <div className="card container w-75 mt-3 rounded-3 text-dark bg-dark-subtle col-form-label ">
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="form-group row align-items-center">
-          <label className=" col-form-label col-md-1 text-white font-monospace text-white font-monospace fs-4 mb-4  "><label htmlFor="title border-white ">Title: </label></label> {/* Added margin-bottom className here for tittle tag*/}
-          <div className="col-md-11" >
+          <label className=" col-form-label col-md-1 text-white font-monospace text-white font-monospace fs-4 mb-4  ">
+            <label htmlFor="title border-white ">Title: </label>
+          </label>{" "}
+          {/* Added margin-bottom className here for tittle tag*/}
+          <div className="col-md-11">
             <input
               type="text"
               className="form-control bg-black mb-4" /* Added margin-bottom className here for tittle*/
@@ -113,31 +114,54 @@ const CreateCourseForm = () => {
             </div>
           );
         })}
-        
+
         {/* BUTTONS */}
-        <div className="container d-flex gap-2 col-form-label justify-content-start " style={{ fontFamily: "chillax" }} > {/*col-form-label */}
-
-          <button type="button" className="addbutton" onClick={() => {
-            form.setValue("units", [...form.watch("units"), ""]);
-          }}>
+        <div
+          className="container d-flex gap-2 col-form-label justify-content-start "
+          style={{ fontFamily: "chillax" }}
+        >
+          {" "}
+          {/*col-form-label */}
+          <button
+            type="button"
+            className="addbutton"
+            onClick={() => {
+              form.setValue("units", [...form.watch("units"), ""]);
+            }}
+          >
             <span className="button__text">Add</span>
-            <span className="button__icon"><Plus /></span>
+            <span className="button__icon">
+              <Plus />
+            </span>
           </button>
-
-          <button type="button" className="delbutton" onClick={() => {
-            form.setValue("units", form.watch("units").slice(0, -1));
-          }}>
+          <button
+            type="button"
+            className="delbutton"
+            onClick={() => {
+              form.setValue("units", form.watch("units").slice(0, -1));
+            }}
+          >
             <span className="button__text">Delete</span>
-            <span className="button__icon"><X /></span>
+            <span className="button__icon">
+              <X />
+            </span>
           </button>
           <hr className="flex-grow-1 bg-secondary " />
-          <button disabled={isLoading} type="submit" className={style.button} style={{ fontFamily: "vast", color: "", fontWeight: "bold" }}>
+          <button
+            disabled={isLoading}
+            type="submit"
+            className={style.button}
+            style={{ fontFamily: "vast", color: "", fontWeight: "bold" }}
+          >
             Generate
           </button>
-
         </div>
       </form>
-      <Link href={generatedHref} ref={linkButtonRef} style={{ display: 'none' }}>
+      <Link
+        href={generatedHref}
+        ref={linkButtonRef}
+        style={{ display: "none" }}
+      >
         Hidden Link
       </Link>
     </div>

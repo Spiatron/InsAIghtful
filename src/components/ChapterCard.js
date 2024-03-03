@@ -1,11 +1,17 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+} from "react";
 
-const ChapterCard = React.forwardRef(
+const ChapterCard = forwardRef(
   ({ chapter, chapterIndex, setcompletedChapters }, ref) => {
     //Use this for making the color changes to chapter fetch success
-    const [Success, setSuccess] = React.useState("");
+    const [Success, setSuccess] = useState("");
     const { mutate: getChapterInfo, isLoading } = useMutation({
       mutationFn: async () => {
         const response = await fetch("/api/chapter/getInfo", {
@@ -25,7 +31,7 @@ const ChapterCard = React.forwardRef(
       },
     });
 
-    const addChapterIdToSet = React.useCallback(() => {
+    const addChapterIdToSet = useCallback(() => {
       setcompletedChapters((prev) => {
         const newSet = new Set(prev);
         newSet.add(chapter.id);
@@ -33,14 +39,14 @@ const ChapterCard = React.forwardRef(
       });
     }, [chapter.id, setcompletedChapters]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (chapter.videoId) {
         setSuccess(true);
         addChapterIdToSet();
       }
     }, [chapter, addChapterIdToSet]);
 
-    React.useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, () => ({
       async triggerLoad() {
         if (chapter.videoId) {
           addChapterIdToSet();

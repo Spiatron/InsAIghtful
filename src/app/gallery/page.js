@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/db";
 import React from "react";
 import style from "@/styles/galleryPage.module.css";
 import { getAuthSession } from "@/lib/auth";
@@ -11,25 +10,11 @@ const Page = async () => {
   if (!session?.user) {
     return redirect("/about");
   }
-  
-  const courses = await prisma.course.findMany({
-    where: {
-      userId: session.user.id,
-    },
-    include: {
-      units: {
-        include: {
-          chapters: true,
-        },
-      },
-    },
-  });
-  courses.reverse();
 
   return (
     <div className={style.galleryPage}>
       <div>
-        <GalleryPage courses={courses} />
+        <GalleryPage userId={session.user.id} />
       </div>
     </div>
   );

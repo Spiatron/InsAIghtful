@@ -1,4 +1,4 @@
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
 import { Inter } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,11 +13,13 @@ export const metadata = {
 };
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-bs-theme="dark" > {/*for overall make website in darkmode use-(data-bs-theme="dark")*/}
+    <html lang="en" data-bs-theme="dark">
+      {" "}
+      {/*for overall make website in darkmode use-(data-bs-theme="dark")*/}
       <body className={inter.className}>
         <Providers>
           <NextTopLoader color="#ffc300" showSpinner={false} speed={200} />
-          <Sidebar/>
+          <Sidebar />
           <ImportBsJS />
           <session />
           {children}
@@ -29,6 +31,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-
-
-

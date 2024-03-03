@@ -6,18 +6,17 @@ const SignOutButton = ({ user }) => {
   return (
     <>
       <div>
-          <button className="btn btn-outline-danger text-red"
-            onClick={() => {
-              signOut();
-            }}
-          >
-           <div className=" font-monospace">log Out</div> 
-          </button>
-        </div>
+        <button
+          className="btn btn-outline-danger text-red"
+          onClick={() => {
+            signOut();
+          }}
+        >
+          <div className=" font-monospace">log Out</div>
+        </button>
+      </div>
     </>
   );
 };
 
 export default SignOutButton;
-
-

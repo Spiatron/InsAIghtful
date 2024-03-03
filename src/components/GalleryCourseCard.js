@@ -3,29 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import style from "@/styles/GalleryCourseCard.module.css";
-import GalleryCourseCardBtnStyles from '@/styles/buttons/GalleryCourseCardBtnStyles.css';
-import { Trash2 } from 'lucide-react';
-import { X } from 'lucide-react';
+import GalleryCourseCardBtnStyles from "@/styles/buttons/GalleryCourseCardBtnStyles.css";
+import { Trash2 } from "lucide-react";
+import { X } from "lucide-react";
 
 const GalleryCourseCard = ({ course, handleDelete }) => {
-  const [courseDeleted, setCourseDeleted] = useState(false);
-
   const handleClickDelete = async () => {
     const shouldDelete = window.confirm(
       `Are you sure you want to delete the course of ${course.name}?`
     );
     if (shouldDelete) {
       await handleDelete(course.id);
-      setCourseDeleted(true);
-      alert("Course deleted successfully!");
     } else {
       alert("Course deletion canceled.");
     }
   };
-
-  if (courseDeleted) {
-    return null;
-  }
 
   return (
     <>
@@ -75,7 +67,7 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
           </ul>
           {/*Gallery Course delete button*/}
           <button className="GDbtn" onClick={handleClickDelete}>
-            <X className="icon"  size={30} strokeWidth={3} absoluteStrokeWidth/>
+            <X className="icon" size={30} strokeWidth={3} absoluteStrokeWidth />
           </button>
         </div>
       </div>
@@ -84,4 +76,4 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 };
 
 export default GalleryCourseCard;
-<X size={32} strokeWidth={2.5} absoluteStrokeWidth />
+<X size={32} strokeWidth={2.5} absoluteStrokeWidth />;

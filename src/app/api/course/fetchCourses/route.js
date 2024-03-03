@@ -2,20 +2,25 @@ import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
-  const { courseId } = await req.json();
+  const { userId } = await req.json();
 
   try {
-    // Delete the course along with all related records
-    await prisma.course.delete({
+    const courses = await prisma.course.findMany({
       where: {
-        id: courseId,
+        userId,
+      },
+      include: {
+        units: {
+          include: {
+            chapters: true,
+          },
+        },
       },
     });
 
-    console.log("Course and related records deleted successfully.");
-
     return NextResponse.json({
       success: true,
+      courses: courses,
     });
   } catch (error) {
     console.error("Error deleting course:", error);

@@ -4,32 +4,32 @@ import styles from "@/styles/PopupStyles.css";
 const ResultPopup = ({ courseId, onClose }) => {
   const [resultData, setResultData] = useState({});
 
+  const fetchResultData = async () => {
+    try {
+      const response = await fetch("/api/result/calculateResult", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to fetch result data");
+        return;
+      }
+
+      const data = await response.json();
+      setResultData(data);
+    } catch (error) {
+      console.error("Error fetching result data:", error);
+    }
+  };
+
   // Fetch result data from the server
   useEffect(() => {
-    const fetchResultData = async () => {
-      try {
-        const response = await fetch("/api/result/calculateResult", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            courseId,
-          }),
-        });
-
-        if (!response.ok) {
-          console.error("Failed to fetch result data");
-          return;
-        }
-
-        const data = await response.json();
-        setResultData(data);
-      } catch (error) {
-        console.error("Error fetching result data:", error);
-      }
-    };
-
     fetchResultData();
   }, []);
 

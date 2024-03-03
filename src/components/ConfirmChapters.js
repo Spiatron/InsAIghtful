@@ -1,23 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import ChapterCard from "./ChapterCard";
 import Link from "next/link";
 
 const ConfirmChapters = ({ course }) => {
-  const [Loading, setLoading] = React.useState(false);
+  const [Loading, setLoading] = useState(false);
   const chapterRefs = {};
   course.units.forEach((unit) => {
     unit.chapters.forEach((chapter) => {
-      chapterRefs[chapter.id] = React.useRef(null);
+      chapterRefs[chapter.id] = useRef(null);
     });
   });
-  const [completedChapters, setcompletedChapters] = React.useState(new Set());
-  const totalChaptersCount = React.useMemo(() => {
+  const [completedChapters, setcompletedChapters] = useState(new Set());
+  const totalChaptersCount = useMemo(() => {
     return course.units.reduce((acc, unit) => {
       return acc + unit.chapters.length;
     }, 0);
   }, [course.units]);
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(completedChapters, totalChaptersCount);
     if (completedChapters.size === totalChaptersCount) {
       setLoading(false);
@@ -51,9 +51,16 @@ const ConfirmChapters = ({ course }) => {
       })}
       <div className="container d-inline-flex gap-3 col-form-label justify-content-center">
         <hr className="flex-grow-1 bg-secondary " />
-        <Link href="/create" className="btn btn-light fw-bold">Back</Link>
+        <Link href="/create" className="btn btn-light fw-bold">
+          Back
+        </Link>
         {totalChaptersCount === completedChapters.size ? (
-          <Link href={`/course/${course.id}/0/0`} className="btn btn-warning fw-bold">Go to next step</Link>
+          <Link
+            href={`/course/${course.id}/0/0`}
+            className="btn btn-warning fw-bold"
+          >
+            Go to next step
+          </Link>
         ) : (
           <button
             className="btn btn-warning fw-bold"
@@ -74,7 +81,5 @@ const ConfirmChapters = ({ course }) => {
     </div>
   );
 };
-
-
 
 export default ConfirmChapters;
