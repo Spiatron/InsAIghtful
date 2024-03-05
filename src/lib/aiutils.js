@@ -1,23 +1,26 @@
 import { strict_response } from "./gpt2.0";
 
 export async function generateCoursePlaylist(course_title, course_units) {
-  let unitsPrompt = `Creating a course about ${course_title}. The user has requested chapters for each of the units ${
+  let unitsPrompt = `Creating a course about ${course_title}. The user has requested chapters for each of the units, ${
     course_units.length > 0
       ? `(only include these units: ${course_units})`
       : `(create at least 4 units or more if needed)`
-  }. For each chapter, provide a detailed YouTube search query for an informative educational video.`;
+  }. Create an array of 3 or more chapters for each unit. For each chapter provide a detailed YouTube search query for an informative educational video and each chapter should have a youtube_search_query key and a chapter_title key in the JSON object with proper syntax.`;
   const response = await strict_response(
     "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant youtube videos for each chapter",
     unitsPrompt,
     {
-      units: [
+      "units": [
         {
-          title: "title of the unit",
-          chapters: [
-            "an array of 3 chapters, each chapter should have a youtube_search_query key and a chapter_title key in the JSON object with proper syntax",
-          ],
-        },
-      ],
+          "title": "title of the unit",
+          "chapters": [
+            {
+              "chapter_title": "Chapter Title",
+              "youtube_search_query": "Chapter YouTube Search Query"
+            },
+          ]
+        }
+      ]
     },
     course_units.length
   );

@@ -12,7 +12,7 @@ export async function strict_response(
   units = undefined,
   model = "gpt-3.5-turbo",
   temperature = 1,
-  num_tries = 3,
+  num_tries = 4,
   verbose = false
 ) {
   // if the user input is in a list, we also process the output as a list of json
@@ -74,31 +74,38 @@ export async function strict_response(
     try {
       let output = JSON.parse(res);
 
-      // Logic for checking the number of units
+      // Logic for checking the number of units, chapters and keys
       if (output.units) {
-        if (units == 0 && output.units < 4) {
+        if (units == 0 && output.units.length < 4) {
           console.log("There are less than 4 units in the whole course.");
           continue;
         }
-        if (units > 0 && output.units < units) {
+        if (units > 0 && output.units.length < units) {
           console.log("There are less units than requested in the course.");
           continue;
         }
-      }
-
-      // Logic for checking the number of chapters in each unit
-      let continueFlag = false;
-      if (output.units) {
+        let continueFlag = false;
         for (const unit of output.units) {
           if (unit.chapters.length < 2) {
             continueFlag = true;
             break;
           }
+          for (const chapter of unit.chapters) {
+            if (
+              !("chapter_title" in chapter) ||
+              !("youtube_search_query" in chapter)
+            ) {
+              continueFlag = true;
+              break;
+            }
+          }
         }
-      }
-      if (continueFlag) {
-        console.log("There are less than 2 chapters in one of the units.");
-        continue;
+        if (continueFlag) {
+          console.log(
+            "There are less than 2 chapters in one of the units or one of the keys is missing from one of the chapters of the units."
+          );
+          continue;
+        }
       }
 
       // Logic for checking the number of questions

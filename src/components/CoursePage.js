@@ -203,7 +203,9 @@ const CoursePage = ({
 
   // This function is used for Navigation of chapters
   const unit = course.units[unitIndex];
+  const nextUnit = course.units[unitIndex + 1];
   const nextChapter = unit.chapters[chapterIndex + 1];
+  const prevUnit = course.units[unitIndex - 1];
   const prevChapter = unit.chapters[chapterIndex - 1];
 
   const linkButtonRef = useRef();
@@ -270,7 +272,7 @@ const CoursePage = ({
             />
             <div className="mb-3 ms-5 me-5 d-flex justify-content-between">
               <div>
-                {prevChapter && (
+                {prevChapter ? (
                   <Link
                     className="text-decoration-none"
                     href={`/course/${course.id}/${unitIndex}/${
@@ -281,13 +283,29 @@ const CoursePage = ({
                       <div className="PreviousArrow">
                         <FastForward color="black" />
                       </div>
-                      <span className="BtnText">Previous</span>
+                      <span className="BtnText">Previous Chapter</span>
                     </button>
                   </Link>
+                ) : (
+                  prevUnit && (
+                    <Link
+                      className="text-decoration-none"
+                      href={`/course/${course.id}/${unitIndex - 1}/${
+                        prevUnit.chapters.length - 1
+                      }`}
+                    >
+                      <button className="Previousbutton">
+                        <div className="PreviousArrow">
+                          <FastForward color="black" />
+                        </div>
+                        <span className="BtnText">Previous Unit</span>
+                      </button>
+                    </Link>
+                  )
                 )}
               </div>
               <div>
-                {nextChapter && (
+                {nextChapter ? (
                   <Link
                     className="text-decoration-none"
                     href={`/course/${course.id}/${unitIndex}/${
@@ -295,12 +313,26 @@ const CoursePage = ({
                     }`}
                   >
                     <button className="Nextbutton">
-                      <span className="BtnText">Next</span>
+                      <span className="BtnText">Next Chapter</span>
                       <div className="arrow">
                         <FastForward color="black" />
                       </div>
                     </button>
                   </Link>
+                ) : (
+                  nextUnit && (
+                    <Link
+                      className="text-decoration-none"
+                      href={`/course/${course.id}/${unitIndex + 1}/0`}
+                    >
+                      <button className="Nextbutton">
+                        <span className="BtnText">Next Unit</span>
+                        <div className="arrow">
+                          <FastForward color="black" />
+                        </div>
+                      </button>
+                    </Link>
+                  )
                 )}
               </div>
             </div>
