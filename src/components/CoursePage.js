@@ -283,7 +283,7 @@ const CoursePage = ({
                       <div className="PreviousArrow">
                         <FastForward color="black" />
                       </div>
-                      <span className="BtnText">Previous Chapter</span>
+                      <span className="BtnText">Previous</span>
                     </button>
                   </Link>
                 ) : (
@@ -294,11 +294,11 @@ const CoursePage = ({
                         prevUnit.chapters.length - 1
                       }`}
                     >
-                      <button className="Previousbutton">
-                        <div className="PreviousArrow">
+                      <button className="PreviousUnitButton">
+                        <div className="PreviousUnitButtonArrow">
                           <FastForward color="black" />
                         </div>
-                        <span className="BtnText">Previous Unit</span>
+                        <span className="UnitButtonBtnText" style={{ fontFamily: "angrybird" }} >Previous Unit</span>
                       </button>
                     </Link>
                   )
@@ -313,7 +313,7 @@ const CoursePage = ({
                     }`}
                   >
                     <button className="Nextbutton">
-                      <span className="BtnText">Next Chapter</span>
+                      <span className="BtnText">Next</span>
                       <div className="arrow">
                         <FastForward color="black" />
                       </div>
@@ -325,9 +325,9 @@ const CoursePage = ({
                       className="text-decoration-none"
                       href={`/course/${course.id}/${unitIndex + 1}/0`}
                     >
-                      <button className="Nextbutton">
-                        <span className="BtnText">Next Unit</span>
-                        <div className="arrow">
+                      <button className="NextUnitButton">
+                        <span className="NextUnitButtonBtnText" style={{ fontFamily: "angrybird" }}>Next Unit</span>
+                        <div className="Unitarrow">
                           <FastForward color="black" />
                         </div>
                       </button>

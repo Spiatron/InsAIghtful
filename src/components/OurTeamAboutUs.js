@@ -22,15 +22,15 @@ const OurTeamAboutUs = () => {
         </div>
 
         <div className="cardsPosition">
-          <div class="Devcard">
+          <div className="Devcard">
             <center>
-              <div class="profileimage">
+              <div className="profileimage">
                 <img src="" alt="" />
               </div>
-              <div class="Name">
+              <div className="Name">
                 <p>Ahsan Hafeez</p>
               </div>
-              <div class="socialbar">
+              <div className="socialbar">
                 <div id="github">
                   <FiGithub />
                 </div>
@@ -50,15 +50,15 @@ const OurTeamAboutUs = () => {
             </center>
           </div>
 
-          <div class="Devcard">
+          <div className="Devcard">
             <center>
-              <div class="profileimage">
+              <div className="profileimage">
                 <img src="" alt="" />
               </div>
-              <div class="Name">
+              <div className="Name">
                 <p>Shehryar Khatri </p>
               </div>
-              <div class="socialbar">
+              <div className="socialbar">
                 <div id="github">
                   <FiGithub />
                 </div>
@@ -78,15 +78,15 @@ const OurTeamAboutUs = () => {
             </center>
           </div>
 
-          <div class="Devcard">
+          <div className="Devcard">
             <center>
-              <div class="profileimage">
+              <div className="profileimage">
                 <img src="" alt="" />
               </div>
-              <div class="Name">
-                <p>Mohmmed Ali</p>
+              <div className="Name">
+                <p>Muhammad Ali</p>
               </div>
-              <div class="socialbar">
+              <div className="socialbar">
                 <div id="github">
                   <FiGithub />
                 </div>

@@ -28,9 +28,9 @@ const ConfirmChapters = ({ course }) => {
       {course.units.map((unit, unitIndex) => {
         return (
           <div key={unitIndex} className="m-2">
-            <h className="font-monospace text-body-secondary fs-5">
+            <h1 className=" text-body-secondary fs-5" style={{ fontFamily: "asul", fontWeight:"bold"}}>
               Unit {unitIndex + 1}
-            </h>
+            </h1>
             <h4 className=" fw-bold fs-2 text-capitalize">{unit.name}</h4>
             <div>
               {unit.chapters.map((chapter, chapterIndex) => {

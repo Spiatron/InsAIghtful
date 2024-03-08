@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import style from "@/styles/loader/loadingpage.module.css";
-// import style from "@/styles/loader/loader.module.css";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Spinner from "react-bootstrap/Spinner";
 

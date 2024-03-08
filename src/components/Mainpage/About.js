@@ -14,7 +14,7 @@ const About = () => {
       <div className="about-section-text-container">
         <p className="primary-subheading">Gallery</p>
         <h1 className="gallery-primary-heading">
-        Your Personal Learning Gallery
+        Your Personal Learning  <span style={{ fontFamily: "angrybird", color: "#fe9e0d" }} >Gallery</span>
         </h1>
         <p className="primary-text">
         Curate your learning universe with courses tailored to you. Explore your personalized gallery, where every course you create finds its home.

@@ -75,3 +75,83 @@
 .Nextbutton:active {
   transform: scale(0.97);
 }
+
+.PreviousUnitButton{
+  background: rgb(255, 239, 94);
+  display: flex;
+  /* font-family: inherit; */
+  /* padding: 0.6em 1.3em; */
+  /* font-weight: 900; */
+  /* font-size: 18px; */
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+  color: #000;
+}
+.PreviousUnitButton:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.PreviousUnitButton:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}
+.PreviousUnitButtonArrow{
+  transform: scaleX(-1);
+  margin-bottom: 0.19rem;
+}
+.UnitButtonBtnText{
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* background-color: rgb(27, 27, 27); */
+  /* color: white; */
+  font-size: 18px;
+  color: #000;
+  margin-left: 4px;
+}
+.PreviousUnitButton:hover .PreviousUnitButtonArrow{
+  animation: slide-in-right-mirrored 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.NextUnitButton{
+  background: rgb(255, 239, 94);
+  display: flex;
+  /* font-family: inherit; */
+  /* padding: 0.6em 1.3em; */
+  /* font-weight: 900; */
+  /* font-size: 18px; */
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+  color: #000;
+}
+.NextUnitButton:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.NextUnitButton:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}
+.NextUnitButtonBtnText{
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* background-color: rgb(27, 27, 27); */
+  /* color: white; */
+  font-size: 20px;
+  color: #000;
+  margin-right: 6px;
+}
+.NextUnitButton:hover .Unitarrow {
+  animation: slide-in-left 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}

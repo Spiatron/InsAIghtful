@@ -1,16 +1,14 @@
-import UserAccountNav from "../components/UserAccountNav";
-import SignInButton from "../components/SignInButton";
-import SignOutButton from "../components/SignOutButton";
-import "../styles/fonts.module.css";
-import { BookCopy } from "lucide-react";
-import { FcGallery } from "react-icons/fc";
-import { FcAbout } from "react-icons/fc";
-import { Cog } from "lucide-react";
-import { IoClose } from "react-icons/io5";
-import style from "@/styles/buttons/mainMenubuttonClick.module.css";
 import React from "react";
 import Link from "next/link";
 import { getAuthSession } from "@/lib/auth";
+import UserAccountNav from "../components/UserAccountNav";
+import SignInButton from "../components/SignInButton";
+import SignOutButton from "../components/SignOutButton";
+import { BookCopy } from "lucide-react";
+import { FcGallery, FcAbout } from "react-icons/fc";
+import { IoClose } from "react-icons/io5";
+import "../styles/fonts.module.css";
+import style from "@/styles/buttons/mainMenubuttonClick.module.css";
 import "../styles/fonts.module.css";
 import btnMenuStyles from "@/styles/btnMenuStyles.css";
 import sidebarNavAnimationStyles from "@/styles/sidebarNavAnimationStyles.css";
@@ -19,7 +17,7 @@ const Sidebar = async () => {
   const session = await getAuthSession();
   return (
     <>
-      <nav className="navbar bg-black fixed-fliud">
+      <nav className="navbar bg-black fixed-fliud sticky-top">
         <div>
           <div className="container-fluid">
             <button
@@ -50,9 +48,6 @@ const Sidebar = async () => {
               </span>
               <span className="text">Menu</span>
             </button>
-
-            {/* <span> <RiMenuUnfoldFill size="30" /></span> */}
-            {/* </button> */}
             <Link
               className="fs-1 lh-1 navbar-brand text-light btn btn-outline-warning m-2"
               href="/"
@@ -82,7 +77,6 @@ const Sidebar = async () => {
                 className="btn btn-outline-warning"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
-                // className={style.button}
               >
                 {" "}
                 <IoClose size={20} />
@@ -122,22 +116,14 @@ const Sidebar = async () => {
                     <FcAbout /> About-us
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    className={` m-1 nav-link btn font-monospace fw-bold text-start ${style.button}`}
-                    href="/settings"
-                  >
-                    {" "}
-                    <Cog /> Settings
-                  </Link>
-                </li>
               </ul>
-
-              <div style={{ marginTop: "20.5rem" }}>
-                {session?.user && <SignOutButton />}
+              <div className="fixed-bottom m-3">
+                <div>
+                  {session?.user && <SignOutButton />}
+                </div>
+                <div>{!session?.user && <SignInButton />}</div>
               </div>
 
-              <div>{!session?.user && <SignInButton />}</div>
             </div>
           </div>
         </div>

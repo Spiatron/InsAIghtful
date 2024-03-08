@@ -1,66 +1,58 @@
+import createCourse from "../../../public/images/mainpage/createCourse.png";
+import Quiz from "../../../public/images/mainpage/Quiz.png";
+import progress from "../../../public/images/mainpage/progress.png";
+import result from "../../../public/images/mainpage/result.png";
+import ChatBot from "../../../public/images/mainpage/ChatBot.png";
+import gallery from "../../../public/images/mainpage/gallery.png";
 import Image from 'next/image';
-import { Bot } from 'lucide-react';
-import PickMealsImage from '../../../public/images/mainpage/pick-meals-image.png';
-import ChooseMealsImage from "../../../public/images/mainpage/choose-image.png";
-import DeliveryMealsImage from "../../../public/images/mainpage/delivery-image.png";
 
 const Work = () => {
   const workInfoData = [
     {
-      image: PickMealsImage,
-      title: "Feature 1",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et sagittis duis elementum interdum facilisi bibendum.",
+      image: createCourse,
+      title: "Course Generation",
+      text: "We compile course content to create comprehensive learning materials according to the user preferences and needs.",
     },
     {
-      image: ChooseMealsImage,
-      title: "Feature",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et ",
+      image: Quiz,
+      title: "Quiz Generation",
+      text: " Quizzes are dynamically created from video transcripts to ensure relevance and engagement.",
     },
     {
-      image: DeliveryMealsImage,
-      title: "Feature",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum",
+      image: progress,
+      title: "User Progress",
+      text: " Monitor and track individual user progress across all course.",
     },
     {
-      image: DeliveryMealsImage,
-      title: "Feature",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum",
+      image: result,
+      title: "Progress result",
+      text: "Assess user activity and performance to assign grades and provide feedback on their progress.",
     },
     {
-      image: DeliveryMealsImage,
-      title: "Feature",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum",
+      image: ChatBot,
+      title: "ChatBot",
+      text: "Our chatbot assists users in resolving queries and providing support throughout their learning.",
     },
     {
-      image: DeliveryMealsImage,
-      title: "Feature",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum",
-    },
-    {
-      image: DeliveryMealsImage,
-      title: "Feature",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum",
+      image: gallery,
+      title: "User specified gallery",
+      text: "Every user has a personalized gallery where they can access and organize content tailored to their preferences and needs.",
     },
   ];
 
   return (
-    
     <div className="work-section-wrapper" style={{ fontFamily: "kufi", color: "", fontWeight: "bold" }}>
       <div className="work-section-top">
-        <p className="primary-subheading">Work</p>
-        <h1 className="primary-heading">How It Works</h1>
-        {/* <p className="primary-text">
-          Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et
-          elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.
-        </p> */}
+        <p className="primary-subheading">Features</p>
+        <h1 className="primary-heading">How It <span style={{ fontFamily: "angrybird", color: "#fe9e0d" }} >Works</span></h1>
       </div>
       <div className="work-section-bottom">
-        {workInfoData.map((data) => (
-          <div className="work-section-info" key={data.title}>
+        {workInfoData.map((data, index) => (
+          <div className="work-section-info" key={index}>
             <div className="info-boxes-img-container">
-              <Image src={data.image} alt="" />
+              {data.icon ? <data.icon size={150} /> : <Image src={data.image} alt="" width={180} height={180} />} {/* Render the icon component or the image */}
             </div>
-            <h2>{data.title}</h2>
+            <h4>{data.title}</h4>
             <p>{data.text}</p>
           </div>
         ))}

@@ -1,18 +1,13 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-} from "react";
+import React, { useState, useEffect, forwardRef, useCallback, useImperativeHandle, } from "react";
+
 
 const ChapterCard = forwardRef(
   ({ chapter, chapterIndex, setcompletedChapters }, ref) => {
     //Use this for making the color changes to chapter fetch success
     const [Success, setSuccess] = useState("");
-    const { mutate: getChapterInfo, isLoading } = useMutation({
+    const { mutate: getChapterInfo, isPending } = useMutation({
       mutationFn: async () => {
         const response = await fetch("/api/chapter/getInfo", {
           method: "POST",
@@ -68,16 +63,25 @@ const ChapterCard = forwardRef(
 
     return (
       <div
-        className="card container  m-2"
+        className="card container m-2"
         key={chapter.id}
         style={{
           backgroundColor:
             Success === true ? "#689C0D" : Success === false ? "#ff0000" : "",
         }}
       >
-        <h5 className="fs-5 font-monospace">
-          Chapter-{chapterIndex + 1}: {chapter.name}
-        </h5>
+        <div className="row align-items-center">
+          <div className="col">
+            <h5 className="fs-5 m-1" style={{ fontFamily: "quando" }}>
+              Chapter-{chapterIndex + 1}: {chapter.name}
+            </h5>
+          </div>
+          <div className="col-auto m-1">
+            { isPending && <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>}
+          </div>
+        </div>
       </div>
     );
   }

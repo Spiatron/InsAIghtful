@@ -1,7 +1,7 @@
 "use client";
 import "../styles/fonts.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import styles from "@/styles/QuizCardStyles.css";
+
 
 const QuizCards = ({
   questions,
