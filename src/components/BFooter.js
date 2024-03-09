@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
-import { FaFacebookSquare } from "react-icons/fa";
+import { FaFacebookSquare, FaGithubSquare  } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
-import { FaGithubSquare } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
+import Link from "next/link";
 
 const BFooter = () => {
   return (
-    <div className="container">
-      <footer className="d-flex  flex-wrap justify-content-between align-items-center py-3 my-4 border-top ">
+      <footer className="d-flex container flex-wrap justify-content-between align-items-center py-3 my-4 border-top ">
         <div className="col-md-4 d-flex align-items-center ">
           <a
             href="/"
@@ -48,7 +47,6 @@ const BFooter = () => {
           </li>
         </ul>
       </footer>
-    </div>
   );
 };
 export default BFooter;

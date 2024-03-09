@@ -225,7 +225,7 @@ const CoursePage = ({
           <div className="col">
             <Progressbar progress={totalProgress} />
           </div>
-          <div className="col-auto">
+          <div className="col-auto d-flex align-items-center">
             {/* Overall Progress reset button */}
             <button
               className="ResetBtn"
@@ -244,9 +244,34 @@ const CoursePage = ({
                 <BiReset className="svg" size={30} />
               </span>
             </button>
+
+            {/* Overall result Pop-up */}
+            {parseInt(totalProgress) === 100 && (
+              <div className="mt-3 ms-2">
+                <button
+                  className="cssbuttons-io-button"
+                  style={{
+                    fontFamily: "quando",
+                    fontWeight: "bold",
+                  }}
+                  onClick={togglePopup}
+                >
+                  Show Result
+                  <div className="icon">
+                    <div className="svg">
+                      <MdOutlineDoubleArrow size={100} />
+                    </div>
+                  </div>
+                </button>
+                {showPopup && (
+                  <ResultPopup courseId={course.id} onClose={togglePopup} />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
+
 
       <div className="row">
         {/* Course sidebar */}
@@ -262,7 +287,7 @@ const CoursePage = ({
         </div>
 
         {/* Main video summary */}
-        <div className="col-md-6 mt-4">
+        <div className="col-md-6">
           <div className="">
             <MainVideoSummary
               unitIndex={unitIndex}
@@ -275,9 +300,8 @@ const CoursePage = ({
                 {prevChapter ? (
                   <Link
                     className="text-decoration-none"
-                    href={`/course/${course.id}/${unitIndex}/${
-                      chapterIndex - 1
-                    }`}
+                    href={`/course/${course.id}/${unitIndex}/${chapterIndex - 1
+                      }`}
                   >
                     <button className="Previousbutton">
                       <div className="PreviousArrow">
@@ -290,9 +314,8 @@ const CoursePage = ({
                   prevUnit && (
                     <Link
                       className="text-decoration-none"
-                      href={`/course/${course.id}/${unitIndex - 1}/${
-                        prevUnit.chapters.length - 1
-                      }`}
+                      href={`/course/${course.id}/${unitIndex - 1}/${prevUnit.chapters.length - 1
+                        }`}
                     >
                       <button className="PreviousUnitButton">
                         <div className="PreviousUnitButtonArrow">
@@ -308,9 +331,8 @@ const CoursePage = ({
                 {nextChapter ? (
                   <Link
                     className="text-decoration-none"
-                    href={`/course/${course.id}/${unitIndex}/${
-                      chapterIndex + 1
-                    }`}
+                    href={`/course/${course.id}/${unitIndex}/${chapterIndex + 1
+                      }`}
                   >
                     <button className="Nextbutton">
                       <span className="BtnText">Next</span>
@@ -340,7 +362,7 @@ const CoursePage = ({
         </div>
 
         {/* Quiz card */}
-        <div className="col-md-3 mt-4">
+        <div className="col-md-3 mt-4 mb-3">
           <div className="">
             <QuizCards
               key={resetKey}
@@ -351,29 +373,6 @@ const CoursePage = ({
               onQuizEnd={handleQuizEnd}
             />
           </div>
-          {/* Overall result Pop-up */}
-          {parseInt(totalProgress) == 100 && (
-            <div className="d-flex justify-content-center mt-2 mb-4">
-              <button
-                className="cssbuttons-io-button"
-                style={{
-                  fontFamily: "quando",
-                  fontWeight: "bold",
-                }}
-                onClick={togglePopup}
-              >
-                Show Result
-                <div className="icon">
-                  <div className="svg">
-                    <MdOutlineDoubleArrow size={100} />
-                  </div>
-                </div>
-              </button>
-              {showPopup && (
-                <ResultPopup courseId={course.id} onClose={togglePopup} />
-              )}
-            </div>
-          )}
         </div>
       </div>
     </div>

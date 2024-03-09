@@ -1,99 +1,120 @@
-.OurTeam{
-    width: auto;
-    height: auto;
-    display: flex;
-   background-color: #0f1e27;
+.OurTeam {
+  width: auto;
+  height: auto;
+  display: flex;
+  background-color: #0f1e27;
+  flex-direction: column; /* Stack elements vertically on small screens */
+  align-items: center; /* Center items horizontally */
 }
-
 
 .OurTeam .paraHeading {
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 8px;
-    
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  margin-bottom: 20px; /* Add margin below heading */
 }
 
-
 .OurTeam .mainWord {
-    color: #ffc300;
-    /* font-weight: 900; */
-    letter-spacing: 5px;
-
+  color: #ffc300;
+  letter-spacing: 5px;
 }
 
 .OurTeam .content {
-    flex: 70;
-    padding: 40px; /* Adjust as needed */
-    color: #fff;  /* Text color */
+  padding: 40px; /* Adjust padding as needed */
+  color: #fff; /* Text color */
+  max-width: 800px; /* Limit width of content */
+  text-align: center; /* Center text content */
 }
 
-
-
+.DevCardsPosition{
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to next line */
+  justify-content: center; /* Center cards horizontally */
+  gap: 20px; /* Add gap between cards */
+  margin-top: 20px; /* Adjust margin as needed */
+}
 
 .Devcard {
-    width: 330px;
-    height: 380px;
-    border-radius: 2em;
-    padding: 10px;
-    background-color: #191919;
-    box-shadow: 5px 5px 30px rgb(4, 4, 4),
-                     -5px -5px 30px rgb(57, 57, 57);
-    margin: 20px;
-  }
-  
-  .profileimage {
-    background-color: transparent;
-    border: none;
-    margin-top: 20px;
-    border-radius: 5em;
-    width: 100px;
-    height: 100px;
-  }
-  
-  .pfp {
-    border-radius: 35em;
-    fill: white;
-  }
-  
-  .Name {
-    color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    padding: 15px;
-    font-size: 20px;
-    margin-top: 110px;
-  }
-  
-  .socialbar {
-    display: flex; /* Make it a flex container */
-    justify-content: space-around; /* Align items horizontally */
-    background-color: #191919;
-    border-radius: 3em;
-    width: 90%;
-    padding: 14px;
-    margin-top: 1px;
-    color: white;
-    box-shadow: 3px 3px 15px rgb(0, 0, 0),
-                     -3px -3px 15px rgb(58, 58, 58);
-  }
-  
-  .Devcard a {
-    transition: 0.4s;
-    color: white
-  }
-  
-  #github:hover {
-    color: #c9510c;
-  }
-  
-  #instagram:hover {
-    color: #d62976;
-  }
-  
-  #facebook:hover {
-    color: #3b5998;
-  }
-  
-  #twitter:hover {
-    color: #00acee;
+  width: 330px;
+  height: auto;
+  border-radius: 2em;
+  padding: 10px;
+  background-color: #191919;
+  box-shadow: 5px 5px 30px rgb(4, 4, 4), -5px -5px 30px rgb(57, 57, 57);
+  margin: 20px;
+}
+
+.profileimage {
+  background-color: transparent;
+  border: none;
+  margin-top: 20px;
+  border-radius: 5em;
+  width: 100px;
+  height: 100px;
+}
+
+.profileimage img {
+  width: 100%; /* Set the width to fill the parent container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10%; /* Make it round */
+}
+.pfp {
+  border-radius: 35em;
+  fill: white;
+}
+
+.Name {
+  color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 15px;
+  font-size: 20px;
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+.socialbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #191919;
+  border-radius: 3em;
+  width: 90%;
+  padding: 14px;
+  margin-top: 20px; /* Adjust margin as needed */
+  color: white;
+  box-shadow: 3px 3px 15px rgb(0, 0, 0), -3px -3px 15px rgb(58, 58, 58);
+}
+
+.Devcard a {
+  transition: 0.4s;
+  color: white;
+}
+
+#github:hover {
+  color: #c9510c;
+}
+
+#instagram:hover {
+  color: #d62976;
+}
+
+#facebook:hover {
+  color: #3b5998;
+}
+
+#twitter:hover {
+  color: #00acee;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .OurTeam .content {
+      padding: 20px; /* Adjust padding for smaller screens */
   }
 
+  .cardsPosition {
+      padding: 0 20px; /* Add horizontal padding for smaller screens */
+  }
+
+  .Devcard {
+      width: calc(50% - 40px); /* Set card width to half of container minus gap */
+  }
+}

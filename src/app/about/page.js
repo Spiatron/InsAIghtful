@@ -9,9 +9,9 @@ const page = () => {
       <div>
         <UpsideAboutUs />
       </div>
-      <div>
+      <span>
         <ServicesAboutUs />
-      </div>
+      </span>
       <div>
         <OurTeamAboutUs />
       </div>

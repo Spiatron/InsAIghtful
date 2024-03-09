@@ -78,7 +78,7 @@ const CreateCourseForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="form-group row align-items-center">
           <label className=" col-form-label col-md-1 text-white font-monospace text-white font-monospace fs-4 mb-4  ">
-            <label htmlFor="title border-white ">Title: </label>
+            <label htmlFor="title border-white"  style={{ fontFamily: "quando"}}>Title: </label>
           </label>{" "}
           {/* Added margin-bottom className here for tittle tag*/}
           <div className="col-md-11">
@@ -97,7 +97,8 @@ const CreateCourseForm = () => {
             <div className="form-group row align-items-center " key={index}>
               <label
                 htmlFor={`units.${index}`}
-                className="col-form-label col-md-1 text-white font-monospace  mb-3 fw-bold"
+                className="col-form-label col-md-1 text-white  mb-3"
+                style={{ fontFamily: "quando"}}
               >
                 Unit {index + 1}
               </label>

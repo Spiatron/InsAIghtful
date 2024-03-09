@@ -1,46 +1,34 @@
-.ServicesAboutUs{
+.ServicesAboutUs {
     width: auto;
     height: auto;
     display: flex;
-    /* background-color: #081b29; */
-   background-color: #0f1e27;
+    background-color: #0f1e27;
 }
 
 .ServicesAboutUs .mainHeading {
     color: #ffc300;
     font-size: 17px;
-    margin-left: 290px;
+    margin-left: 10%; /* Adjust margin for responsiveness */
 }
 
 .ServicesAboutUs .paraHeading {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 8px;
-    margin-left: 290px;
+    margin-left: 10%; /* Adjust margin for responsiveness */
 }
 
 .ServicesAboutUs .para {
     text-align: justify;
-    margin-left: 290px;
-    /* width: 73%; */
-}
-
-.ServicesAboutUs .mainWord {
-    color: #ffc300;
-    /* font-weight: 900; */
-    letter-spacing: 5px;
-
+    margin-left: 10%; /* Adjust margin for responsiveness */
 }
 
 .ServicesAboutUs .content {
     flex: 70;
-    padding: 50px; /* Adjust as needed */
-    color: #fff;  /* Text color */
+    padding: 50px; /* Adjust padding for responsiveness */
+    color: #fff;
     margin-top: 150px;
 }
-
-
-
 
 .cards {
     box-sizing: border-box;
@@ -61,28 +49,44 @@
     font-weight: bolder;
     color: black;
     margin: 10px;
-  }
+}
 
-  .cardsPosition {
+.cardsPosition {
     margin-top: 150px;
     display: flex;
-    justify-content: center; /* Center cards horizontally */
-    padding: 10px 0; /* Add padding as needed */
-    margin-right: 400px;
+    justify-content: center;
+    padding: 10px 0;
+    margin-right: 10%; /* Adjust margin for responsiveness */
 }
 
 .upperCards,
 .lowerCards {
-    /* display: flex; */
     flex-direction: column;
-    align-items: center; /* Center cards vertically */
+    align-items: center;
 }
-  
-  .cards:hover {
+
+.cards:hover {
     border: 1px solid black;
     transform: scale(1.05);
-  }
-  
-  .cards:active {
+}
+
+.cards:active {
     transform: scale(0.95) rotateZ(1.7deg);
-  }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .ServicesAboutUs .mainHeading,
+    .ServicesAboutUs .paraHeading,
+    .ServicesAboutUs .para {
+        margin-left: 5%; /* Adjust margin for smaller screens */
+    }
+
+    .ServicesAboutUs .content {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .cardsPosition {
+        margin-right: 5%; /* Adjust margin for smaller screens */
+    }
+}

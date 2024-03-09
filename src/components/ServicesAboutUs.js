@@ -20,11 +20,10 @@ const ServicesAboutUs = () => {
           </h1>
 
           <hr
-            className="flex-grow-1 bg-secondary"
+            className="flex-grow-1 bg-secondary para"
             style={{
               border: "2px solid #eff7f6",
-              width: "10%",
-              marginLeft: "290px",
+              width: "10%"
             }}
           />
 
@@ -38,16 +37,19 @@ const ServicesAboutUs = () => {
             Plus, enjoy round-the-clock support from our friendly chatbot,
             ensuring a smooth and personalized learning experience for all.
           </h5>
+          
         </div>
 
         <div className="cardsPosition">
           <div className="upperCards">
-            <div className="cards">First Card Content</div>
-            <div className="cards">Second Card Content</div>
+            <div className="cards">Course Generation</div>
+            <div className="cards">User Progress</div>
+            <div className="cards">Chat-bot</div>
           </div>
           <div className="lowerCards">
-            <div className="cards">Third Card Content</div>
-            <div className="cards">Fourth Card Content</div>
+            <div className="cards">Quiz Generation</div>
+            <div className="cards">Progress result</div>
+            <div className="cards">User specified gallery</div>
           </div>
         </div>
       </div>

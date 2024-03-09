@@ -46,8 +46,8 @@ const MainVideoSummary = ({ unitIndex, chapterIndex, chapter, onVideoEnd }) => {
             Summary:
           </h3>
           <p
-            className="fs-6 m-2 text-light"
-            style={{ textAlign: "justify", textJustify: "inter-word" }}
+            className="m-2 text-light"
+            style={{ textAlign: "justify", textJustify: "inter-word", fontSize:"15px" }}
           >
             {chapter.summary}
           </p>

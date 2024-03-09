@@ -11,24 +11,15 @@ const OurTeamAboutUs = () => {
   return (
     <>
       <div className="OurTeam">
-        <div className="container content">
-          {/* <h4 className="mainHeading" style={{ fontFamily: "delius" }}>OUR SERVICES</h4> */}
-
-          {/* <h1 className="paraHeading" style={{ fontFamily: "delius", color: "white" }}>
-                    Our <span className="mainWord">Dev</span> Team
-                </h1>
-
-                <hr className="flex-grow-1 bg-secondary" style={{ border: "2px solid #eff7f6", width: "30%", marginLeft: "" }} /> */}
-        </div>
-
-        <div className="cardsPosition">
+        <div className="DevCardsPosition">
           <div className="Devcard">
             <center>
               <div className="profileimage">
-                <img src="" alt="" />
+                <img src="/images/aboutUs/ahsan.gif" alt="" />
               </div>
               <div className="Name">
-                <p>Ahsan Hafeez</p>
+                <p className="fs-1" style={{ fontFamily: "Kufi" }} >Ahsan Hafeez</p>
+                <p style={{ fontFamily: "kufi" }}>Front-end Developer</p>
               </div>
               <div className="socialbar">
                 <div id="github">
@@ -53,10 +44,11 @@ const OurTeamAboutUs = () => {
           <div className="Devcard">
             <center>
               <div className="profileimage">
-                <img src="" alt="" />
+                <img src="/images/aboutUs/shady.gif" alt="" />
               </div>
               <div className="Name">
-                <p>Shehryar Khatri </p>
+                <p className="fs-1" style={{ fontFamily: "Kufi" }}>Shehryar Khatri </p>
+                <p style={{ fontFamily: "kufi" }}>Integration Developer</p>
               </div>
               <div className="socialbar">
                 <div id="github">
@@ -81,10 +73,11 @@ const OurTeamAboutUs = () => {
           <div className="Devcard">
             <center>
               <div className="profileimage">
-                <img src="" alt="" />
+                <img src="/images/aboutUs/shadow.gif" alt="" />
               </div>
               <div className="Name">
-                <p>Muhammad Ali</p>
+                <p className="fs-1" style={{ fontFamily: "Kufi" }}>Muhammad Ali</p>
+                <p style={{ fontFamily: "kufi" }}>Back-end Developer</p>
               </div>
               <div className="socialbar">
                 <div id="github">

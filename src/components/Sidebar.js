@@ -65,13 +65,14 @@ const Sidebar = async () => {
             aria-labelledby="offcanvasNavbarLabel"
           >
             <div className="offcanvas-header">
-              <h1
+              <Link
+                href="/gallery"
                 className="offcanvas-title fs-2 btn btn-outline-warning"
                 id="offcanvasNavbarLabel"
                 style={{ fontFamily: "angrybird" }}
               >
                 Learnify
-              </h1>
+              </Link>
               <button
                 type="button"
                 className="btn btn-outline-warning"

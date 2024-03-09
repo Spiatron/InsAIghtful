@@ -20,8 +20,8 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 
   return (
     <>
-      <div className={style.GalleryCourseCard}>
-        <div className="card outline bg-dark border border-dark">
+      <div className={style.GalleryCourseCard} >
+        <div className="card bg-dark border border-dark">
           {/*This chunk of code is for course name & picture*/}
           <Link
             className="  font-monospace text-capitalize  text-decoration-none"
