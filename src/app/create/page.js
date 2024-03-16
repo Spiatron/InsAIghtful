@@ -12,7 +12,7 @@ const page = async () => {
   }
   return (
     <div className={style.coursepage}>
-      <div className="container mt-5 ">
+      <div className="container mt-5 mb-5 ">
         <div className="mb-4" style={{ fontFamily: "stencil", color: "" }}>
           <h1 className="text-uppercase fw-bold ">Create Course</h1>
           <h5 className="text-capitalize">Through AI</h5>

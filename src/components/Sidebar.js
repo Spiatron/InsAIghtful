@@ -66,7 +66,7 @@ const Sidebar = async () => {
           >
             <div className="offcanvas-header">
               <Link
-                href="/gallery"
+                href="/"
                 className="offcanvas-title fs-2 btn btn-outline-warning"
                 id="offcanvasNavbarLabel"
                 style={{ fontFamily: "angrybird" }}

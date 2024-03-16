@@ -2,7 +2,7 @@
     background: #ffc300;
     color: #000;
     font-family: inherit;
-    /* padding: 0.35em; */
+    /* padding: 0. 77em; */
     /* padding-left: 1.2em; */
     font-size: 14px;
     font-weight: 500;
@@ -14,10 +14,12 @@
     box-shadow: inset 0 0 1.6em -0.6em #ff9500;
     overflow: hidden;
     position: relative;
-    height: 2.8em;
+    height: 40px;
     padding-right: 3.3em;
     cursor: pointer;
-    box-shadow: 6px 6px #323232  ;
+    margin-top: 3px;
+    border: 2px solid #323232;
+    box-shadow: 4px 4px #323232  ;
   }
   
   .cssbuttons-io-button .icon {
@@ -27,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.2em;
+    height: 2.1em;
     width: 2.2em;
     border-radius: 0.7em;
     box-shadow: 0.1em 0.1em 0.6em 0.2em #ff9500;

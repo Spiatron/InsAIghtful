@@ -1,0 +1,13 @@
+/* BFooter.module.css */
+
+.footerContainer {
+    background-color: #212529; 
+  }
+
+.footerLeft {
+  padding: 10px;
+}
+
+.socialLink {
+  margin-right: 10px;
+}
