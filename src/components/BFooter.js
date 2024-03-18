@@ -7,7 +7,7 @@ import styles from "@/styles/BFooter.module.css";
 
 const BFooter = () => {
   return (
-    <footer className={`d-flex  ${styles.footerContainer}`}>
+    <footer className={`d-flex ${styles.footerContainer}`}>
       <div className={`container col-md-4 d-flex align-items-center  ${styles.footerLeft}`}>
         <span className="mb-3 mb-md-0 text-body-secondary">
           &copy; 2024 Company, Inc

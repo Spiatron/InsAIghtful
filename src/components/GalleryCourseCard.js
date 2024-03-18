@@ -18,6 +18,14 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
     }
   };
 
+  const getFontSizeStyle = (textLength) => {
+    if (textLength <= 10) return { fontSize: "30px" }; // Small course name
+    if (textLength <= 20) return { fontSize: "28px" }; // Medium course name
+    if (textLength <= 60) return { fontSize: "1.36rem" }; // large course name
+    return { fontSize: "24px" }; // Normal course name
+  };
+
+  const fontSizeStyle = getFontSizeStyle(course.name.length);
   return (
     <>
       <div className={style.GalleryCourseCard} >
@@ -38,7 +46,8 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 
             {/* put this (mt-5 p-5) for tag adjustment in below div and h3 */}
             <div className="card-img-overlay">
-              <h3 className="">
+            {/* <h3 className={`course-name ${fontSizeClass}`}> */}
+            <h3 className="course-name" style={fontSizeStyle}>
                 {" "}
                 <span className=" badge rounded-pill text-dark bg-white  bg-opacity-75  ">
                   {course.name}

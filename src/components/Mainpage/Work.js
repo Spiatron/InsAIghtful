@@ -41,7 +41,7 @@ const Work = () => {
   ];
 
   return (
-    <div className="work-section-wrapper" style={{ fontFamily: "kufi", color: "", fontWeight: "bold" }}>
+    <div className="work-section-wrapper" style={{ fontFamily: "kufi", color: "", fontWeight: "bold", marginBottom: "6rem" }}>
       <div className="work-section-top">
         <p className="primary-subheading">Features</p>
         <h1 className="primary-heading">How It <span style={{ fontFamily: "angrybird", color: "#fe9e0d" }} >Works</span></h1>

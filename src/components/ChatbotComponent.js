@@ -210,7 +210,7 @@ export default function ChatbotComponent({ summary }) {
               />
               {sendingMessage ? (
                 <span>
-                  <Spinner animation="border" variant="dark" />
+                  {/* <Spinner animation="border" variant="dark" /> */}
                 </span>
               ) : (
                 <span id="send-btn" onClick={buttonHandler}>

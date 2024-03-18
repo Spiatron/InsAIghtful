@@ -11,7 +11,7 @@
   
   .GalleryCourseCard:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 0 5px #ffffff80;
+    box-shadow: 0 0 0 5px #6c757d;
   }
 
   @media (max-width: 768px) {
