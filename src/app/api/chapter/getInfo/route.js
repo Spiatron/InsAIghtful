@@ -54,9 +54,13 @@ export async function POST(req, res) {
         ];
 
         options = options.sort(() => Math.random() - 0.5);
+
+        // Find the index of the correct answer after shuffling
+        const correctIndex = options.indexOf(question.answer);
+
         return {
           question: question.question,
-          answer: question.answer,
+          answer: correctIndex,
           options: JSON.stringify(options),
           chapterId: chapterId,
         };

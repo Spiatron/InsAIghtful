@@ -2,7 +2,6 @@
 import "../styles/fonts.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 
-
 const QuizCards = ({
   questions,
   videoDone,
@@ -16,7 +15,8 @@ const QuizCards = ({
 
   useEffect(() => {
     const hasAnswerForAllQuestions = questions.every(
-      (question) => answers[question.id]
+      (question) =>
+        answers[question.id] !== undefined && answers[question.id] !== null
     );
 
     if (
@@ -95,16 +95,19 @@ const QuizCards = ({
                           value={option}
                           id={question.id + index.toString()}
                           name={question.id}
-                          onChange={(e) => {
+                          onChange={() => {
                             setAnswers((prev) => ({
                               ...prev,
-                              [question.id]: e.target.value,
+                              [question.id]: index,
                             }));
                           }}
                           defaultChecked={
-                            extractedAnswers[question.id] == option
+                            extractedAnswers[question.id] == index
                           }
-                          disabled={extractedAnswers[question.id]}
+                          disabled={
+                            extractedAnswers[question.id] !== undefined &&
+                            extractedAnswers[question.id] !== null
+                          }
                         />
                         {option}
                       </label>

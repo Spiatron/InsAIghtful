@@ -91,9 +91,9 @@ model Question {
   chapterId String
 
   question       String  @db.VarChar(3000)
-  answer         String  @db.VarChar(3000)
+  answer         Int
   options        String  @db.VarChar(3000)
-  selectedAnswer String?
+  selectedAnswer Int?
   chapter        Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@index([chapterId], name: "chapterId")
