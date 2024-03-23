@@ -3,6 +3,7 @@ import Link from "next/link";
 import GalleryCourseCard from "@/components/GalleryCourseCard";
 import React, { useState, useEffect, useRef } from "react";
 import style from "@/styles/galleryPage.module.css";
+import Search from "./Search";
 
 const GalleryPage = ({ userId }) => {
   const [loading, setLoading] = useState(true);
@@ -78,6 +79,8 @@ const GalleryPage = ({ userId }) => {
 
   return (
     <div>
+      <Search courses={courseList}/>
+
       {courseList.map((course) => {
         return (
           <GalleryCourseCard
