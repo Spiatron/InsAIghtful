@@ -31,25 +31,26 @@ const Search = ({ courses }) => {
   };
 
   return (
-    <div className="container">
+    <div className="SearchContainer">
       <input
         type="text"
         placeholder="Search..."
         value={searchTerm}
         onChange={handleSearch}
+        name="text" className="SearchBar"
       />
       {searchResults.length > 0 && (
-        <ul>
+        <ul className="searchResultBox">
           {searchResults.map((result) => (
-            <li
+            <Link className="SearchText" href={`/course/${result.id}/0/0`}>
+            <li className="searchResultCourse"
               key={result.courseName}
               onClick={() => handleResultClick(result)}
               style={{ cursor: "pointer" }}
             >
-              <Link href={`/course/${result.id}/0/0`}>
                 {result.courseName}
-              </Link>
             </li>
+              </Link>
           ))}
         </ul>
       )}

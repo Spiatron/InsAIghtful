@@ -1,6 +1,7 @@
 "use client";
 import "../styles/fonts.module.css";
 import React, { useState, useEffect, useCallback } from "react";
+import style from "@/styles/QuizcardPopupsStyles.css";
 
 const QuizCards = ({
   questions,
@@ -12,6 +13,8 @@ const QuizCards = ({
   const [answers, setAnswers] = useState(extractedAnswers || {});
   const [questionState, setQuestionState] = useState(extractedBooleans || {});
   const [isCheckButtonDisabled, setIsCheckButtonDisabled] = useState(true);
+  const [showHistoryPopup, setShowHistoryPopup] = useState(false); //Usesate for HistoryPopup
+  const [showResultPopup, setShowResultPopup] = useState(false); //Usestate for  ResultPopup
 
   useEffect(() => {
     const hasAnswerForAllQuestions = questions.every(
@@ -47,18 +50,29 @@ const QuizCards = ({
     }
   }, [answers, questionState, questions, videoDone]);
 
+  //Function to trigger History and Result popup
+  const toggleHistoryPopup = () => {
+    setShowHistoryPopup(!showHistoryPopup);
+  };
+
+  const toggleResultPopup = () => {
+    setShowResultPopup(!showResultPopup);
+  };
+
   return (
     <div className="QuizCard">
       <div
         className="bg-black bg-opacity-50 rounded-4 p-2"
         style={{ height: "", width: "" }}
       >
+        <button onClick={toggleHistoryPopup}>history </button>
         <h5
           className="fs-1 text-center text-capitalize fw-bold"
           style={{ fontFamily: "angrybird", color: "#DEDEDE" }}
         >
           Concept Check
         </h5>
+        <button onClick={toggleResultPopup}>Result</button>
 
         <div className=" " style={{ height: "", width: "" }}>
           {questions.map((question) => {
@@ -130,6 +144,27 @@ const QuizCards = ({
           </button>
         </div>
       </div>
+      {/* History Popup */}
+      {showHistoryPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h2>History</h2>
+            <button onClick={toggleHistoryPopup}>Close</button>
+            {/* History content goes here */}
+          </div>
+        </div>
+      )}
+
+      {/* Result Popup */}
+      {showResultPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h2>Result</h2>
+            <button onClick={toggleResultPopup}>Close</button>
+            {/* Result content goes here */}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

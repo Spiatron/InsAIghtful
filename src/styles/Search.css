@@ -1,52 +1,60 @@
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.input-container {
-  position: relative;
-}
-
-input[type="text"] {
+.SearchBar{
+  border-radius: 10px;
+  outline: 2px solid #FEBF00;
+  border: 0;
+  background-color: #e2e2e2;
+  outline-offset: 3px;
+  padding: 10px 1rem;
+  transition: 0.25s;
+  color: #011627;
   width: 50%;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
 }
 
-ul {
+.SearchBar:focus {
+  outline-offset: 5px;
+  background-color: #fff
+}
+
+.SearchContainer {
+  /* max-width: 1000px; */
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.searchResultBox{
   list-style: none;
   padding: 0;
-  margin: 10px 0;
+  margin: 40px;
+  width: 48%;
+  position: absolute;
+  background-color: #011627;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+  border-radius: 8px; /* Apply border radius for rounded corners */
+  font-family: Arial, sans-serif; /* Specify a font family for better readability */
+  
 }
 
-li {
+.searchResultCourse {
   padding: 5px;
   cursor: pointer;
   background-color: #1c1c1c;
   border-radius: 5px;
+  border-bottom: 1px solid #375e97; /* Add a bottom border to create the divider */
 }
 
-li:hover {
+.searchResultCourse:last-child{
+  border-bottom: none; /* Remove bottom border from the last list item */
+}
+
+.searchResultCourse:hover {
   background-color: #000000;
 }
 
-.selected-input {
-  margin-top: 10px;
-  font-weight: bold;
+.SearchText{
+  color: #fff; /* Set text color to white */
+  text-decoration: none;
 }
 
-.selected-word {
-  margin-top: 5px;
-  color: #888;
-}
