@@ -201,6 +201,46 @@ const CoursePage = ({
     }
   };
 
+  const handleChapterReattempt = async () => {
+    const shouldReset = window.confirm(
+      `Your chapter quiz progress will be reset. Are you sure?`
+    );
+
+    if (shouldReset) {
+      try {
+        const response = await fetch("/api/progress/chapterReattempt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chapterId: chapter.id,
+          }),
+        });
+
+        if (response.ok) {
+          const { [chapter.id]: omittedKeyQuiz, ...restQuiz } = quizDone;
+          setQuizDone(restQuiz);
+          setAnswers({});
+          setBooleans({});
+          setResetKey((prevKey) => prevKey + 1);
+          setTotalProgress(totalProgress - increment);
+          alert("Chapter reattempt complete!");
+        } else {
+          console.error("API call failed");
+          alert("Failed to reattempt chapter. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during API call:", error);
+        alert(
+          "An error occurred while reattempting chapter. Please try again later."
+        );
+      }
+    } else {
+      alert("Chapter reattempt canceled.");
+    }
+  };
+
   // This function is used for Navigation of chapters
   const unit = course.units[unitIndex];
   const nextUnit = course.units[unitIndex + 1];
@@ -272,7 +312,6 @@ const CoursePage = ({
         </div>
       </div>
 
-
       <div className="row">
         {/* Course sidebar */}
         <div className="col-md-3 mt-4">
@@ -300,8 +339,9 @@ const CoursePage = ({
                 {prevChapter ? (
                   <Link
                     className="text-decoration-none"
-                    href={`/course/${course.id}/${unitIndex}/${chapterIndex - 1
-                      }`}
+                    href={`/course/${course.id}/${unitIndex}/${
+                      chapterIndex - 1
+                    }`}
                   >
                     <button className="Previousbutton">
                       <div className="PreviousArrow">
@@ -314,14 +354,20 @@ const CoursePage = ({
                   prevUnit && (
                     <Link
                       className="text-decoration-none"
-                      href={`/course/${course.id}/${unitIndex - 1}/${prevUnit.chapters.length - 1
-                        }`}
+                      href={`/course/${course.id}/${unitIndex - 1}/${
+                        prevUnit.chapters.length - 1
+                      }`}
                     >
                       <button className="PreviousUnitButton">
                         <div className="PreviousUnitButtonArrow">
                           <FastForward color="black" />
                         </div>
-                        <span className="UnitButtonBtnText" style={{ fontFamily: "angrybird" }} >Previous Unit</span>
+                        <span
+                          className="UnitButtonBtnText"
+                          style={{ fontFamily: "angrybird" }}
+                        >
+                          Previous Unit
+                        </span>
                       </button>
                     </Link>
                   )
@@ -331,8 +377,9 @@ const CoursePage = ({
                 {nextChapter ? (
                   <Link
                     className="text-decoration-none"
-                    href={`/course/${course.id}/${unitIndex}/${chapterIndex + 1
-                      }`}
+                    href={`/course/${course.id}/${unitIndex}/${
+                      chapterIndex + 1
+                    }`}
                   >
                     <button className="Nextbutton">
                       <span className="BtnText">Next</span>
@@ -348,7 +395,12 @@ const CoursePage = ({
                       href={`/course/${course.id}/${unitIndex + 1}/0`}
                     >
                       <button className="NextUnitButton">
-                        <span className="NextUnitButtonBtnText" style={{ fontFamily: "angrybird" }}>Next Unit</span>
+                        <span
+                          className="NextUnitButtonBtnText"
+                          style={{ fontFamily: "angrybird" }}
+                        >
+                          Next Unit
+                        </span>
                         <div className="Unitarrow">
                           <FastForward color="black" />
                         </div>
@@ -366,11 +418,14 @@ const CoursePage = ({
           <div className="">
             <QuizCards
               key={resetKey}
+              chapterId={chapter.id}
+              chapterName={chapter.name}
               videoDone={videoDone[chapter.id]}
               questions={questions}
               extractedAnswers={answers}
               extractedBooleans={booleans}
               onQuizEnd={handleQuizEnd}
+              onChapterReattempt={handleChapterReattempt}
             />
           </div>
         </div>

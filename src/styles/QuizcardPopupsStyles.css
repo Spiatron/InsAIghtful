@@ -1,23 +1,22 @@
 .popup-overlay {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px; /* Fixed size of the popup overlay */
-    height: 500px; /* Fixed size of the popup overlay */
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Adjust the z-index as needed */
-  }
-  
-  .popup {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 4px;
-    width: 300px; /* Adjust the width of the popup */
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; /* Fixed size of the popup overlay */
+  height: 500px; /* Fixed size of the popup overlay */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Adjust the z-index as needed */
+}
+
+.Historypopup {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  width: 300px; /* Adjust the width of the popup */
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

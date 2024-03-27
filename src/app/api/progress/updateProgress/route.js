@@ -64,7 +64,31 @@ export async function POST(req, res) {
           data: { selectedAnswer },
         });
       }
-      console.log("New user quiz answers updated successfully");
+
+      // Fetch all questions for the given chapterId
+      const allQuestions = await prisma.question.findMany({
+        where: {
+          chapterId,
+        },
+      });
+
+      // Filter questions where selectedAnswer is not null and matches answer
+      const matchingQuestions = allQuestions.filter((question) => {
+        return (
+          question.selectedAnswer !== null &&
+          question.selectedAnswer === question.answer
+        );
+      });
+
+      // Create a new entry in the History model
+      await prisma.history.create({
+        data: {
+          chapterId, // Assuming chapterId is already defined
+          correct: matchingQuestions.length,
+        },
+      });
+
+      console.log("New user quiz answers and history updated successfully");
       return NextResponse.json({
         success: true,
       });

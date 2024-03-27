@@ -82,6 +82,7 @@ model Chapter {
   summary            String?    @db.VarChar(3000)
   unit               Unit       @relation(fields: [unitId], references: [id], onDelete: Cascade)
   questions          Question[]
+  history            History[]
 
   @@index([unitId], name: "unitId")
 }
@@ -108,4 +109,13 @@ model UserProgress {
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId], name: "courseId")
+}
+
+model History {
+  id        Int     @id @default(autoincrement())
+  chapterId String
+  correct   Int
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@index([chapterId], name: "chapterId")
 }
