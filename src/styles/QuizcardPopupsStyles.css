@@ -1,22 +1,461 @@
-.popup-overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px; /* Fixed size of the popup overlay */
-  height: 500px; /* Fixed size of the popup overlay */
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Adjust the z-index as needed */
-}
+  /*Popup-CSS*/
+  .History-popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(10px);
+  }
 
-.Historypopup {
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 4px;
-  width: 300px; /* Adjust the width of the popup */
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+  .History-popup {
+    /* Ensure the popup content is on top of the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+
+  }
+
+  .History-popup-inner {
+    background-color: #e8e8e8;
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+    padding: 18px;
+
+  }
+
+  .History-popup-inner:hover {
+    border: 3px solid #fbca1f;
+  }
+
+  .History-popup-content {
+    padding: 1px;
+    color: #000;
+  }
+
+
+  /*History-popup error message*/
+  .History-error {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    background: #EF665B;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px -3px #111;
+  }
+
+  .History-error__icon {
+    margin-right: 10px;
+  }
+
+  .HistoryIcon-path {
+    fill: #fff;
+  }
+
+  .History-error__title {
+    transform: translateY(3px);
+    font-weight: 500;
+    font-size: 22px;
+    color: #fff;
+  }
+
+
+
+
+  /*Popup Close Button*/
+  .History-popup-closebtn {
+    background-color: transparent;
+    position: fixed;
+    margin-top: 12px;
+    margin-left: 21px;
+    border: none;
+  }
+
+  .History-popup-closebtn::after {
+    content: 'close';
+    position: absolute;
+    top: -130%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(168, 7, 7);
+    padding: 4px 8px;
+    border-radius: 5px;
+    transition: .2s linear;
+    transition-delay: .2s;
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .History-popup-icon {
+    transform: scale(1.5);
+    background-color: #d00000;
+    transition: .2s linear;
+  }
+
+  .History-popup-closebtn:hover>.History-popup-icon {
+    transform: scale(1.5);
+    background-color: rgb(168, 7, 7);
+  }
+
+  .History-popup-closebtn:hover::after {
+    visibility: visible;
+    opacity: 1;
+    top: -160%;
+  }
+
+
+
+
+  /*HistoryPopup Title Button*/
+  .HistoryPopup-button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #0f1923;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all .15s ease;
+    text-align: center;
+  }
+
+  .HistoryPopup-button::before,
+  .HistoryPopup-button::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid #7D8082;
+    transition: all .15s ease;
+  }
+
+  .HistoryPopup-button::before {
+    top: 0;
+    border-bottom-width: 0;
+  }
+
+  .HistoryPopup-button::after {
+    bottom: 0;
+    border-top-width: 0;
+  }
+
+  .HistoryPopup-button:active,
+  .HistoryPopup-button:focus {
+    outline: none;
+  }
+
+  .HistoryPopup-button:active::before,
+  .HistoryPopup-button:active::after {
+    right: 3px;
+    left: 3px;
+  }
+
+  .HistoryPopup-button:active::before {
+    top: 3px;
+  }
+
+  .HistoryPopup-button:active::after {
+    bottom: 3px;
+  }
+
+  .HistoryPopup-button_lg {
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #292929;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+
+  .HistoryPopup-button_lg::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: #292929;
+  }
+
+  .HistoryPopup-button_lg::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #292929;
+    transition: all .2s ease;
+  }
+
+  .HistoryPopup-button_sl {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: -8px;
+    width: 0;
+    background-color: #ff4655;
+    transform: skew(-15deg);
+    transition: all .2s ease;
+  }
+
+  .HistoryPopup-button_text {
+    position: relative;
+    /* letter-spacing: 10px; */ /*HistoryPopup Title spacing*/
+    /* font-size: 30px;  */ /*HistoryPopup Tittle FontSize*/
+  }
+
+  .HistoryPopup-button:hover {
+    color: #292929;
+  }
+
+  .HistoryPopup-button:hover .HistoryPopup-button_sl {
+    width: calc(100% + 15px);
+  }
+
+  .HistoryPopup-button:hover .HistoryPopup-button_lg::after {
+    background-color: #fff;
+  }
+
+  .HistoryPopup-button-position {
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+  /*HistoryPopup Attempt-tag*/
+  .History-popupAttempt {
+    --btn-default-bg: rgb(41, 41, 41);
+    --btn-padding: 10px 10px;
+    --btn-hover-bg: rgb(51, 51, 51);
+    --btn-transition: .3s;
+    --btn-letter-spacing: .1rem;
+    --btn-animation-duration: 1.2s;
+    --btn-shadow-color: rgba(0, 0, 0, 0.137);
+    --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
+    --hover-btn-color: #fbca1f;
+    --default-btn-color: #fff;
+    --font-size: 16px;
+    /* 👆 this field should not be empty */
+    --font-weight: 600;
+    /* 👆 this field should not be empty */
+  }
+
+  /* button settings 👆 */
+  .History-popupAttempt {
+    box-sizing: border-box;
+    padding: var(--btn-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--default-btn-color);
+    font: var(--font-weight) var(--font-size) var(--font-family);
+    background: var(--btn-default-bg);
+    border: none;
+    cursor: pointer;
+    transition: var(--btn-transition);
+    overflow: hidden;
+    box-shadow: var(--btn-shadow);
+    border-radius: 10px;
+    width: 133px;
+  }
+
+
+  .History-popupAttempt .Attempt-span {
+    letter-spacing: var(--btn-letter-spacing);
+    transition: var(--btn-transition);
+    box-sizing: border-box;
+    position: relative;
+    background: inherit;
+  }
+
+  .History-popupAttempt .Attempt-span::before {
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    background: inherit;
+  }
+
+  .History-popupAttempt:hover,
+  .History-popupAttempt:focus {
+    background: var(--btn-hover-bg);
+  }
+
+  .History-popupAttempt:hover .Attempt-span,
+  .History-popupAttempt:focus .Attempt-span {
+    color: var(--hover-btn-color);
+  }
+
+  .History-popupAttempt:hover .Attempt-span::before,
+  .History-popupAttempt:focus .Attempt-span::before {
+    animation: chitchat linear both var(--btn-animation-duration);
+  }
+
+  @keyframes chitchat {
+    0% {
+      content: "#";
+    }
+
+    5% {
+      content: ".";
+    }
+
+    10% {
+      content: "^{";
+    }
+
+    15% {
+      content: "-!";
+    }
+
+    20% {
+      content: "#$_";
+    }
+
+    25% {
+      content: "№:0";
+    }
+
+    30% {
+      content: "#{+.";
+    }
+
+    35% {
+      content: "@}-?";
+    }
+
+    40% {
+      content: "?{4@%";
+    }
+
+    45% {
+      content: "=.,^!";
+    }
+
+    50% {
+      content: "?2@%";
+    }
+
+    55% {
+      content: "\;1}]";
+    }
+
+    60% {
+      content: "?{%:%";
+      right: 0;
+    }
+
+    65% {
+      content: "|{f[4";
+      right: 0;
+    }
+
+    70% {
+      content: "{4%0%";
+      right: 0;
+    }
+
+    75% {
+      content: "'1_0<";
+      right: 0;
+    }
+
+    80% {
+      content: "{0%";
+      right: 0;
+    }
+
+    85% {
+      content: "]>'";
+      right: 0;
+    }
+
+    90% {
+      content: "4";
+      right: 0;
+    }
+
+    95% {
+      content: "2";
+      right: 0;
+    }
+
+    100% {
+      content: "";
+      right: 0;
+    }
+  }
+
+
+
+  /* HistoryPopup Quiz result */
+  .HistoryPopup-Attempt-result {
+    /* width: 65%; */
+    background: #fff;
+    font-family: inherit;
+    /* padding: 0.6em 1.3em; */
+    padding: 2px 10px;
+    font-weight: 900;
+    font-size: 20px;
+    border: 3px solid black;
+    border-radius: 0.4em;
+    box-shadow: 0.1em 0.1em;
+    color: #000;
+    cursor: pointer;
+    text-align: left;
+    width: 220px;
+  }
+
+  /* HistoryPopup Quiz result percentage*/
+  .HistoryPopup-Attempt-resultScore {
+    background: #fed766;
+    font-family: inherit;
+    padding: 2px 10px;
+    font-weight: 900;
+    font-size: 19px;
+    display: inline-flexbox;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #000;
+    border-radius: 0.4em;
+    box-shadow: 0.1em 0.1em;
+    cursor: pointer;
+    margin-left: 4px;
+    color: #000;
+    width: 230px;
+  }

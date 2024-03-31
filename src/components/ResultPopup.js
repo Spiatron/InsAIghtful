@@ -114,12 +114,3 @@ const ResultPopup = ({ courseId, onClose }) => {
 };
 
 export default ResultPopup;
-
-
-// green color
-// 43c59e
-
-// red color
-// ff4655
-
-//button_sl

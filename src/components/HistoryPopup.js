@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import styles from "@/styles/PopupStyles.css";
+import Spinner from 'react-bootstrap/Spinner';
+import styles from "@/styles/QuizcardPopupsStyles.css";
 import { X } from "lucide-react";
+import { BiSolidErrorAlt } from "react-icons/bi";
 
 const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
   const [historyData, setHistoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fontSize, setFontSize] = useState(24); // Initial font size for chapterName
+  const [letterSpacing, setLetterSpacing] = useState(""); // Initial letter spacing
 
   useEffect(() => {
     const fetchHistoryData = async () => {
@@ -35,34 +39,69 @@ const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
     fetchHistoryData();
   }, []);
 
+   // Function to dynamically set font size based on text length
+   const updateFontSize = () => {
+    const textLength = chapterName.length;
+    if (textLength > 22) {
+      setFontSize(18); // Reduce font size for longer names
+      setLetterSpacing("0.313em"); // Adjust letter spacing for longer names
+    } else {
+      setFontSize(24); // Default font size
+      setLetterSpacing("0.625em"); // Default letter spacing
+    }
+  };
+
+  // Call updateFontSize whenever chapterName changes
+  useEffect(() => {
+    updateFontSize();
+  }, [chapterName]); 
   return (
-    <div className="popup-background">
-      <div className="popup">
-        <div className="popup-inner">
-          <div className="popup-content">
+    <div className="History-popup-background">
+      <div className="History-popup mt-5">
+        <div className="History-popup-inner">
+          <div className="History-popup-content">
             <div>
-              <h2>{chapterName}</h2>
+              <h1 className="HistoryPopup-button" style={{ fontFamily: "Kufi", color: "", fontWeight: "", fontSize: `${fontSize}px` , letterSpacing: letterSpacing }}>
+                <span className="HistoryPopup-button_lg">
+                  <span className="HistoryPopup-button_sl"></span>
+                  <span className="HistoryPopup-button_text">{chapterName}</span>
+                </span>
+              </h1>
               {isLoading ? (
-                <p>Loading...</p>
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden container"></span>
+                </Spinner>
               ) : historyData.length === 0 ? (
-                <p>No history found</p>
+                <div className="History-error">
+                  <div className="History-error__icon ">
+                    <BiSolidErrorAlt size={30} className="HistoryIcon-path" />
+                  </div>
+                  <div className="History-error__title" style={{ fontFamily: "Kufi", color: "", fontWeight: "", fontSize: "" }}>No history found</div>
+                </div>
               ) : (
                 historyData.map((entry, index) => (
-                  <div key={entry.id}>
-                    <p>Attempt {index + 1}</p>
-                    <p>
-                      You got {entry.correct} out of 3 answers correct and your
-                      chapter score was {((entry.correct / 3) * 100).toFixed(2)}%
-                    </p>
+                  <div key={entry.id} className="d-flex flex-row align-items-center">
+                    <button className="History-popupAttempt m-2">
+                      <span className="Attempt-span" style={{ fontFamily: "quando", color: "", fontWeight: "", }}>
+                        Attempt {index + 1}
+                      </span>
+                    </button>
+                    <div className="mb-3 mt-3">
+                    <button className="HistoryPopup-Attempt-result" style={{ fontFamily: "Kufi"}}>
+                       Quiz Score: {entry.correct}/3
+                    </button>
+                    <button className="HistoryPopup-Attempt-resultScore ms-2" style={{ fontFamily: "Kufi"}}>
+                    Percentage was {((entry.correct / 3) * 100).toFixed(2)}%</button>
+                    </div>
                   </div>
                 ))
               )}
             </div>
           </div>
-          <div className="popup-closebtn-position">
-            <button className="popup-closebtn" onClick={onClose}>
+          <div className="Historypopup-closebtn-position">
+            <button className="History-popup-closebtn" onClick={onClose}>
               <X
-                className="popup-icon"
+                className="History-popup-icon"
                 size={30}
                 strokeWidth={3}
                 absoluteStrokeWidth

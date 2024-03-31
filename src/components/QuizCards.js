@@ -1,8 +1,8 @@
 "use client";
 import "../styles/fonts.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import style from "@/styles/QuizcardPopupsStyles.css";
 import HistoryPopup from "./HistoryPopup";
+import style from "@/styles/buttons/QuizCardStyles.css"
 
 const QuizCards = ({
   chapterId,
@@ -64,31 +64,33 @@ const QuizCards = ({
         className="bg-black bg-opacity-50 rounded-4 p-2"
         style={{ height: "", width: "" }}
       >
-        {Object.keys(questionState).length > 0 && (
-          <button onClick={onChapterReattempt}>Reattempt</button>
-        )}
-        <h5
-          className="fs-1 text-center text-capitalize fw-bold"
-          style={{ fontFamily: "angrybird", color: "#DEDEDE" }}
-        >
-          Concept Check
-        </h5>
-        <button onClick={toggleHistoryPopup}>History</button>
+        <div className="d-flex flex-row align-items-center">
+          {Object.keys(questionState).length > 0 && (
+            <button className="Reattempt-button" onClick={onChapterReattempt}>Reattempt</button>
+          )}
+          <h5
+            className="fs-2 text-center text-capitalize fw-bold mt-3 container"
+            style={{ fontFamily: "angrybird", color: "#DEDEDE" }}
+          >
+            Concept Check
+          </h5>
+          <button className="History-button" onClick={toggleHistoryPopup}>History</button>
+        </div>
 
-        <div className=" " style={{ height: "", width: "" }}>
+        <div className="" style={{ height: "", width: "" }}>
           {questions.map((question) => {
             const options = JSON.parse(question.options);
             return (
               <div
-                className="border border-secondary rounded-4 p-2 mt-4 text-start"
+                className="border border-secondary rounded-4 p-2 mt-4 text-start Quiz"
                 key={question.id}
                 style={{
                   backgroundColor:
                     questionState[question.id] === true
-                      ? "#689C0D"
+                      ? "#27a300"
                       : questionState[question.id] === false
-                      ? "#ff0000"
-                      : "",
+                        ? "#ae0000"
+                        : "",
                   fontFamily: "quando",
                   color: "#E9EAEC",
                   fontSize: "14px",
@@ -124,7 +126,9 @@ const QuizCards = ({
                             extractedAnswers[question.id] !== null
                           }
                         />
-                        {option}
+                        <span className="m-1">
+                          {option}
+                        </span>
                       </label>
                     </div>
                   ))}
@@ -135,8 +139,12 @@ const QuizCards = ({
         </div>
         <div className="d-grid mt-4">
           <button
-            style={{ fontFamily: "quando", color: "", fontWeight: "bold" }}
-            className="btn btn-success"
+            style={{
+              fontFamily: "quando",
+              fontWeight: "bold",
+              transition: "color 0.3s ease-in-out", // Adding a transition effect for color change
+            }}
+            className="CheckAnswer-button"
             type="button"
             onClick={checkAnswer}
             disabled={isCheckButtonDisabled}

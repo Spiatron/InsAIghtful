@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import "../styles/fonts.module.css";
+import style from "@/styles/Course-SideBarStyles.css"
 
 const CourseSideBar = ({
   course,
@@ -57,7 +58,7 @@ const CourseSideBar = ({
 
   return (
     <div
-      className=" mb-5 bg-black lh-1 bg-opacity-50 rounded-4 p-3"
+      className="Course-sideBar mb-5 bg-black lh-1 bg-opacity-50 rounded-4 p-3"
       style={{ height: "", width: "" }}
     >
       <h5

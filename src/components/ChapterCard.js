@@ -77,8 +77,8 @@ const ChapterCard = forwardRef(
             </h5>
           </div>
           <div className="col-auto m-1">
-            { isPending && <div class="spinner-border text-warning" role="status">
-              <span class="visually-hidden">Loading...</span>
+            {  isPending && <div className="spinner-border text-warning" style={{width: "1.3rem", height: "1.3rem"}} role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>}
           </div>
         </div>

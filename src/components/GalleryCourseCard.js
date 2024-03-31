@@ -46,7 +46,6 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 
             {/* put this (mt-5 p-5) for tag adjustment in below div and h3 */}
             <div className="card-img-overlay">
-            {/* <h3 className={`course-name ${fontSizeClass}`}> */}
             <h3 className="course-name" style={fontSizeStyle}>
                 {" "}
                 <span className=" badge rounded-pill text-dark bg-white  bg-opacity-75  ">
@@ -58,12 +57,12 @@ const GalleryCourseCard = ({ course, handleDelete }) => {
 
           {/*This chunk of code is for units*/}
           <ul className=" list-group list-group-flush">
-            <li className=" list-group-item bg-dark  ">
-              <h5 className="text-light font-monospace ">Units:</h5>
+            <li className=" list-group-item bg-dark">
+              <h5 className="text-light font-monospace">Units:</h5>
               {course.units.map((unit, unitIndex) => {
                 return (
                   <Link
-                    className="text-start btn btn-outline-success fw-bold m-1"
+                    className="text-start btn btn-outline-light fw-bold m-1"
                     href={`/course/${course.id}/${unitIndex}/0`}
                     key={unit.id}
                   >

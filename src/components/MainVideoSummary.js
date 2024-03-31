@@ -38,7 +38,7 @@ const MainVideoSummary = ({ unitIndex, chapterIndex, chapter, onVideoEnd }) => {
             style={{ height: "100%", width: "100%" }}
           />
         </div>
-        <div className="card text-bg-success m-2">
+        <div className="card text-bg-secondary m-2">
           <h3
             className="fs-3 m-2 text-light"
             style={{ fontFamily: "asul", color: "#C3CED6" }}
@@ -47,7 +47,7 @@ const MainVideoSummary = ({ unitIndex, chapterIndex, chapter, onVideoEnd }) => {
           </h3>
           <p
             className="m-2 text-light"
-            style={{ textAlign: "justify", textJustify: "inter-word", fontSize:"15px" }}
+            style={{ fontFamily: "asul",textAlign: "justify", textJustify: "inter-word", fontSize:"15.5px" }}
           >
             {chapter.summary}
           </p>
