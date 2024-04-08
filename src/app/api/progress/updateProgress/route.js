@@ -65,6 +65,8 @@ export async function POST(req, res) {
         });
       }
 
+      let updatedCorrectAnswersArray = [];
+
       // Fetch all questions for the given chapterId
       const allQuestions = await prisma.question.findMany({
         where: {
@@ -75,18 +77,40 @@ export async function POST(req, res) {
       // Filter questions where selectedAnswer is not null and matches answer
       const matchingQuestions = allQuestions.filter((question) => {
         return (
-          question.selectedAnswer !== null &&
           question.selectedAnswer === question.answer
         );
       });
 
-      // Create a new entry in the History model
-      await prisma.history.create({
-        data: {
-          chapterId, // Assuming chapterId is already defined
-          correct: matchingQuestions.length,
+      const historyEntry = await prisma.chapterHistory.findFirst({
+        where: {
+          chapterId,
         },
       });
+
+      if (historyEntry) {
+        updatedCorrectAnswersArray = await JSON.parse(historyEntry.correctAnswers)
+        await updatedCorrectAnswersArray.push(matchingQuestions.length)
+
+        // Update existing entry in the History table
+        await prisma.chapterHistory.update({
+          where: {
+            id: historyEntry.id,
+          },
+          data: {
+            correctAnswers: JSON.stringify(updatedCorrectAnswersArray),
+          },
+        });
+      } else {
+        await updatedCorrectAnswersArray.push(matchingQuestions.length)
+
+        // Create a new entry in the History model
+        await prisma.chapterHistory.create({
+          data: {
+            chapterId,
+            correctAnswers: JSON.stringify(updatedCorrectAnswersArray),
+          },
+        });
+      }
 
       console.log("New user quiz answers and history updated successfully");
       return NextResponse.json({

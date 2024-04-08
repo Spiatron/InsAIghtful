@@ -1,13 +1,14 @@
 "use client";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import GalleryCourseCard from "@/components/GalleryCourseCard";
-import React, { useState, useEffect, useRef } from "react";
 import style from "@/styles/galleryPage.module.css";
-import Search from "./Search";
+import styles from "@/styles/Search.css";
 
 const GalleryPage = ({ userId }) => {
   const [loading, setLoading] = useState(true);
-  const [courseList, setCourseList] = useState();
+  const [courseList, setCourseList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchCourses = async () => {
     try {
@@ -27,10 +28,9 @@ const GalleryPage = ({ userId }) => {
       }
 
       const { courses } = await response.json();
-      await courses.reverse();
+      await courses.reverse(); // Reverse the order of courses
       setCourseList(courses);
-      // Update loading state
-      setLoading(false);
+      setLoading(false); // Update loading state
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
@@ -68,6 +68,14 @@ const GalleryPage = ({ userId }) => {
 
   const linkButtonRef = useRef();
 
+  // Filtering function to filter courses based on search term
+  const filteredCourses = courseList.filter((course) =>
+    course.name
+      .toLowerCase()
+      .replace(/\s/g, "")
+      .includes(searchTerm.toLowerCase().replace(/\s/g, ""))
+  );
+
   // Render loading indicator if data is still being fetched
   if (loading) {
     return (
@@ -78,19 +86,29 @@ const GalleryPage = ({ userId }) => {
   }
 
   return (
-    <div>
-      <Search courses={courseList}/>
-
-      {courseList.map((course) => {
-        return (
+    <>
+      <div className="SearchContainer">
+        {/* Search input field */}
+        <input
+          type="text"
+          placeholder="Search courses..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          name="text"
+          className="SearchBar"
+        />
+      </div>
+      <div>
+        {/* Render filtered courses */}
+        {filteredCourses.map((course) => (
           <GalleryCourseCard
             course={course}
             key={course.id}
             handleDelete={handleDelete}
           />
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
 

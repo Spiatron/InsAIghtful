@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { BiSolidErrorAlt } from "react-icons/bi";
 
 const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
-  const [historyData, setHistoryData] = useState([]);
+  const [historyData, setHistoryData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [fontSize, setFontSize] = useState(24); // Initial font size for chapterName
   const [letterSpacing, setLetterSpacing] = useState(""); // Initial letter spacing
@@ -29,7 +29,7 @@ const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
         }
 
         const data = await response.json();
-        setHistoryData(data.historyEntries);
+        setHistoryData(data.historyEntry);
         setIsLoading(false); // Set loading state to false when data is fetched
       } catch (error) {
         console.error("Error fetching history data:", error);
@@ -71,7 +71,7 @@ const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
                 <Spinner animation="border" role="status">
                   <span className="visually-hidden container"></span>
                 </Spinner>
-              ) : historyData.length === 0 ? (
+              ) : historyData == null ? (
                 <div className="History-error">
                   <div className="History-error__icon ">
                     <BiSolidErrorAlt size={30} className="HistoryIcon-path" />
@@ -79,8 +79,8 @@ const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
                   <div className="History-error__title" style={{ fontFamily: "Kufi", color: "", fontWeight: "", fontSize: "" }}>No history found</div>
                 </div>
               ) : (
-                historyData.map((entry, index) => (
-                  <div key={entry.id} className="d-flex flex-row align-items-center">
+                JSON.parse(historyData).map((correctAnswer, index) => (
+                  <div key={index} className="d-flex flex-row align-items-center">
                     <button className="History-popupAttempt m-2">
                       <span className="Attempt-span" style={{ fontFamily: "quando", color: "", fontWeight: "", }}>
                         Attempt {index + 1}
@@ -88,10 +88,10 @@ const HistoryPopup = ({ chapterId, chapterName, onClose }) => {
                     </button>
                     <div className="mb-3 mt-3">
                     <button className="HistoryPopup-Attempt-result" style={{ fontFamily: "Kufi"}}>
-                       Quiz Score: {entry.correct}/3
+                       Quiz Score: {correctAnswer}/3
                     </button>
                     <button className="HistoryPopup-Attempt-resultScore ms-2" style={{ fontFamily: "Kufi"}}>
-                    Percentage was {((entry.correct / 3) * 100).toFixed(2)}%</button>
+                    Percentage was {((correctAnswer / 3) * 100).toFixed(2)}%</button>
                     </div>
                   </div>
                 ))

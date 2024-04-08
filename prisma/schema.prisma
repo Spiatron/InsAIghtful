@@ -79,10 +79,10 @@ model Chapter {
   name               String
   youtubeSearchQuery String
   videoId            String?
-  summary            String?    @db.VarChar(3000)
-  unit               Unit       @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  summary            String?          @db.VarChar(3000)
+  unit               Unit             @relation(fields: [unitId], references: [id], onDelete: Cascade)
   questions          Question[]
-  history            History[]
+  history            ChapterHistory[]
 
   @@index([unitId], name: "unitId")
 }
@@ -101,7 +101,7 @@ model Question {
 }
 
 model UserProgress {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   courseId  String
   chapterId String
   videoDone Boolean?
@@ -111,11 +111,11 @@ model UserProgress {
   @@index([courseId], name: "courseId")
 }
 
-model History {
-  id        Int     @id @default(autoincrement())
-  chapterId String
-  correct   Int
-  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+model ChapterHistory {
+  id             String  @id @default(cuid())
+  chapterId      String
+  correctAnswers String  @db.VarChar(3000)
+  chapter        Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@index([chapterId], name: "chapterId")
 }

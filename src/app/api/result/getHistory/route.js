@@ -7,20 +7,21 @@ export async function POST(req, res) {
 
   try {
     // Retrieve all entries with a certain chapterId
-    const historyEntries = await prisma.history.findMany({
+    const historyEntry = await prisma.chapterHistory.findFirst({
       where: {
         chapterId,
       },
     });
 
-    if (!historyEntries) {
+    if (!historyEntry) {
       console.log(`No history found`);
-      return;
+      // Return a response indicating no history found
+      return NextResponse.json({ message: "No history found" });
     }
 
     // Return the result object
     return NextResponse.json({
-        historyEntries,
+      historyEntry: historyEntry.correctAnswers,
     });
   } catch (error) {
     console.error("Error fetching chapter history: ", error);
