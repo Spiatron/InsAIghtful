@@ -41,3 +41,7 @@ openaikey.js
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+~$README.docx
+~WRL0003.tmp
+~WRL0004.tmp
+~WRL0005.tmp
