@@ -87,7 +87,7 @@ const GalleryPage = ({ userId }) => {
 
   return (
     <>
-      <div className="SearchContainer container">
+      <div className="SearchContainer">
         {/* Search input field */}
         <input
           type="text"
