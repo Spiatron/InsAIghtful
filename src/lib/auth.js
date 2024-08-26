@@ -16,6 +16,8 @@ export const authOptions = {
       });
       if (db_user) {
         token.id = db_user.id;
+        token.role = db_user.role;
+        token.credits = db_user.credits;
       }
       return token;
     },
@@ -25,6 +27,8 @@ export const authOptions = {
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.image = token.picture;
+        session.user.role = token.role;
+        session.user.credits = token.credits;
       }
       return session;
     },
