@@ -3,36 +3,61 @@ import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
   try {
-    const { userEmail, credsToUpdate } = await req.json();
+    const {
+      userId,
+      userRole,
+      courseId,
+      courseName,
+      credsToUpdate,
+    } = await req.json();
 
-    if (!userEmail || !credsToUpdate) {
-        return NextResponse.json(
-            { success: false, error: "Required field missing" },
-            { status: 404 }
-          );
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { email: userEmail },
-    });
-
-    if (!user) {
+    if (!userId || !userRole || !courseId || !courseName || !credsToUpdate) {
       return NextResponse.json(
-        { success: false, error: "User not found" },
+        { success: false, error: "Required fields are missing" },
         { status: 404 }
       );
     }
 
-    await prisma.user.update({
-      where: { email: userEmail },
+    let updateData = {
+      credits: {
+        increment: credsToUpdate,
+      },
+    };
+
+    if (credsToUpdate > 0 && user.role === "basic") {
+      updateData.role = "premium";
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
       data: {
-        credits: user.credits + credsToUpdate,
+        credits: {
+          increment: credsToUpdate,
+        },
+      },
+      select: {
+        credits: true,
+        role: true,
       },
     });
 
-    return NextResponse.json({ success: true });
+    await prisma.creditHistory.create({
+      data: {
+        userId: userId,
+        courseId: courseId,
+        courseName: courseName,
+        creditUpdate: credsToUpdate,
+        date: new Date(),
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      updatedCredits: updatedUser.credits,
+      updatedRole: updatedUser.role,
+    });
   } catch (error) {
-    console.error("Error updating credits:", error);
+    console.error("Error updating credits: ", error);
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }

@@ -37,28 +37,38 @@ model Session {
   @@index([userId], name: "userId")
 }
 
+enum Role {
+  basic
+  premium
+  admin
+}
+
 model User {
-  id            String    @id @default(cuid())
+  id String @id @default(cuid())
+
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role          String    @default("user")
-  credits       Int       @default(2)
+  role          Role      @default(basic)
+  credits       Int       @default(1)
+
   accounts      Account[]
   sessions      Session[]
   courses       Course[]
+  CreditHistory CreditHistory[]
 }
 
 model Course {
   id     String @id @default(cuid())
   userId String
 
-  name     String
-  image    String
-  units    Unit[]
-  User     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Progress UserProgress[]
+  name          String
+  image         String
+  units         Unit[]
+  User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Progress      UserProgress[]
+  CreditHistory CreditHistory[]
 
   @@index([userId], name: "userId")
 }
@@ -120,4 +130,20 @@ model ChapterHistory {
   chapter        Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@index([chapterId], name: "chapterId")
+}
+
+model CreditHistory {
+  id       String @id @default(cuid())
+  userId   String
+  courseId String
+
+  courseName   String
+  creditUpdate Int
+  date         DateTime
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Course Course @relation(fields: [courseId], references: [id])
+
+  @@index([userId], name: "userId")
+  @@index([courseId], name: "courseId")
 }
