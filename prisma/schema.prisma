@@ -133,16 +133,16 @@ model ChapterHistory {
 }
 
 model CreditHistory {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
   userId   String
-  courseId String
+  courseId String?
 
-  courseName   String
-  creditUpdate Int
-  date         DateTime
+  actionPerformed String
+  creditUpdate    Int
+  date            DateTime @default(now())
 
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Course Course @relation(fields: [courseId], references: [id])
+  User   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Course Course? @relation(fields: [courseId], references: [id])
 
   @@index([userId], name: "userId")
   @@index([courseId], name: "courseId")

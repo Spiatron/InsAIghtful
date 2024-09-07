@@ -6,35 +6,31 @@ export async function POST(req, res) {
     const {
       userId,
       userRole,
-      courseId,
-      courseName,
+      courseId = null,
+      actionPerformed,
       credsToUpdate,
     } = await req.json();
 
-    if (!userId || !userRole || !courseId || !courseName || !credsToUpdate) {
+    if (!userId || !userRole || !actionPerformed || !credsToUpdate) {
       return NextResponse.json(
         { success: false, error: "Required fields are missing" },
         { status: 404 }
       );
     }
 
-    let updateData = {
+    let updatedData = {
       credits: {
         increment: credsToUpdate,
       },
     };
 
-    if (credsToUpdate > 0 && user.role === "basic") {
-      updateData.role = "premium";
+    if (credsToUpdate > 0 && userRole === "basic") {
+      updatedData.role = "premium";
     }
 
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: {
-        credits: {
-          increment: credsToUpdate,
-        },
-      },
+      data: updatedData,
       select: {
         credits: true,
         role: true,
@@ -43,11 +39,10 @@ export async function POST(req, res) {
 
     await prisma.creditHistory.create({
       data: {
-        userId: userId,
-        courseId: courseId,
-        courseName: courseName,
+        userId,
+        courseId,
+        actionPerformed,
         creditUpdate: credsToUpdate,
-        date: new Date(),
       },
     });
 
