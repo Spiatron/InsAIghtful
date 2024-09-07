@@ -1,0 +1,9 @@
+.admin{
+    width: auto;
+    height: 82vh;
+    background-image: linear-gradient(rgba(50, 2, 2, 0.856), rgba(53, 53, 53, 0.849)), url('/images/bg2.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}

@@ -18,10 +18,14 @@ const UserAccountNav = ({ user }) => {
               </li>
             )}
             <li className="list-group-item font-monospace ">
-              {user?.name && <div>{user.name}</div>}
+            {user?.name && <div>Name: {user.name}</div>}
             </li>
             <li className="list-group-item font-monospace">
-              {user?.email && <div>{user.email}</div>}
+              {user?.email && <div>Email: {user.email}</div>}
+            </li>
+            <li className="list-group-item font-monospace">
+             <div>Credits: {user.credits}</div>
+            {/* {user?.credits && <div>Credits: {user.credits}</div>} */}
             </li>
           </ul>
         </div>

@@ -1,0 +1,15 @@
+.sidebarBtn{
+    /* font: inherit; */
+    background-color: #f0f0f0;
+    border: 0;
+    color: #242424;
+    border-radius: 0.5em;
+    font-size: 1.35rem;
+    padding: 0.150em 1em;
+    font-weight: 600;
+    transition: 0.15s ease;
+    cursor: pointer;
+  }
+  .sidebarBtn:active {
+    translate: 0 0.225em;
+}

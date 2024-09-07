@@ -1,0 +1,32 @@
+.adminHeading{
+    /* font: inherit; */
+    background-color: #f0f0f0;
+    border: 0;
+    color: #242424;
+    border-radius: 0.1em;
+    font-size: 1.35rem;
+    padding: 0.150em 1em;
+    font-weight: 600;
+    transition: 0.15s ease;
+    cursor: pointer;
+  }
+  .adminHeading:active {
+    translate: 0 0.225em;
+}
+
+.CreditsBtn{
+    font: inherit;
+    background-color: #f0f0f0;
+    border: 0;
+    color: #242424;
+    border-radius: 0.5em;
+    font-size: 1rem;
+    padding: 0.100em 0.5em;
+    font-weight: 600;
+    transition: 0.15s ease;
+    cursor: pointer;
+}
+.CreditsBtn:active {
+    translate: 0 0.225em;
+}
+

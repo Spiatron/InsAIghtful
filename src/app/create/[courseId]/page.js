@@ -4,6 +4,9 @@ import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import React from "react";
 import style from "@/styles/confirmcoursepage.module.css";
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth'
+
 
 const CreateChapters = async ({ params: { courseId } }) => {
   const session = await getAuthSession();

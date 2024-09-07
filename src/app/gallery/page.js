@@ -8,7 +8,7 @@ const Page = async () => {
   const session = await getAuthSession();
 
   if (!session?.user) {
-    return redirect("/about");
+    return redirect("/");
   }
 
   return (

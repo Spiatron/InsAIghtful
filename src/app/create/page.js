@@ -27,7 +27,7 @@ const page = async () => {
           list of units, which are the specifics you want to learn. and our AI
           will generate a course for you!
         </div>
-        <CreateCourseForm />
+        <CreateCourseForm session={session} />
       </div>
     </div>
   );
