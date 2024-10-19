@@ -51,7 +51,7 @@ model User {
   emailVerified DateTime?
   image         String?
   role          Role      @default(basic)
-  credits       Int       @default(1)
+  credits       Int       @default(5)
 
   accounts      Account[]
   sessions      Session[]
