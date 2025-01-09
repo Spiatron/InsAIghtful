@@ -108,4 +108,5 @@ This project is licensed under the **MIT License**. See the `LICENSE` file for m
 For support, feedback, or inquiries, reach out to us:
 
 - **Email**: [ahsanhafeez506@gmail.com](mailto:ahsanhafeez506@gmail.com)
-- **GitHub**: [Spiatron](https://github.com/Spiatron)
+- **GitHub**: [Ahsan Hafeez](https://github.com/Spiatron)
+- **Linkedln**: [Ahsan Hafeez](https://www.linkedin.com/in/ahsan-hafeez-116943278/)
