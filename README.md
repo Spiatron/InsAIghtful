@@ -97,12 +97,6 @@ We welcome contributions to improve **InsAIghtful**! Here’s how you can help:
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License**. See the `LICENSE` file for more details.
-
----
-
 ## 📧 Contact
 
 For support, feedback, or inquiries, reach out to us:
