@@ -56,11 +56,11 @@ Ensure the following software is installed on your machine before proceeding:
 
 Run the following commands in the terminal, in order:
 
-\`\`\`bash
+```bash
 npm i
 npx prisma db push
 npm run dev
-\`\`\`
+```
 
 ### Step 6: Launch the Website
 
