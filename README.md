@@ -1,5 +1,5 @@
 
-# InsAIghtful
+# 🤖 InsAIghtful
 
 InsAIghtful is a cutting-edge project designed to bring the power of AI to insightful solutions. This project combines modern tools like Node.js, XAMPP, and Prisma for efficient development and deployment, ensuring a robust and seamless user experience.
 
